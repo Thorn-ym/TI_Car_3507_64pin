@@ -1,41 +1,61 @@
 /*
- * Copyright (c) 2021, Texas Instruments Incorporated
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * *  Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *
- * *  Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- *
- * *  Neither the name of Texas Instruments Incorporated nor the names of
- *    its contributors may be used to endorse or promote products derived
- *    from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
- * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
- * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
- * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
- * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
- * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * MSPM0G3507 line-tracking car application.
  */
 
 #include "ti_msp_dl_config.h"
+#include "car_control.h"
+#include "debug_uart.h"
+#include "ec11_encoder.h"
+#include "line_tracker.h"
+#include "mpu6050.h"
+#include "oled_ssd1306.h"
+#include "problem_menu.h"
 
 int main(void)
 {
     SYSCFG_DL_init();
 
+    LineTracker_Init();
+    EC11_Init();
+    Car_Init();
+    OLED_Init();
+    MPU6050_Init();
+    ProblemMenu_Init();
+    Debug_UART_Init();
+
+    g_car.left.pid.kp = 180;
+    g_car.left.pid.ki = 0.35f;
+    g_car.left.pid.kd = 26;
+    g_car.right.pid.kp = 180;
+    g_car.right.pid.ki = 0.28f;
+    g_car.right.pid.kd = 18;
+
+    g_car.left.invert_motor = 0U;
+    g_car.left.invert_encoder = 0U;
+    g_car.right.invert_motor = 1U;
+    g_car.right.invert_encoder = 1U;
+
+    g_car.left.target_counts = 26;
+    g_car.right.target_counts = 26;
+    g_car.mode = 3;
+
     while (1) {
+        MPU6050_Task();
+        OLED_Task(g_car.control_tick);
+        EC11_Task();
+        ProblemMenu_Task();
+        Debug_UART_Task();
+        __WFI();
+    }
+}
+
+void TIMER_CONTROL_INST_IRQHandler(void)
+{
+    switch (DL_TimerG_getPendingInterrupt(TIMER_CONTROL_INST)) {
+        case DL_TIMER_IIDX_ZERO:
+            Car_ControlStep();
+            break;
+        default:
+            break;
     }
 }
