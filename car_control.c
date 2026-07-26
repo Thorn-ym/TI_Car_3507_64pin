@@ -88,7 +88,7 @@ volatile CarControl_t g_car =
     .right_angle_gyro_deadband_dps = 2.0f,
     .right_angle_base_counts = 14,
     .right_angle_turn_counts = 4,
-    .right_angle_approach_counts = 100,
+    .right_angle_approach_counts = 0,
     .right_angle_approach_speed_counts = 18,
     .right_angle_approach_travel_counts = 0,
     .right_angle_approach_start_left_total = 0,
@@ -123,6 +123,51 @@ volatile CarControl_t g_car =
 static volatile int32_t s_right_encoder_count = 0;
 static uint8_t s_right_encoder_state = 0U;
 
+typedef enum
+{
+  CAR_APPROACH_ENCODERS_BOTH_OK = 0,
+  CAR_APPROACH_ENCODER_LEFT_SUSPECT = 1,
+  CAR_APPROACH_ENCODER_RIGHT_SUSPECT = 2,
+  CAR_APPROACH_ENCODERS_BOTH_INVALID = 3
+} CarApproachEncoderHealth_t;
+
+typedef enum
+{
+  CAR_APPROACH_RUNNING = 0,
+  CAR_APPROACH_COMPLETE = 1,
+  CAR_APPROACH_FAULT = 2
+} CarApproachResult_t;
+
+enum
+{
+  CAR_APPROACH_STARTUP_GRACE_TICKS = 3U,
+  CAR_APPROACH_INVALID_CONFIRM_TICKS = 3U,
+  CAR_APPROACH_MISMATCH_CONFIRM_TICKS = 2U,
+  CAR_APPROACH_IDLE_STEP_COUNTS = 1,
+  CAR_APPROACH_PROGRESS_MIN_COUNTS = 12,
+  CAR_APPROACH_STEP_MAX_MIN_COUNTS = 32,
+  CAR_APPROACH_STEP_MAX_MULTIPLIER = 3,
+  CAR_APPROACH_DISTANCE_SLACK_COUNTS = 4,
+  CAR_APPROACH_MISMATCH_RATIO = 3,
+  CAR_APPROACH_CLOSE_MIN_COUNTS = 6,
+  CAR_APPROACH_EXPECTED_HIGH_MULTIPLIER = 2,
+  CAR_APPROACH_PWM_DELTA_LIMIT = CAR_PWM_MAX / 5,
+  CAR_APPROACH_FALLBACK_PWM_MAX = CAR_PWM_MAX / 2
+};
+
+static CarApproachEncoderHealth_t s_approach_encoder_health =
+    CAR_APPROACH_ENCODERS_BOTH_OK;
+static CarApproachEncoderHealth_t s_approach_locked_health =
+    CAR_APPROACH_ENCODERS_BOTH_OK;
+static CarApproachEncoderHealth_t s_approach_mismatch_health =
+    CAR_APPROACH_ENCODERS_BOTH_OK;
+static uint8_t s_approach_invalid_ticks = 0U;
+static uint8_t s_approach_left_stale_ticks = 0U;
+static uint8_t s_approach_right_stale_ticks = 0U;
+static uint8_t s_approach_mismatch_ticks = 0U;
+static uint8_t s_approach_distance_reliable = 0U;
+static int32_t s_approach_fused_distance = 0;
+
 static int16_t Car_LimitPwm(int32_t pwm);
 static float Car_AbsFloat(float value);
 static int32_t Car_AbsInt32(int32_t value);
@@ -138,10 +183,15 @@ static void Car_RightAngleSetTargets(int32_t left_target,
                                      int32_t right_target,
                                      int16_t *left_pwm,
                                      int16_t *right_pwm);
+static int16_t Car_RightAngleLimitSuspectPwm(int16_t suspect_pwm,
+                                             int16_t healthy_pwm);
+static void Car_RightAngleApproachSetTargets(int32_t target,
+                                             int16_t *left_pwm,
+                                             int16_t *right_pwm);
 static void Car_RightAngleApproachStart(int8_t direction);
 static void Car_RightAngleApproachStop(void);
-static int32_t Car_RightAngleApproachDistance(void);
-static uint8_t Car_RightAngleApproachComplete(void);
+static int32_t Car_RightAngleApproachDistance(int32_t target);
+static CarApproachResult_t Car_RightAngleApproachResult(int32_t target);
 static uint8_t Car_RightAngleApproachStep(int16_t *left_pwm, int16_t *right_pwm);
 static void Car_RightAngleAssistStart(int8_t direction);
 static void Car_RightAngleAssistStop(void);
@@ -512,6 +562,123 @@ static void Car_RightAngleSetTargets(int32_t left_target,
   }
 }
 
+static int16_t Car_RightAngleLimitSuspectPwm(int16_t suspect_pwm,
+                                             int16_t healthy_pwm)
+{
+  int32_t limited_pwm = (int32_t)suspect_pwm;
+  int32_t reference_pwm = (int32_t)healthy_pwm;
+  int32_t lower_limit = 0;
+  int32_t upper_limit = 0;
+
+  if (reference_pwm < 0)
+  {
+    reference_pwm = 0;
+  }
+  else if (reference_pwm > CAR_PWM_MAX)
+  {
+    reference_pwm = CAR_PWM_MAX;
+  }
+
+  if (limited_pwm < 0)
+  {
+    limited_pwm = 0;
+  }
+  else if (limited_pwm > CAR_PWM_MAX)
+  {
+    limited_pwm = CAR_PWM_MAX;
+  }
+
+  lower_limit = reference_pwm - CAR_APPROACH_PWM_DELTA_LIMIT;
+  upper_limit = reference_pwm + CAR_APPROACH_PWM_DELTA_LIMIT;
+  if (lower_limit < 0)
+  {
+    lower_limit = 0;
+  }
+  if (upper_limit > CAR_PWM_MAX)
+  {
+    upper_limit = CAR_PWM_MAX;
+  }
+
+  if (limited_pwm < lower_limit)
+  {
+    limited_pwm = lower_limit;
+  }
+  else if (limited_pwm > upper_limit)
+  {
+    limited_pwm = upper_limit;
+  }
+
+  return (int16_t)limited_pwm;
+}
+
+static void Car_RightAngleApproachSetTargets(int32_t target,
+                                             int16_t *left_pwm,
+                                             int16_t *right_pwm)
+{
+  float left_integral = g_car.left.pid.integral;
+  float left_previous_error = g_car.left.pid.previous_error;
+  float right_integral = g_car.right.pid.integral;
+  float right_previous_error = g_car.right.pid.previous_error;
+  int32_t fallback_left_pwm = g_car.left.pwm_output;
+  int32_t fallback_right_pwm = g_car.right.pwm_output;
+
+  Car_RightAngleSetTargets(target, target, left_pwm, right_pwm);
+
+  if ((s_approach_encoder_health == CAR_APPROACH_ENCODER_LEFT_SUSPECT) ||
+      (s_approach_encoder_health == CAR_APPROACH_ENCODERS_BOTH_INVALID))
+  {
+    g_car.left.pid.integral = left_integral;
+    g_car.left.pid.previous_error = left_previous_error;
+  }
+
+  if ((s_approach_encoder_health == CAR_APPROACH_ENCODER_RIGHT_SUSPECT) ||
+      (s_approach_encoder_health == CAR_APPROACH_ENCODERS_BOTH_INVALID))
+  {
+    g_car.right.pid.integral = right_integral;
+    g_car.right.pid.previous_error = right_previous_error;
+  }
+
+  if (*left_pwm < 0)
+  {
+    *left_pwm = 0;
+  }
+  if (*right_pwm < 0)
+  {
+    *right_pwm = 0;
+  }
+
+  if (s_approach_encoder_health == CAR_APPROACH_ENCODER_LEFT_SUSPECT)
+  {
+    *left_pwm = Car_RightAngleLimitSuspectPwm(*left_pwm, *right_pwm);
+  }
+  else if (s_approach_encoder_health == CAR_APPROACH_ENCODER_RIGHT_SUSPECT)
+  {
+    *right_pwm = Car_RightAngleLimitSuspectPwm(*right_pwm, *left_pwm);
+  }
+  else if (s_approach_encoder_health == CAR_APPROACH_ENCODERS_BOTH_INVALID)
+  {
+    if (fallback_left_pwm < 0)
+    {
+      fallback_left_pwm = 0;
+    }
+    else if (fallback_left_pwm > CAR_APPROACH_FALLBACK_PWM_MAX)
+    {
+      fallback_left_pwm = CAR_APPROACH_FALLBACK_PWM_MAX;
+    }
+
+    if (fallback_right_pwm < 0)
+    {
+      fallback_right_pwm = 0;
+    }
+    else if (fallback_right_pwm > CAR_APPROACH_FALLBACK_PWM_MAX)
+    {
+      fallback_right_pwm = CAR_APPROACH_FALLBACK_PWM_MAX;
+    }
+
+    *left_pwm = (int16_t)fallback_left_pwm;
+    *right_pwm = (int16_t)fallback_right_pwm;
+  }
+}
 static void Car_RightAngleApproachStart(int8_t direction)
 {
   g_car.line.right_angle_state = CAR_RIGHT_ANGLE_STATE_APPROACH;
@@ -527,6 +694,15 @@ static void Car_RightAngleApproachStart(int8_t direction)
   g_car.line.right_angle_center_seen_count = 0U;
   g_car.line.right_angle_cooldown_center_count = 0U;
   g_car.line.right_angle_recovery_count = 0U;
+  s_approach_encoder_health = CAR_APPROACH_ENCODERS_BOTH_OK;
+  s_approach_locked_health = CAR_APPROACH_ENCODERS_BOTH_OK;
+  s_approach_mismatch_health = CAR_APPROACH_ENCODERS_BOTH_OK;
+  s_approach_invalid_ticks = 0U;
+  s_approach_left_stale_ticks = 0U;
+  s_approach_right_stale_ticks = 0U;
+  s_approach_mismatch_ticks = 0U;
+  s_approach_distance_reliable = 0U;
+  s_approach_fused_distance = 0;
 
   Car_ResetLinePid();
   Car_ResetPid(&g_car.left);
@@ -537,57 +713,370 @@ static void Car_RightAngleApproachStop(void)
 {
   g_car.line.right_angle_approach_active = 0U;
   g_car.line.right_angle_approach_direction = 0;
+  s_approach_encoder_health = CAR_APPROACH_ENCODERS_BOTH_OK;
+  s_approach_locked_health = CAR_APPROACH_ENCODERS_BOTH_OK;
+  s_approach_mismatch_health = CAR_APPROACH_ENCODERS_BOTH_OK;
+  s_approach_invalid_ticks = 0U;
+  s_approach_left_stale_ticks = 0U;
+  s_approach_right_stale_ticks = 0U;
+  s_approach_mismatch_ticks = 0U;
+  s_approach_distance_reliable = 0U;
+  s_approach_fused_distance = 0;
 }
-
-static int32_t Car_RightAngleApproachDistance(void)
+static int32_t Car_RightAngleApproachDistance(int32_t target)
 {
   int32_t left_delta = g_car.left.encoder_total -
       g_car.line.right_angle_approach_start_left_total;
   int32_t right_delta = g_car.right.encoder_total -
       g_car.line.right_angle_approach_start_right_total;
+  int32_t left_distance = Car_AbsInt32(left_delta);
+  int32_t right_distance = Car_AbsInt32(right_delta);
+  int32_t left_step = Car_AbsInt32(g_car.left.encoder_delta);
+  int32_t right_step = Car_AbsInt32(g_car.right.encoder_delta);
+  uint32_t elapsed_ticks = g_car.control_tick -
+      g_car.line.right_angle_approach_start_tick;
+  int32_t expected_distance = (int32_t)elapsed_ticks * target;
+  int32_t plausible_max =
+      (expected_distance * CAR_APPROACH_EXPECTED_HIGH_MULTIPLIER) +
+      (target * 2) + CAR_APPROACH_DISTANCE_SLACK_COUNTS;
+  int32_t max_step = target * CAR_APPROACH_STEP_MAX_MULTIPLIER;
+  int32_t high_distance = left_distance;
+  int32_t low_distance = right_distance;
+  int32_t difference = 0;
+  int32_t close_limit = 0;
+  int32_t progress_gate = target;
+  int32_t candidate = s_approach_fused_distance;
+  uint8_t left_sample_valid = 0U;
+  uint8_t right_sample_valid = 0U;
+  uint8_t left_moving = 0U;
+  uint8_t right_moving = 0U;
+  uint8_t left_invalid = 0U;
+  uint8_t right_invalid = 0U;
+  uint8_t mismatch = 0U;
+  uint8_t confirmed_both_invalid = 0U;
+  CarApproachEncoderHealth_t health = CAR_APPROACH_ENCODERS_BOTH_OK;
 
-  return (Car_AbsInt32(left_delta) + Car_AbsInt32(right_delta)) / 2;
+  s_approach_distance_reliable = 0U;
+
+  if (elapsed_ticks == 0U)
+  {
+    s_approach_encoder_health = CAR_APPROACH_ENCODERS_BOTH_OK;
+    return s_approach_fused_distance;
+  }
+
+  if (max_step < CAR_APPROACH_STEP_MAX_MIN_COUNTS)
+  {
+    max_step = CAR_APPROACH_STEP_MAX_MIN_COUNTS;
+  }
+  if (progress_gate < CAR_APPROACH_PROGRESS_MIN_COUNTS)
+  {
+    progress_gate = CAR_APPROACH_PROGRESS_MIN_COUNTS;
+  }
+
+  left_sample_valid = ((left_step <= max_step) &&
+                       (left_distance <= plausible_max)) ? 1U : 0U;
+  right_sample_valid = ((right_step <= max_step) &&
+                        (right_distance <= plausible_max)) ? 1U : 0U;
+  left_moving = ((left_sample_valid != 0U) &&
+                 (left_step > CAR_APPROACH_IDLE_STEP_COUNTS)) ? 1U : 0U;
+  right_moving = ((right_sample_valid != 0U) &&
+                  (right_step > CAR_APPROACH_IDLE_STEP_COUNTS)) ? 1U : 0U;
+
+  if (left_moving != 0U)
+  {
+    s_approach_left_stale_ticks = 0U;
+  }
+  else if (s_approach_left_stale_ticks <
+           CAR_APPROACH_INVALID_CONFIRM_TICKS)
+  {
+    s_approach_left_stale_ticks++;
+  }
+
+  if (right_moving != 0U)
+  {
+    s_approach_right_stale_ticks = 0U;
+  }
+  else if (s_approach_right_stale_ticks <
+           CAR_APPROACH_INVALID_CONFIRM_TICKS)
+  {
+    s_approach_right_stale_ticks++;
+  }
+
+  if (elapsed_ticks >= CAR_APPROACH_STARTUP_GRACE_TICKS)
+  {
+    left_invalid =
+        (s_approach_left_stale_ticks >=
+         CAR_APPROACH_INVALID_CONFIRM_TICKS) ? 1U : 0U;
+    right_invalid =
+        (s_approach_right_stale_ticks >=
+         CAR_APPROACH_INVALID_CONFIRM_TICKS) ? 1U : 0U;
+  }
+
+  if (s_approach_locked_health == CAR_APPROACH_ENCODER_LEFT_SUSPECT)
+  {
+    if (right_invalid != 0U)
+    {
+      health = CAR_APPROACH_ENCODERS_BOTH_INVALID;
+      confirmed_both_invalid = 1U;
+    }
+    else if (right_sample_valid == 0U)
+    {
+      health = CAR_APPROACH_ENCODERS_BOTH_INVALID;
+    }
+    else
+    {
+      health = CAR_APPROACH_ENCODER_LEFT_SUSPECT;
+      candidate = right_distance;
+      s_approach_distance_reliable = 1U;
+    }
+  }
+  else if (s_approach_locked_health ==
+           CAR_APPROACH_ENCODER_RIGHT_SUSPECT)
+  {
+    if (left_invalid != 0U)
+    {
+      health = CAR_APPROACH_ENCODERS_BOTH_INVALID;
+      confirmed_both_invalid = 1U;
+    }
+    else if (left_sample_valid == 0U)
+    {
+      health = CAR_APPROACH_ENCODERS_BOTH_INVALID;
+    }
+    else
+    {
+      health = CAR_APPROACH_ENCODER_RIGHT_SUSPECT;
+      candidate = left_distance;
+      s_approach_distance_reliable = 1U;
+    }
+  }
+  else if ((left_invalid != 0U) && (right_invalid != 0U))
+  {
+    health = CAR_APPROACH_ENCODERS_BOTH_INVALID;
+    confirmed_both_invalid = 1U;
+  }
+  else if (left_invalid != 0U)
+  {
+    s_approach_locked_health = CAR_APPROACH_ENCODER_LEFT_SUSPECT;
+    health = CAR_APPROACH_ENCODER_LEFT_SUSPECT;
+    if (right_sample_valid != 0U)
+    {
+      candidate = right_distance;
+      s_approach_distance_reliable = 1U;
+    }
+  }
+  else if (right_invalid != 0U)
+  {
+    s_approach_locked_health = CAR_APPROACH_ENCODER_RIGHT_SUSPECT;
+    health = CAR_APPROACH_ENCODER_RIGHT_SUSPECT;
+    if (left_sample_valid != 0U)
+    {
+      candidate = left_distance;
+      s_approach_distance_reliable = 1U;
+    }
+  }
+  else if ((left_sample_valid != 0U) &&
+           (right_sample_valid != 0U))
+  {
+    CarApproachEncoderHealth_t mismatch_health =
+        CAR_APPROACH_ENCODERS_BOTH_INVALID;
+    int32_t left_error =
+        Car_AbsInt32(left_distance - expected_distance);
+    int32_t right_error =
+        Car_AbsInt32(right_distance - expected_distance);
+
+    if (right_distance > left_distance)
+    {
+      high_distance = right_distance;
+      low_distance = left_distance;
+    }
+
+    difference = high_distance - low_distance;
+    close_limit = high_distance / CAR_APPROACH_MISMATCH_RATIO;
+    if (close_limit < CAR_APPROACH_CLOSE_MIN_COUNTS)
+    {
+      close_limit = CAR_APPROACH_CLOSE_MIN_COUNTS;
+    }
+
+    if ((difference > close_limit) ||
+        ((high_distance >= progress_gate) &&
+         (high_distance >=
+          (low_distance * CAR_APPROACH_MISMATCH_RATIO) +
+          CAR_APPROACH_DISTANCE_SLACK_COUNTS)))
+    {
+      mismatch = 1U;
+    }
+
+    if (mismatch == 0U)
+    {
+      health = CAR_APPROACH_ENCODERS_BOTH_OK;
+      candidate = (left_distance + right_distance) / 2;
+      s_approach_mismatch_health = CAR_APPROACH_ENCODERS_BOTH_OK;
+      s_approach_mismatch_ticks = 0U;
+      if ((left_distance > 0) && (right_distance > 0))
+      {
+        s_approach_distance_reliable = 1U;
+      }
+    }
+    else
+    {
+      if (left_error < right_error)
+      {
+        mismatch_health = CAR_APPROACH_ENCODER_RIGHT_SUSPECT;
+      }
+      else if (right_error < left_error)
+      {
+        mismatch_health = CAR_APPROACH_ENCODER_LEFT_SUSPECT;
+      }
+
+      if (mismatch_health == CAR_APPROACH_ENCODERS_BOTH_INVALID)
+      {
+        health = CAR_APPROACH_ENCODERS_BOTH_OK;
+        candidate = low_distance;
+        s_approach_mismatch_health = CAR_APPROACH_ENCODERS_BOTH_OK;
+        s_approach_mismatch_ticks = 0U;
+        if (low_distance > 0)
+        {
+          s_approach_distance_reliable = 1U;
+        }
+      }
+      else
+      {
+        if (s_approach_mismatch_health == mismatch_health)
+        {
+          if (s_approach_mismatch_ticks <
+              CAR_APPROACH_MISMATCH_CONFIRM_TICKS)
+          {
+            s_approach_mismatch_ticks++;
+          }
+        }
+        else
+        {
+          s_approach_mismatch_health = mismatch_health;
+          s_approach_mismatch_ticks = 1U;
+        }
+
+        if ((elapsed_ticks >= CAR_APPROACH_STARTUP_GRACE_TICKS) &&
+            (s_approach_mismatch_ticks >=
+             CAR_APPROACH_MISMATCH_CONFIRM_TICKS))
+        {
+          s_approach_locked_health = mismatch_health;
+          health = mismatch_health;
+          if (health == CAR_APPROACH_ENCODER_LEFT_SUSPECT)
+          {
+            candidate = right_distance;
+          }
+          else
+          {
+            candidate = left_distance;
+          }
+          s_approach_distance_reliable = 1U;
+        }
+        else
+        {
+          health = CAR_APPROACH_ENCODERS_BOTH_OK;
+          candidate = low_distance;
+          if (low_distance > 0)
+          {
+            s_approach_distance_reliable = 1U;
+          }
+        }
+      }
+    }
+  }
+  else if ((left_sample_valid == 0U) &&
+           (right_sample_valid == 0U))
+  {
+    health = CAR_APPROACH_ENCODERS_BOTH_INVALID;
+    s_approach_mismatch_health = CAR_APPROACH_ENCODERS_BOTH_OK;
+    s_approach_mismatch_ticks = 0U;
+  }
+  else if (left_sample_valid == 0U)
+  {
+    health = CAR_APPROACH_ENCODER_LEFT_SUSPECT;
+    s_approach_mismatch_health = CAR_APPROACH_ENCODERS_BOTH_OK;
+    s_approach_mismatch_ticks = 0U;
+  }
+  else
+  {
+    health = CAR_APPROACH_ENCODER_RIGHT_SUSPECT;
+    s_approach_mismatch_health = CAR_APPROACH_ENCODERS_BOTH_OK;
+    s_approach_mismatch_ticks = 0U;
+  }
+
+  s_approach_encoder_health = health;
+  if (health == CAR_APPROACH_ENCODERS_BOTH_INVALID)
+  {
+    if (confirmed_both_invalid != 0U)
+    {
+      s_approach_invalid_ticks =
+          CAR_APPROACH_INVALID_CONFIRM_TICKS;
+    }
+    else if (s_approach_invalid_ticks <
+             CAR_APPROACH_INVALID_CONFIRM_TICKS)
+    {
+      s_approach_invalid_ticks++;
+    }
+  }
+  else
+  {
+    s_approach_invalid_ticks = 0U;
+  }
+
+  if (candidate > s_approach_fused_distance)
+  {
+    s_approach_fused_distance = candidate;
+  }
+
+  return s_approach_fused_distance;
 }
-
-static uint8_t Car_RightAngleApproachComplete(void)
+static CarApproachResult_t Car_RightAngleApproachResult(int32_t target)
 {
-  uint8_t complete = 0U;
-
-  g_car.line.right_angle_approach_travel_counts =
-      Car_RightAngleApproachDistance();
-
   if (g_car.line.right_angle_approach_counts <= 0)
   {
-    complete = 1U;
-  }
-  else if (g_car.line.right_angle_approach_travel_counts >=
-           g_car.line.right_angle_approach_counts)
-  {
-    complete = 1U;
-  }
-  else if ((g_car.line.right_angle_approach_timeout_ticks > 0U) &&
-           ((g_car.control_tick -
-             g_car.line.right_angle_approach_start_tick) >=
-            g_car.line.right_angle_approach_timeout_ticks))
-  {
-    complete = 1U;
+    g_car.line.right_angle_approach_travel_counts = 0;
+    return CAR_APPROACH_COMPLETE;
   }
 
-  return complete;
+  if (target <= 0)
+  {
+    return CAR_APPROACH_FAULT;
+  }
+
+  g_car.line.right_angle_approach_travel_counts =
+      Car_RightAngleApproachDistance(target);
+
+  if (s_approach_invalid_ticks >=
+      CAR_APPROACH_INVALID_CONFIRM_TICKS)
+  {
+    return CAR_APPROACH_FAULT;
+  }
+
+  if ((g_car.line.right_angle_approach_timeout_ticks > 0U) &&
+      ((g_car.control_tick -
+        g_car.line.right_angle_approach_start_tick) >=
+       g_car.line.right_angle_approach_timeout_ticks))
+  {
+    return CAR_APPROACH_FAULT;
+  }
+
+  if ((s_approach_distance_reliable != 0U) &&
+      (s_approach_encoder_health !=
+       CAR_APPROACH_ENCODERS_BOTH_INVALID) &&
+      (g_car.line.right_angle_approach_travel_counts >=
+       g_car.line.right_angle_approach_counts))
+  {
+    return CAR_APPROACH_COMPLETE;
+  }
+
+  return CAR_APPROACH_RUNNING;
 }
 
-static uint8_t Car_RightAngleApproachStep(int16_t *left_pwm, int16_t *right_pwm)
+static uint8_t Car_RightAngleApproachStep(int16_t *left_pwm,
+                                         int16_t *right_pwm)
 {
   int32_t target = g_car.line.right_angle_approach_speed_counts;
   int32_t limited_target = 0;
-
-  if (Car_RightAngleApproachComplete() != 0U)
-  {
-    int8_t direction = g_car.line.right_angle_approach_direction;
-    Car_RightAngleApproachStop();
-    Car_RightAngleAssistStart(direction);
-    return 0U;
-  }
+  CarApproachResult_t result = CAR_APPROACH_RUNNING;
 
   if (target <= 0)
   {
@@ -595,16 +1084,35 @@ static uint8_t Car_RightAngleApproachStep(int16_t *left_pwm, int16_t *right_pwm)
   }
 
   limited_target = Car_LimitTargetCounts(target);
+  result = Car_RightAngleApproachResult(limited_target);
+
+  if (result == CAR_APPROACH_COMPLETE)
+  {
+    int8_t direction = g_car.line.right_angle_approach_direction;
+    Car_RightAngleApproachStop();
+    Car_RightAngleAssistStart(direction);
+    return 0U;
+  }
+
+  if (result == CAR_APPROACH_FAULT)
+  {
+    g_car.line.correction_counts = 0;
+    g_car.line.left_target_counts = 0;
+    g_car.line.right_target_counts = 0;
+    *left_pwm = 0;
+    *right_pwm = 0;
+    Car_RightAngleAssistStop();
+    Car_Stop();
+    return 1U;
+  }
 
   g_car.line.correction_counts = 0;
-  Car_RightAngleSetTargets(limited_target,
-                           limited_target,
-                           left_pwm,
-                           right_pwm);
+  Car_RightAngleApproachSetTargets(limited_target,
+                                   left_pwm,
+                                   right_pwm);
 
   return 1U;
 }
-
 static void Car_RightAngleAssistStart(int8_t direction)
 {
   g_car.line.right_angle_state = CAR_RIGHT_ANGLE_STATE_LEAVE_OLD_LINE;
