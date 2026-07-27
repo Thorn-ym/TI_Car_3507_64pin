@@ -168,6 +168,7 @@ enum
 
 #define CAR_RIGHT_ANGLE_KP                    0.35f
 #define CAR_RIGHT_ANGLE_KD                    0.05f
+#define CAR_RIGHT_ANGLE_OLD_LINE_CLEAR_DEG   45.0f
 #define CAR_RIGHT_ANGLE_TOLERANCE_DEG         3.0f
 #define CAR_RIGHT_ANGLE_ABSOLUTE_LIMIT_DEG    105.0f
 #define CAR_RIGHT_ANGLE_STABLE_RATE_DPS       4.0f
@@ -582,9 +583,7 @@ static uint8_t Car_RightAngleCenterSeen(void)
 
 static uint8_t Car_RightAngleNewLineSeen(void)
 {
-  return ((g_line.right_angle_detected == 0U) &&
-          (Car_RightAngleCenterSeen() != 0U) &&
-          (g_line.active_count <= 3U)) ? 1U : 0U;
+  return Car_RightAngleCenterSeen();
 }
 
 static void Car_RightAngleSetTargets(int32_t left_target,
@@ -1752,7 +1751,9 @@ static uint8_t Car_RightAngleAssistStep(int16_t *left_pwm, int16_t *right_pwm)
       g_car.line.right_angle_old_line_clear_count = 0U;
     }
 
-    if (g_car.line.right_angle_old_line_clear_count >= clear_ticks)
+    if ((g_car.line.right_angle_old_line_clear_count >= clear_ticks) ||
+        (g_car.line.right_angle_yaw_deg >=
+         CAR_RIGHT_ANGLE_OLD_LINE_CLEAR_DEG))
     {
       g_car.line.right_angle_state = CAR_RIGHT_ANGLE_STATE_FIND_NEW_LINE;
       g_car.line.right_angle_center_seen_count = 0U;
