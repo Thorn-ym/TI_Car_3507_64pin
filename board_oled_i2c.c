@@ -29,6 +29,19 @@ static bool Board_OLED_I2C_WriteByte(uint8_t byte);
 
 void Board_OLED_I2C_Init(void)
 {
+  /* Software open-drain needs the input path enabled to sample SCL/SDA. */
+  DL_GPIO_initDigitalInputFeatures(
+      GPIO_OLED_SCL_IOMUX,
+      DL_GPIO_INVERSION_DISABLE,
+      DL_GPIO_RESISTOR_PULL_UP,
+      DL_GPIO_HYSTERESIS_DISABLE,
+      DL_GPIO_WAKEUP_DISABLE);
+  DL_GPIO_initDigitalInputFeatures(
+      GPIO_OLED_SDA_IOMUX,
+      DL_GPIO_INVERSION_DISABLE,
+      DL_GPIO_RESISTOR_PULL_UP,
+      DL_GPIO_HYSTERESIS_DISABLE,
+      DL_GPIO_WAKEUP_DISABLE);
   DL_GPIO_clearPins(
       GPIO_OLED_PORT, GPIO_OLED_SCL_PIN | GPIO_OLED_SDA_PIN);
   DL_GPIO_disableOutput(
