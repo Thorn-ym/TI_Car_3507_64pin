@@ -83,8 +83,10 @@ volatile CarControl_t g_car =
     .gyro_z = 0.0f,
     .gyro_damping = 0.04f,
     .right_angle_yaw_deg = 0.0f,
-    .right_angle_target_deg = 150.0f,
-    .right_angle_center_min_deg = 45.0f,
+    .right_angle_directed_rate_dps = 0.0f,
+    .right_angle_previous_rate_dps = 0.0f,
+    .right_angle_target_deg = 90.0f,
+    .right_angle_center_min_deg = 87.0f,
     .right_angle_gyro_deadband_dps = 2.0f,
     .right_angle_base_counts = 14,
     .right_angle_turn_counts = 4,
@@ -95,10 +97,13 @@ volatile CarControl_t g_car =
     .right_angle_approach_start_right_total = 0,
     .right_angle_start_tick = 0U,
     .right_angle_last_tick = 0U,
+    .right_angle_last_sample_tick = 0U,
+    .right_angle_line_wait_ticks = 0U,
     .right_angle_timeout_ticks = 250U,
     .right_angle_approach_start_tick = 0U,
     .right_angle_approach_timeout_ticks = 45U,
     .right_angle_state = CAR_RIGHT_ANGLE_STATE_IDLE,
+    .right_angle_fault = CAR_RIGHT_ANGLE_FAULT_NONE,
     .right_angle_assist_enable = 1U,
     .right_angle_assist_active = 0U,
     .right_angle_approach_active = 0U,
@@ -111,6 +116,12 @@ volatile CarControl_t g_car =
     .right_angle_old_line_clear_count = 0U,
     .right_angle_old_line_clear_confirm_ticks = 2U,
     .right_angle_center_seen_count = 0U,
+    .right_angle_stable_count = 0U,
+    .right_angle_angle_window_entered = 0U,
+    .right_angle_direction_confirm_count = 0U,
+    .right_angle_direction_verified = 0U,
+    .right_angle_gyro_polarity = 0,
+    .right_angle_polarity_candidate = 0,
     .right_angle_cooldown_center_count = 0U,
     .right_angle_center_confirm_ticks = 3U,
     .right_angle_recovery_count = 0U,
@@ -155,6 +166,19 @@ enum
   CAR_APPROACH_FALLBACK_PWM_MAX = CAR_PWM_MAX / 2
 };
 
+#define CAR_RIGHT_ANGLE_KP                    0.35f
+#define CAR_RIGHT_ANGLE_KD                    0.05f
+#define CAR_RIGHT_ANGLE_TOLERANCE_DEG         3.0f
+#define CAR_RIGHT_ANGLE_ABSOLUTE_LIMIT_DEG    105.0f
+#define CAR_RIGHT_ANGLE_STABLE_RATE_DPS       4.0f
+#define CAR_RIGHT_ANGLE_DIRECTION_RATE_DPS    8.0f
+#define CAR_RIGHT_ANGLE_DIRECTION_CONFIRM     2U
+#define CAR_RIGHT_ANGLE_STABLE_SAMPLES        5U
+#define CAR_RIGHT_ANGLE_DATA_TIMEOUT_TICKS    3U
+#define CAR_RIGHT_ANGLE_LINE_WAIT_TICKS       50U
+#define CAR_RIGHT_ANGLE_MAX_COUNTS             18
+#define CAR_RIGHT_ANGLE_MIN_COUNTS             5
+
 static CarApproachEncoderHealth_t s_approach_encoder_health =
     CAR_APPROACH_ENCODERS_BOTH_OK;
 static CarApproachEncoderHealth_t s_approach_locked_health =
@@ -183,6 +207,10 @@ static void Car_RightAngleSetTargets(int32_t left_target,
                                      int32_t right_target,
                                      int16_t *left_pwm,
                                      int16_t *right_pwm);
+static void Car_RightAngleSetPivotTarget(int8_t direction,
+                                         int32_t outer_target,
+                                         int16_t *left_pwm,
+                                         int16_t *right_pwm);
 static int16_t Car_RightAngleLimitSuspectPwm(int16_t suspect_pwm,
                                              int16_t healthy_pwm);
 static void Car_RightAngleApproachSetTargets(int32_t target,
@@ -195,6 +223,11 @@ static CarApproachResult_t Car_RightAngleApproachResult(int32_t target);
 static uint8_t Car_RightAngleApproachStep(int16_t *left_pwm, int16_t *right_pwm);
 static void Car_RightAngleAssistStart(int8_t direction);
 static void Car_RightAngleAssistStop(void);
+static void Car_RightAngleFaultStop(CarRightAngleFault_t fault,
+                                    int16_t *left_pwm,
+                                    int16_t *right_pwm);
+static uint8_t Car_RightAngleConsumeGyroSample(void);
+static int32_t Car_RightAngleSpeedTarget(void);
 static void Car_RightAngleAssistUpdateCooldown(void);
 static int8_t Car_RightAngleDetectStep(void);
 static void Car_RightAngleRecoveryStart(void);
@@ -363,9 +396,35 @@ void Car_Stop(void)
 
 void Car_StartLineFollow(void)
 {
+  if ((g_mpu6050.present == 0U) || (g_mpu6050.valid == 0U))
+  {
+    MPU6050_Init();
+    if ((g_mpu6050.present == 0U) || (g_mpu6050.valid == 0U))
+    {
+      g_car.line.right_angle_fault =
+          CAR_RIGHT_ANGLE_FAULT_MPU_UNAVAILABLE;
+      Car_Stop();
+      return;
+    }
+
+    g_car.line.right_angle_gyro_polarity = 0;
+  }
+
   Car_ResetLinePid();
   Car_ResetPid(&g_car.left);
   Car_ResetPid(&g_car.right);
+  g_car.line.right_angle_fault = CAR_RIGHT_ANGLE_FAULT_NONE;
+  g_car.line.right_angle_state = CAR_RIGHT_ANGLE_STATE_IDLE;
+  g_car.line.right_angle_assist_active = 0U;
+  g_car.line.right_angle_approach_active = 0U;
+  g_car.line.right_angle_cooldown = 0U;
+  g_car.line.right_angle_detect_count = 0U;
+  g_car.line.right_angle_center_seen_count = 0U;
+  g_car.line.right_angle_stable_count = 0U;
+  g_car.line.right_angle_angle_window_entered = 0U;
+  g_car.line.right_angle_direction_confirm_count = 0U;
+  g_car.line.right_angle_direction_verified = 0U;
+  g_car.line.right_angle_polarity_candidate = 0;
   g_car.mode = CAR_MODE_LINE_FOLLOW;
 }
 
@@ -559,6 +618,72 @@ static void Car_RightAngleSetTargets(int32_t left_target,
   else
   {
     *right_pwm = Car_PidStep(&g_car.right);
+  }
+}
+
+static void Car_RightAngleSetPivotTarget(int8_t direction,
+                                         int32_t outer_target,
+                                         int16_t *left_pwm,
+                                         int16_t *right_pwm)
+{
+  int32_t previous_target = 0;
+
+  if (outer_target > CAR_RIGHT_ANGLE_MAX_COUNTS)
+  {
+    outer_target = CAR_RIGHT_ANGLE_MAX_COUNTS;
+  }
+  else if (outer_target < -CAR_RIGHT_ANGLE_MAX_COUNTS)
+  {
+    outer_target = -CAR_RIGHT_ANGLE_MAX_COUNTS;
+  }
+
+  if (direction > 0)
+  {
+    previous_target = g_car.right.target_counts;
+    g_car.line.left_target_counts = 0;
+    g_car.line.right_target_counts = outer_target;
+    g_car.left.target_counts = 0;
+    g_car.right.target_counts = outer_target;
+    Car_ResetPid(&g_car.left);
+    *left_pwm = 0;
+    if (outer_target == 0)
+    {
+      Car_ResetPid(&g_car.right);
+      *right_pwm = 0;
+    }
+    else
+    {
+      if (((previous_target > 0) && (outer_target < 0)) ||
+          ((previous_target < 0) && (outer_target > 0)))
+      {
+        Car_ResetPid(&g_car.right);
+      }
+      *right_pwm = Car_PidStep(&g_car.right);
+    }
+  }
+  else
+  {
+    previous_target = g_car.left.target_counts;
+    g_car.line.left_target_counts = outer_target;
+    g_car.line.right_target_counts = 0;
+    g_car.left.target_counts = outer_target;
+    g_car.right.target_counts = 0;
+    if (outer_target == 0)
+    {
+      Car_ResetPid(&g_car.left);
+      *left_pwm = 0;
+    }
+    else
+    {
+      if (((previous_target > 0) && (outer_target < 0)) ||
+          ((previous_target < 0) && (outer_target > 0)))
+      {
+        Car_ResetPid(&g_car.left);
+      }
+      *left_pwm = Car_PidStep(&g_car.left);
+    }
+    Car_ResetPid(&g_car.right);
+    *right_pwm = 0;
   }
 }
 
@@ -1119,10 +1244,20 @@ static void Car_RightAngleAssistStart(int8_t direction)
   g_car.line.right_angle_assist_active = 1U;
   g_car.line.right_angle_assist_direction = direction;
   g_car.line.right_angle_yaw_deg = 0.0f;
+  g_car.line.right_angle_directed_rate_dps = 0.0f;
+  g_car.line.right_angle_previous_rate_dps = 0.0f;
   g_car.line.right_angle_start_tick = g_car.control_tick;
-  g_car.line.right_angle_last_tick = g_car.control_tick;
+  g_car.line.right_angle_last_tick = g_mpu6050.last_success_control_tick;
+  g_car.line.right_angle_last_sample_tick = g_mpu6050.sample_tick;
+  g_car.line.right_angle_line_wait_ticks = 0U;
   g_car.line.right_angle_old_line_clear_count = 0U;
   g_car.line.right_angle_center_seen_count = 0U;
+  g_car.line.right_angle_stable_count = 0U;
+  g_car.line.right_angle_angle_window_entered = 0U;
+  g_car.line.right_angle_direction_confirm_count = 0U;
+  g_car.line.right_angle_direction_verified =
+      (g_car.line.right_angle_gyro_polarity != 0) ? 1U : 0U;
+  g_car.line.right_angle_polarity_candidate = 0;
   g_car.line.right_angle_cooldown_center_count = 0U;
   g_car.line.right_angle_recovery_count = 0U;
 
@@ -1148,7 +1283,214 @@ static void Car_RightAngleAssistStop(void)
   g_car.line.right_angle_detect_count = 0U;
   g_car.line.right_angle_old_line_clear_count = 0U;
   g_car.line.right_angle_center_seen_count = 0U;
+  g_car.line.right_angle_stable_count = 0U;
+  g_car.line.right_angle_angle_window_entered = 0U;
+  g_car.line.right_angle_direction_confirm_count = 0U;
+  g_car.line.right_angle_direction_verified = 0U;
+  g_car.line.right_angle_polarity_candidate = 0;
+  g_car.line.right_angle_directed_rate_dps = 0.0f;
+  g_car.line.right_angle_previous_rate_dps = 0.0f;
   g_car.line.right_angle_recovery_count = 0U;
+}
+
+static void Car_RightAngleFaultStop(CarRightAngleFault_t fault,
+                                    int16_t *left_pwm,
+                                    int16_t *right_pwm)
+{
+  if (fault == CAR_RIGHT_ANGLE_FAULT_DIRECTION)
+  {
+    g_car.line.right_angle_gyro_polarity = 0;
+  }
+
+  g_car.line.right_angle_fault = fault;
+  g_car.line.right_angle_state = CAR_RIGHT_ANGLE_STATE_IDLE;
+  g_car.line.right_angle_assist_active = 0U;
+  g_car.line.right_angle_approach_active = 0U;
+  g_car.line.right_angle_assist_direction = 0;
+  g_car.line.right_angle_approach_direction = 0;
+  g_car.line.correction_counts = 0;
+  g_car.line.left_target_counts = 0;
+  g_car.line.right_target_counts = 0;
+  *left_pwm = 0;
+  *right_pwm = 0;
+  Car_Stop();
+}
+
+static uint8_t Car_RightAngleConsumeGyroSample(void)
+{
+  uint32_t sample_tick = g_mpu6050.sample_tick;
+  uint32_t sample_control_tick = g_mpu6050.last_success_control_tick;
+  float raw_rate = g_mpu6050.gyro_z_dps;
+  float absolute_rate = Car_AbsFloat(raw_rate);
+  float directed_rate = 0.0f;
+  int8_t direction = g_car.line.right_angle_assist_direction;
+
+  if (sample_tick == g_car.line.right_angle_last_sample_tick)
+  {
+    return 0U;
+  }
+
+  g_car.line.right_angle_last_sample_tick = sample_tick;
+
+  if (absolute_rate < g_car.line.right_angle_gyro_deadband_dps)
+  {
+    raw_rate = 0.0f;
+    absolute_rate = 0.0f;
+  }
+
+  if (g_car.line.right_angle_gyro_polarity == 0)
+  {
+    if (absolute_rate >= CAR_RIGHT_ANGLE_DIRECTION_RATE_DPS)
+    {
+      int8_t candidate = (raw_rate >= 0.0f) ? direction : (int8_t)-direction;
+
+      if (candidate == g_car.line.right_angle_polarity_candidate)
+      {
+        if (g_car.line.right_angle_direction_confirm_count <
+            CAR_RIGHT_ANGLE_DIRECTION_CONFIRM)
+        {
+          g_car.line.right_angle_direction_confirm_count++;
+        }
+      }
+      else
+      {
+        g_car.line.right_angle_polarity_candidate = candidate;
+        g_car.line.right_angle_direction_confirm_count = 1U;
+      }
+
+      if (g_car.line.right_angle_direction_confirm_count >=
+          CAR_RIGHT_ANGLE_DIRECTION_CONFIRM)
+      {
+        g_car.line.right_angle_gyro_polarity = candidate;
+        g_car.line.right_angle_direction_verified = 1U;
+        g_car.line.right_angle_direction_confirm_count = 0U;
+      }
+    }
+    else
+    {
+      g_car.line.right_angle_direction_confirm_count = 0U;
+      g_car.line.right_angle_polarity_candidate = 0;
+    }
+
+    g_car.line.right_angle_directed_rate_dps = absolute_rate;
+    if (sample_control_tick != g_car.line.right_angle_last_tick)
+    {
+      uint32_t delta_ticks =
+          sample_control_tick - g_car.line.right_angle_last_tick;
+      float dt_s = ((float)delta_ticks *
+                    (float)g_car.control_period_ms) * 0.001f;
+
+      g_car.line.right_angle_yaw_deg +=
+          0.5f * (g_car.line.right_angle_previous_rate_dps + absolute_rate) *
+          dt_s;
+      g_car.line.right_angle_last_tick = sample_control_tick;
+    }
+
+    g_car.line.right_angle_previous_rate_dps = absolute_rate;
+    return 1U;
+  }
+
+  directed_rate = raw_rate *
+      (float)g_car.line.right_angle_gyro_polarity * (float)direction;
+  g_car.line.right_angle_directed_rate_dps = directed_rate;
+
+  if ((g_car.line.right_angle_angle_window_entered == 0U) &&
+      (g_car.line.right_angle_yaw_deg <
+       g_car.line.right_angle_center_min_deg) &&
+      (directed_rate <= -CAR_RIGHT_ANGLE_DIRECTION_RATE_DPS))
+  {
+    if (g_car.line.right_angle_direction_confirm_count <
+        CAR_RIGHT_ANGLE_DIRECTION_CONFIRM)
+    {
+      g_car.line.right_angle_direction_confirm_count++;
+    }
+
+    if (g_car.line.right_angle_direction_confirm_count >=
+        CAR_RIGHT_ANGLE_DIRECTION_CONFIRM)
+    {
+      g_car.line.right_angle_fault = CAR_RIGHT_ANGLE_FAULT_DIRECTION;
+    }
+  }
+  else
+  {
+    g_car.line.right_angle_direction_confirm_count = 0U;
+  }
+
+  if (sample_control_tick != g_car.line.right_angle_last_tick)
+  {
+    uint32_t delta_ticks =
+        sample_control_tick - g_car.line.right_angle_last_tick;
+    float dt_s = ((float)delta_ticks *
+                  (float)g_car.control_period_ms) * 0.001f;
+
+    g_car.line.right_angle_yaw_deg +=
+        0.5f * (g_car.line.right_angle_previous_rate_dps + directed_rate) *
+        dt_s;
+    g_car.line.right_angle_last_tick = sample_control_tick;
+  }
+
+  g_car.line.right_angle_previous_rate_dps = directed_rate;
+
+  if ((g_car.line.right_angle_yaw_deg >=
+       g_car.line.right_angle_center_min_deg) &&
+      (g_car.line.right_angle_yaw_deg <=
+       (g_car.line.right_angle_target_deg +
+        CAR_RIGHT_ANGLE_TOLERANCE_DEG)) &&
+      (Car_AbsFloat(directed_rate) <= CAR_RIGHT_ANGLE_STABLE_RATE_DPS))
+  {
+    if (g_car.line.right_angle_stable_count <
+        CAR_RIGHT_ANGLE_STABLE_SAMPLES)
+    {
+      g_car.line.right_angle_stable_count++;
+    }
+  }
+  else
+  {
+    g_car.line.right_angle_stable_count = 0U;
+  }
+
+  return 1U;
+}
+
+static int32_t Car_RightAngleSpeedTarget(void)
+{
+  float angle_error =
+      g_car.line.right_angle_target_deg - g_car.line.right_angle_yaw_deg;
+  float output = (CAR_RIGHT_ANGLE_KP * angle_error) -
+      (CAR_RIGHT_ANGLE_KD * g_car.line.right_angle_directed_rate_dps);
+  int32_t target = 0;
+
+  if ((g_car.line.right_angle_yaw_deg >=
+       g_car.line.right_angle_center_min_deg) &&
+      (g_car.line.right_angle_yaw_deg <=
+       (g_car.line.right_angle_target_deg +
+        CAR_RIGHT_ANGLE_TOLERANCE_DEG)))
+  {
+    return 0;
+  }
+
+  if (output > (float)CAR_RIGHT_ANGLE_MAX_COUNTS)
+  {
+    output = (float)CAR_RIGHT_ANGLE_MAX_COUNTS;
+  }
+  else if (output < (float)-CAR_RIGHT_ANGLE_MAX_COUNTS)
+  {
+    output = (float)-CAR_RIGHT_ANGLE_MAX_COUNTS;
+  }
+
+  target = (int32_t)output;
+  if ((angle_error > CAR_RIGHT_ANGLE_TOLERANCE_DEG) &&
+      (target < CAR_RIGHT_ANGLE_MIN_COUNTS))
+  {
+    target = CAR_RIGHT_ANGLE_MIN_COUNTS;
+  }
+  else if ((angle_error < -CAR_RIGHT_ANGLE_TOLERANCE_DEG) &&
+           (target > -CAR_RIGHT_ANGLE_MIN_COUNTS))
+  {
+    target = -CAR_RIGHT_ANGLE_MIN_COUNTS;
+  }
+
+  return target;
 }
 
 static void Car_RightAngleAssistUpdateCooldown(void)
@@ -1276,9 +1618,16 @@ static uint8_t Car_RightAngleRecoveryStep(int16_t *left_pwm, int16_t *right_pwm)
 static uint8_t Car_RightAngleAssistStep(int16_t *left_pwm, int16_t *right_pwm)
 {
   int32_t outer_target = 0;
-  uint8_t safety_stop = 0U;
 
   Car_RightAngleAssistUpdateCooldown();
+
+  if (g_car.line.right_angle_fault != CAR_RIGHT_ANGLE_FAULT_NONE)
+  {
+    Car_RightAngleFaultStop(g_car.line.right_angle_fault,
+                            left_pwm,
+                            right_pwm);
+    return 1U;
+  }
 
   if (g_car.line.right_angle_state == CAR_RIGHT_ANGLE_STATE_RECOVER)
   {
@@ -1311,50 +1660,72 @@ static uint8_t Car_RightAngleAssistStep(int16_t *left_pwm, int16_t *right_pwm)
     }
   }
 
-  if ((g_mpu6050.present != 0U) && (g_mpu6050.valid != 0U))
+  if ((g_mpu6050.present == 0U) || (g_mpu6050.valid == 0U))
   {
-    uint32_t delta_ticks =
-        g_car.control_tick - g_car.line.right_angle_last_tick;
-    float dt_s = ((float)delta_ticks *
-                  (float)g_car.control_period_ms) * 0.001f;
-    float gyro = Car_AbsFloat(g_car.line.gyro_z);
-
-    if (gyro < g_car.line.right_angle_gyro_deadband_dps)
-    {
-      gyro = 0.0f;
-    }
-
-    g_car.line.right_angle_yaw_deg += gyro * dt_s;
+    Car_RightAngleFaultStop(CAR_RIGHT_ANGLE_FAULT_MPU_UNAVAILABLE,
+                            left_pwm,
+                            right_pwm);
+    return 1U;
   }
-  g_car.line.right_angle_last_tick = g_car.control_tick;
 
-  if ((g_mpu6050.present != 0U) &&
-      (g_mpu6050.valid != 0U) &&
-      (g_car.line.right_angle_target_deg > 0.0f) &&
-      (g_car.line.right_angle_yaw_deg >=
-       g_car.line.right_angle_target_deg))
+  if ((g_car.control_tick - g_mpu6050.last_success_control_tick) >=
+      CAR_RIGHT_ANGLE_DATA_TIMEOUT_TICKS)
   {
-    safety_stop = 1U;
+    Car_RightAngleFaultStop(CAR_RIGHT_ANGLE_FAULT_DATA_TIMEOUT,
+                            left_pwm,
+                            right_pwm);
+    return 1U;
   }
 
   if ((g_car.line.right_angle_timeout_ticks > 0U) &&
       ((g_car.control_tick - g_car.line.right_angle_start_tick) >=
        g_car.line.right_angle_timeout_ticks))
   {
-    safety_stop = 1U;
+    Car_RightAngleFaultStop(CAR_RIGHT_ANGLE_FAULT_TURN_TIMEOUT,
+                            left_pwm,
+                            right_pwm);
+    return 1U;
   }
 
-  if (safety_stop != 0U)
-  {
-    if (g_line.line_seen != 0U)
-    {
-      Car_RightAngleAssistStop();
-      return 0U;
-    }
+  (void)Car_RightAngleConsumeGyroSample();
 
-    g_car.line.correction_counts = 0;
-    Car_RightAngleSetTargets(0, 0, left_pwm, right_pwm);
-    Car_RightAngleAssistStop();
+  if (g_car.line.right_angle_fault != CAR_RIGHT_ANGLE_FAULT_NONE)
+  {
+    Car_RightAngleFaultStop(g_car.line.right_angle_fault,
+                            left_pwm,
+                            right_pwm);
+    return 1U;
+  }
+
+  if (g_car.line.right_angle_yaw_deg >
+      CAR_RIGHT_ANGLE_ABSOLUTE_LIMIT_DEG)
+  {
+    Car_RightAngleFaultStop(CAR_RIGHT_ANGLE_FAULT_ANGLE_LIMIT,
+                            left_pwm,
+                            right_pwm);
+    return 1U;
+  }
+
+  if ((g_car.line.right_angle_angle_window_entered == 0U) &&
+      (g_car.line.right_angle_yaw_deg >=
+       g_car.line.right_angle_center_min_deg))
+  {
+    g_car.line.right_angle_angle_window_entered = 1U;
+    g_car.line.right_angle_line_wait_ticks = 0U;
+  }
+  else if ((g_car.line.right_angle_angle_window_entered != 0U) &&
+           (g_car.line.right_angle_line_wait_ticks < UINT32_MAX))
+  {
+    g_car.line.right_angle_line_wait_ticks++;
+  }
+
+  if ((g_car.line.right_angle_angle_window_entered != 0U) &&
+      (g_car.line.right_angle_line_wait_ticks >=
+       CAR_RIGHT_ANGLE_LINE_WAIT_TICKS))
+  {
+    Car_RightAngleFaultStop(CAR_RIGHT_ANGLE_FAULT_LINE_NOT_FOUND,
+                            left_pwm,
+                            right_pwm);
     return 1U;
   }
 
@@ -1397,7 +1768,9 @@ static uint8_t Car_RightAngleAssistStep(int16_t *left_pwm, int16_t *right_pwm)
       confirm_ticks = 1U;
     }
 
-    if (Car_RightAngleNewLineSeen() != 0U)
+    if ((g_car.line.right_angle_stable_count >=
+         CAR_RIGHT_ANGLE_STABLE_SAMPLES) &&
+        (Car_RightAngleNewLineSeen() != 0U))
     {
       if (g_car.line.right_angle_center_seen_count < confirm_ticks)
       {
@@ -1416,20 +1789,13 @@ static uint8_t Car_RightAngleAssistStep(int16_t *left_pwm, int16_t *right_pwm)
     }
   }
 
-  outer_target = g_car.line.right_angle_base_counts +
-      g_car.line.right_angle_turn_counts;
-  outer_target = Car_LimitTargetCounts(outer_target);
+  outer_target = Car_RightAngleSpeedTarget();
   g_car.line.correction_counts =
       ((int32_t)g_car.line.right_angle_assist_direction) * outer_target;
-
-  if (g_car.line.right_angle_assist_direction > 0)
-  {
-    Car_RightAngleSetTargets(0, outer_target, left_pwm, right_pwm);
-  }
-  else
-  {
-    Car_RightAngleSetTargets(outer_target, 0, left_pwm, right_pwm);
-  }
+  Car_RightAngleSetPivotTarget(g_car.line.right_angle_assist_direction,
+                               outer_target,
+                               left_pwm,
+                               right_pwm);
 
   return 1U;
 }

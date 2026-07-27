@@ -23,7 +23,8 @@
 #define MPU6050_WHO_AM_I_VALUE       0x68U
 #define MPU6050_GYRO_LSB_PER_DPS     131.0f
 #define MPU6050_FILTER_ALPHA         0.30f
-#define MPU6050_CALIBRATION_SAMPLES  64U
+#define MPU6050_CALIBRATION_SAMPLES  100U
+#define MPU6050_CALIBRATION_DELAY_CYCLES (CPUCLK_FREQ / 100U)
 
 volatile Mpu6050_t g_mpu6050 =
 {
@@ -35,6 +36,7 @@ volatile Mpu6050_t g_mpu6050 =
   .gyro_z_filtered_dps = 0.0f,
   .gyro_z_bias_dps = 0.0f,
   .sample_tick = 0U,
+  .last_success_control_tick = 0U,
   .error_count = 0U,
 };
 
@@ -59,6 +61,7 @@ void MPU6050_Init(void)
   g_mpu6050.valid = 0U;
   g_mpu6050.gyro_z_bias_dps = 0.0f;
   g_mpu6050.sample_tick = 0U;
+  g_mpu6050.last_success_control_tick = g_car.control_tick;
   g_mpu6050.error_count = 0U;
   s_last_sample_tick = g_car.control_tick;
 
@@ -137,21 +140,24 @@ void MPU6050_Calibrate(void)
   {
     int16_t raw = 0;
 
+    delay_cycles(MPU6050_CALIBRATION_DELAY_CYCLES);
+
     if (MPU6050_ReadGyroZRaw(&raw))
     {
       sum += (float)raw / MPU6050_GYRO_LSB_PER_DPS;
       valid_count++;
+      g_mpu6050.gyro_z_raw = raw;
+      g_mpu6050.last_success_control_tick = g_car.control_tick;
+      g_mpu6050.sample_tick++;
     }
     else
     {
       MPU6050_MarkError();
       break;
     }
-
-    delay_cycles(32000U);
   }
 
-  if (valid_count > 0U)
+  if (valid_count == MPU6050_CALIBRATION_SAMPLES)
   {
     g_mpu6050.gyro_z_bias_dps = sum / (float)valid_count;
     g_mpu6050.gyro_z_filtered_dps = 0.0f;
@@ -237,6 +243,7 @@ static void MPU6050_UpdateGyro(int16_t raw)
       MPU6050_FILTER_ALPHA * (gyro - g_mpu6050.gyro_z_filtered_dps);
   g_mpu6050.valid = 1U;
   g_mpu6050.present = 1U;
-  g_mpu6050.sample_tick++;
   g_car.line.gyro_z = g_mpu6050.gyro_z_filtered_dps;
+  g_mpu6050.last_success_control_tick = g_car.control_tick;
+  g_mpu6050.sample_tick++;
 }

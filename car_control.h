@@ -40,6 +40,17 @@ typedef enum
   CAR_RIGHT_ANGLE_STATE_RECOVER = 4
 } CarRightAngleState_t;
 
+typedef enum
+{
+  CAR_RIGHT_ANGLE_FAULT_NONE = 0,
+  CAR_RIGHT_ANGLE_FAULT_MPU_UNAVAILABLE = 1,
+  CAR_RIGHT_ANGLE_FAULT_DATA_TIMEOUT = 2,
+  CAR_RIGHT_ANGLE_FAULT_DIRECTION = 3,
+  CAR_RIGHT_ANGLE_FAULT_ANGLE_LIMIT = 4,
+  CAR_RIGHT_ANGLE_FAULT_LINE_NOT_FOUND = 5,
+  CAR_RIGHT_ANGLE_FAULT_TURN_TIMEOUT = 6
+} CarRightAngleFault_t;
+
 typedef struct
 {
   float kp;
@@ -76,6 +87,8 @@ typedef struct
   float gyro_z;
   float gyro_damping;
   float right_angle_yaw_deg;
+  float right_angle_directed_rate_dps;
+  float right_angle_previous_rate_dps;
   float right_angle_target_deg;
   float right_angle_center_min_deg;
   float right_angle_gyro_deadband_dps;
@@ -88,10 +101,13 @@ typedef struct
   int32_t right_angle_approach_start_right_total;
   uint32_t right_angle_start_tick;
   uint32_t right_angle_last_tick;
+  uint32_t right_angle_last_sample_tick;
+  uint32_t right_angle_line_wait_ticks;
   uint32_t right_angle_timeout_ticks;
   uint32_t right_angle_approach_start_tick;
   uint32_t right_angle_approach_timeout_ticks;
   CarRightAngleState_t right_angle_state;
+  CarRightAngleFault_t right_angle_fault;
   uint8_t right_angle_assist_enable;
   uint8_t right_angle_assist_active;
   uint8_t right_angle_approach_active;
@@ -104,6 +120,12 @@ typedef struct
   uint8_t right_angle_old_line_clear_count;
   uint8_t right_angle_old_line_clear_confirm_ticks;
   uint8_t right_angle_center_seen_count;
+  uint8_t right_angle_stable_count;
+  uint8_t right_angle_angle_window_entered;
+  uint8_t right_angle_direction_confirm_count;
+  uint8_t right_angle_direction_verified;
+  int8_t right_angle_gyro_polarity;
+  int8_t right_angle_polarity_candidate;
   uint8_t right_angle_cooldown_center_count;
   uint8_t right_angle_center_confirm_ticks;
   uint8_t right_angle_recovery_count;

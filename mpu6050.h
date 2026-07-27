@@ -21,6 +21,7 @@ typedef struct
   float gyro_z_filtered_dps;
   float gyro_z_bias_dps;
   uint32_t sample_tick;
+  uint32_t last_success_control_tick;
   uint32_t error_count;
 } Mpu6050_t;
 
