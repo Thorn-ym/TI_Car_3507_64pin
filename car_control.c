@@ -197,7 +197,6 @@ static void Car_RightAngleAssistStart(int8_t direction);
 static void Car_RightAngleAssistStop(void);
 static void Car_RightAngleAssistUpdateCooldown(void);
 static int8_t Car_RightAngleDetectStep(void);
-static void Car_RightAngleRecoveryStart(void);
 static uint8_t Car_RightAngleRecoveryStep(int16_t *left_pwm, int16_t *right_pwm);
 static uint8_t Car_RightAngleAssistStep(int16_t *left_pwm, int16_t *right_pwm);
 static void Car_UpdateLeftEncoder(volatile CarMotor_t *motor);
@@ -209,7 +208,8 @@ static void Car_ApplyMotor(volatile CarMotor_t *motor,
                            GPIO_Regs *in1_port,
                            uint32_t in1_pin,
                            GPIO_Regs *in2_port,
-                           uint32_t in2_pin);
+                           uint32_t in2_pin,
+                           uint8_t short_brake);
 static uint8_t Car_ReadRightEncoderState(void);
 static void Car_UpdateRightEncoderCount(void);
 
@@ -242,6 +242,8 @@ void Car_ControlStep(void)
 {
   int16_t left_pwm = 0;
   int16_t right_pwm = 0;
+  uint8_t left_short_brake = 0U;
+  uint8_t right_short_brake = 0U;
 
   g_car.control_tick++;
 
@@ -321,18 +323,36 @@ void Car_ControlStep(void)
     Car_SetDriverEnable(1U);
   }
 
+  if ((g_car.mode == CAR_MODE_LINE_FOLLOW) &&
+      (g_car.line.right_angle_assist_active != 0U) &&
+      ((g_car.line.right_angle_state ==
+        CAR_RIGHT_ANGLE_STATE_LEAVE_OLD_LINE) ||
+       (g_car.line.right_angle_state ==
+        CAR_RIGHT_ANGLE_STATE_FIND_NEW_LINE)))
+  {
+    if (g_car.line.right_angle_assist_direction > 0)
+    {
+      left_short_brake = 1U;
+    }
+    else if (g_car.line.right_angle_assist_direction < 0)
+    {
+      right_short_brake = 1U;
+    }
+  }
   Car_ApplyMotor(&g_car.left,
                  GPIO_PWM_0_C0_IDX,
                  GPIO_MOTOR_PORT,
                  GPIO_MOTOR_AIN1_PIN,
                  GPIO_MOTOR_PORT,
-                 GPIO_MOTOR_AIN2_PIN);
+                 GPIO_MOTOR_AIN2_PIN,
+                 left_short_brake);
   Car_ApplyMotor(&g_car.right,
                  GPIO_PWM_0_C1_IDX,
                  GPIO_MOTOR_PORT,
                  GPIO_MOTOR_BIN1_PIN,
                  GPIO_MOTOR_PORT,
-                 GPIO_MOTOR_BIN2_PIN);
+                 GPIO_MOTOR_BIN2_PIN,
+                 right_short_brake);
 }
 
 void Car_Stop(void)
@@ -352,13 +372,15 @@ void Car_Stop(void)
                  GPIO_MOTOR_PORT,
                  GPIO_MOTOR_AIN1_PIN,
                  GPIO_MOTOR_PORT,
-                 GPIO_MOTOR_AIN2_PIN);
+                 GPIO_MOTOR_AIN2_PIN,
+                 0U);
   Car_ApplyMotor(&g_car.right,
                  GPIO_PWM_0_C1_IDX,
                  GPIO_MOTOR_PORT,
                  GPIO_MOTOR_BIN1_PIN,
                  GPIO_MOTOR_PORT,
-                 GPIO_MOTOR_BIN2_PIN);
+                 GPIO_MOTOR_BIN2_PIN,
+                 0U);
 }
 
 void Car_StartLineFollow(void)
@@ -1224,15 +1246,6 @@ static int8_t Car_RightAngleDetectStep(void)
   return 0;
 }
 
-static void Car_RightAngleRecoveryStart(void)
-{
-  g_car.line.right_angle_state = CAR_RIGHT_ANGLE_STATE_RECOVER;
-  g_car.line.right_angle_recovery_count = 0U;
-  Car_ResetLinePid();
-  Car_ResetPid(&g_car.left);
-  Car_ResetPid(&g_car.right);
-}
-
 static uint8_t Car_RightAngleRecoveryStep(int16_t *left_pwm, int16_t *right_pwm)
 {
   int32_t base = g_car.line.right_angle_recovery_speed_counts;
@@ -1411,8 +1424,10 @@ static uint8_t Car_RightAngleAssistStep(int16_t *left_pwm, int16_t *right_pwm)
 
     if (g_car.line.right_angle_center_seen_count >= confirm_ticks)
     {
-      Car_RightAngleRecoveryStart();
-      return Car_RightAngleRecoveryStep(left_pwm, right_pwm);
+      g_car.line.correction_counts = 0;
+      Car_RightAngleSetTargets(0, 0, left_pwm, right_pwm);
+      Car_RightAngleAssistStop();
+      return 1U;
     }
   }
 
@@ -1495,7 +1510,8 @@ static void Car_ApplyMotor(volatile CarMotor_t *motor,
                            GPIO_Regs *in1_port,
                            uint32_t in1_pin,
                            GPIO_Regs *in2_port,
-                           uint32_t in2_pin)
+                           uint32_t in2_pin,
+                           uint8_t short_brake)
 {
   int16_t pwm = motor->pwm_output;
   uint32_t duty = 0U;
@@ -1518,6 +1534,12 @@ static void Car_ApplyMotor(volatile CarMotor_t *motor,
     duty = (uint32_t)(-pwm);
   }
 
+  if (short_brake != 0U)
+  {
+    in1 = 1U;
+    in2 = 1U;
+    duty = 0U;
+  }
   if (g_car.mode == CAR_MODE_DISABLED)
   {
     in1 = 0U;
