@@ -8,15 +8,17 @@
 /* USER CODE END Header */
 
 #include "debug_uart.h"
+#include "app_config.h"
 #include "car_control.h"
 #include "line_tracker.h"
 #include "mpu6050.h"
+#include "oled_ssd1306.h"
 #include "ti_msp_dl_config.h"
 
 #include <stddef.h>
 #include <stdint.h>
 
-#define DEBUG_UART_RX_BUFFER_SIZE    128U
+#define DEBUG_UART_RX_BUFFER_SIZE    2048U
 #define DEBUG_UART_LINE_BUFFER_SIZE  96U
 #define DEBUG_UART_VOFA_PERIOD_TICKS 5U
 #define DEBUG_UART_VOFA_MODE_TEST    0U
@@ -31,6 +33,7 @@
 static volatile uint8_t s_rx_buffer[DEBUG_UART_RX_BUFFER_SIZE];
 static volatile uint16_t s_rx_head = 0U;
 static volatile uint16_t s_rx_tail = 0U;
+static volatile uint8_t s_rx_overflow = 0U;
 
 static char s_line_buffer[DEBUG_UART_LINE_BUFFER_SIZE];
 static uint16_t s_line_length = 0U;
@@ -39,6 +42,12 @@ static uint32_t s_last_vofa_tick = 0U;
 static uint8_t s_vofa_stream_enabled = 0U;
 static uint8_t s_vofa_mode = DEBUG_UART_VOFA_MODE_TEST;
 
+static char s_terminal_rows[OLED_BLUETOOTH_DATA_ROWS][OLED_TEXT_COLUMNS + 1U];
+static char s_terminal_line[OLED_TEXT_COLUMNS + 1U];
+static uint8_t s_terminal_line_length = 0U;
+static uint8_t s_terminal_last_was_cr = 0U;
+static uint8_t s_terminal_dirty = 0U;
+
 static uint16_t Debug_UART_NextIndex(uint16_t index, uint16_t size);
 static uint32_t Debug_UART_EnterCritical(void);
 static void Debug_UART_ExitCritical(uint32_t primask);
@@ -46,6 +55,12 @@ static void Debug_UART_SendTextBuffer(const char *text, uint16_t length);
 static void Debug_UART_SendTextIfAllowed(const char *text, uint16_t length);
 static void Debug_UART_RxPushFromIsr(uint8_t byte);
 static uint8_t Debug_UART_RxPop(uint8_t *byte);
+static uint8_t Debug_UART_TakeRxOverflow(void);
+static void Debug_UART_TerminalReset(void);
+static void Debug_UART_TerminalCommit(const char *line, uint8_t length);
+static void Debug_UART_TerminalCommitCurrent(void);
+static void Debug_UART_TerminalHandleByte(uint8_t byte);
+static void Debug_UART_ProcessDisplayRx(void);
 static uint8_t Debug_UART_IsSpace(char ch);
 static char Debug_UART_ToUpper(char ch);
 static const char *Debug_UART_SkipSpaces(const char *text);
@@ -86,11 +101,19 @@ void Debug_UART_Init(void)
 #else
   s_rx_head = 0U;
   s_rx_tail = 0U;
+  s_rx_overflow = 0U;
   s_line_length = 0U;
   s_line_overflow = 0U;
   s_last_vofa_tick = g_car.control_tick;
   s_vofa_stream_enabled = 0U;
   s_vofa_mode = DEBUG_UART_VOFA_MODE_TEST;
+
+  if (APP_DISPLAY_MODE == APP_DISPLAY_MODE_BLUETOOTH_RX)
+  {
+    Debug_UART_TerminalReset();
+    OLED_DrawBluetoothRx(s_terminal_rows);
+    s_terminal_dirty = 0U;
+  }
 
   DL_UART_Main_disableFIFOs(UART_DEBUG_INST);
   DL_UART_Main_disableInterrupt(UART_DEBUG_INST,
@@ -115,6 +138,11 @@ void Debug_UART_Task(void)
   return;
 #else
   Debug_UART_ProcessRx();
+
+  if (APP_DISPLAY_MODE == APP_DISPLAY_MODE_BLUETOOTH_RX)
+  {
+    return;
+  }
 
 #if (CAR_DEBUG_MODE != DEBUG_MODE_VOFA)
   return;
@@ -160,6 +188,12 @@ void Debug_UART_ProcessRx(void)
   return;
 #else
   uint8_t byte = 0U;
+
+  if (APP_DISPLAY_MODE == APP_DISPLAY_MODE_BLUETOOTH_RX)
+  {
+    Debug_UART_ProcessDisplayRx();
+    return;
+  }
 
   while (Debug_UART_RxPop(&byte) != 0U)
   {
@@ -417,6 +451,10 @@ static void Debug_UART_RxPushFromIsr(uint8_t byte)
     s_rx_buffer[s_rx_head] = byte;
     s_rx_head = next;
   }
+  else
+  {
+    s_rx_overflow = 1U;
+  }
 }
 
 static uint8_t Debug_UART_RxPop(uint8_t *byte)
@@ -438,6 +476,136 @@ static uint8_t Debug_UART_RxPop(uint8_t *byte)
   return 1U;
 }
 
+static uint8_t Debug_UART_TakeRxOverflow(void)
+{
+  uint32_t primask = Debug_UART_EnterCritical();
+  uint8_t overflow = s_rx_overflow;
+
+  s_rx_overflow = 0U;
+  Debug_UART_ExitCritical(primask);
+  return overflow;
+}
+
+static void Debug_UART_TerminalReset(void)
+{
+  uint8_t row = 0U;
+
+  for (row = 0U; row < OLED_BLUETOOTH_DATA_ROWS; row++)
+  {
+    uint8_t col = 0U;
+
+    for (col = 0U; col < OLED_TEXT_COLUMNS; col++)
+    {
+      s_terminal_rows[row][col] = ' ';
+    }
+    s_terminal_rows[row][OLED_TEXT_COLUMNS] = '\0';
+  }
+
+  s_terminal_line[0] = '\0';
+  s_terminal_line_length = 0U;
+  s_terminal_last_was_cr = 0U;
+  s_terminal_dirty = 1U;
+}
+
+static void Debug_UART_TerminalCommit(const char *line, uint8_t length)
+{
+  uint8_t row = 0U;
+  uint8_t col = 0U;
+
+  for (row = 0U; row < (OLED_BLUETOOTH_DATA_ROWS - 1U); row++)
+  {
+    for (col = 0U; col <= OLED_TEXT_COLUMNS; col++)
+    {
+      s_terminal_rows[row][col] = s_terminal_rows[row + 1U][col];
+    }
+  }
+
+  row = OLED_BLUETOOTH_DATA_ROWS - 1U;
+  for (col = 0U; col < OLED_TEXT_COLUMNS; col++)
+  {
+    s_terminal_rows[row][col] = ' ';
+  }
+
+  if (length > OLED_TEXT_COLUMNS)
+  {
+    length = OLED_TEXT_COLUMNS;
+  }
+  for (col = 0U; col < length; col++)
+  {
+    s_terminal_rows[row][col] = line[col];
+  }
+  s_terminal_rows[row][OLED_TEXT_COLUMNS] = '\0';
+  s_terminal_dirty = 1U;
+}
+
+static void Debug_UART_TerminalCommitCurrent(void)
+{
+  Debug_UART_TerminalCommit(s_terminal_line, s_terminal_line_length);
+  s_terminal_line_length = 0U;
+  s_terminal_line[0] = '\0';
+}
+
+static void Debug_UART_TerminalHandleByte(uint8_t byte)
+{
+  if (byte == (uint8_t)'\r')
+  {
+    Debug_UART_TerminalCommitCurrent();
+    s_terminal_last_was_cr = 1U;
+    return;
+  }
+
+  if (byte == (uint8_t)'\n')
+  {
+    if (s_terminal_last_was_cr == 0U)
+    {
+      Debug_UART_TerminalCommitCurrent();
+    }
+    s_terminal_last_was_cr = 0U;
+    return;
+  }
+
+  s_terminal_last_was_cr = 0U;
+  if (s_terminal_line_length >= OLED_TEXT_COLUMNS)
+  {
+    Debug_UART_TerminalCommitCurrent();
+  }
+
+  if ((byte < 0x20U) || (byte > 0x7EU))
+  {
+    byte = (uint8_t)'.';
+  }
+
+  s_terminal_line[s_terminal_line_length] = (char)byte;
+  s_terminal_line_length++;
+  s_terminal_line[s_terminal_line_length] = '\0';
+}
+
+static void Debug_UART_ProcessDisplayRx(void)
+{
+  static const char overflow_text[] = "RX OVERFLOW";
+  uint8_t byte = 0U;
+
+  while (Debug_UART_RxPop(&byte) != 0U)
+  {
+    Debug_UART_TerminalHandleByte(byte);
+  }
+
+  if (Debug_UART_TakeRxOverflow() != 0U)
+  {
+    if (s_terminal_line_length > 0U)
+    {
+      Debug_UART_TerminalCommitCurrent();
+    }
+    Debug_UART_TerminalCommit(
+        overflow_text, (uint8_t)(sizeof(overflow_text) - 1U));
+  }
+
+  if (s_terminal_dirty != 0U)
+  {
+    OLED_DrawBluetoothRx(s_terminal_rows);
+    s_terminal_dirty = 0U;
+  }
+}
 static uint8_t Debug_UART_IsSpace(char ch)
 {
   return ((ch == ' ') || (ch == '\t')) ? 1U : 0U;

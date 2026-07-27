@@ -152,9 +152,9 @@ extern "C" {
 #define GPIO_UART_DEBUG_IOMUX_TX                                 (IOMUX_PINCM19)
 #define GPIO_UART_DEBUG_IOMUX_RX_FUNC                  IOMUX_PINCM20_PF_UART1_RX
 #define GPIO_UART_DEBUG_IOMUX_TX_FUNC                  IOMUX_PINCM19_PF_UART1_TX
-#define UART_DEBUG_BAUD_RATE                                              (9600)
-#define UART_DEBUG_IBRD_32_MHZ_9600_BAUD                                   (208)
-#define UART_DEBUG_FBRD_32_MHZ_9600_BAUD                                    (21)
+#define UART_DEBUG_BAUD_RATE                                            (115200)
+#define UART_DEBUG_IBRD_32_MHZ_115200_BAUD                                  (17)
+#define UART_DEBUG_FBRD_32_MHZ_115200_BAUD                                  (23)
 
 
 

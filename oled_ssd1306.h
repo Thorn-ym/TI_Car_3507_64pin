@@ -13,6 +13,8 @@ extern "C" {
 
 #define OLED_WIDTH  128U
 #define OLED_HEIGHT 64U
+#define OLED_TEXT_COLUMNS 21U
+#define OLED_BLUETOOTH_DATA_ROWS 7U
 
 typedef struct
 {
@@ -32,6 +34,8 @@ void OLED_DrawAscii(uint8_t x, uint8_t page, const char *text);
 void OLED_DrawChinese(uint8_t x, uint8_t page, uint8_t glyph_id);
 void OLED_DrawProblemSelect(uint8_t problem);
 void OLED_DrawProblemSelected(uint8_t problem);
+void OLED_DrawBluetoothRx(
+    const char rows[OLED_BLUETOOTH_DATA_ROWS][OLED_TEXT_COLUMNS + 1U]);
 
 #ifdef __cplusplus
 }

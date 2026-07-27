@@ -84,8 +84,8 @@ empty.o: ../empty.c \
  F:/TI/mspm0_sdk_2_10_00_04/source/ti/driverlib/dl_wwdt.h \
  F:/TI/mspm0_sdk_2_10_00_04/source/ti/driverlib/m0p/dl_interrupt.h \
  F:/TI/mspm0_sdk_2_10_00_04/source/ti/driverlib/m0p/dl_systick.h \
- ../car_control.h ../debug_uart.h ../ec11_encoder.h ../line_tracker.h \
- ../mpu6050.h ../oled_ssd1306.h ../problem_menu.h
+ ../app_config.h ../car_control.h ../debug_uart.h ../ec11_encoder.h \
+ ../line_tracker.h ../mpu6050.h ../oled_ssd1306.h ../problem_menu.h
 ti_msp_dl_config.h:
 F:/TI/mspm0_sdk_2_10_00_04/source/ti/devices/msp/msp.h:
 F:/TI/mspm0_sdk_2_10_00_04/source/ti/devices/DeviceFamily.h:
@@ -169,6 +169,7 @@ F:/TI/mspm0_sdk_2_10_00_04/source/ti/driverlib/dl_vref.h:
 F:/TI/mspm0_sdk_2_10_00_04/source/ti/driverlib/dl_wwdt.h:
 F:/TI/mspm0_sdk_2_10_00_04/source/ti/driverlib/m0p/dl_interrupt.h:
 F:/TI/mspm0_sdk_2_10_00_04/source/ti/driverlib/m0p/dl_systick.h:
+../app_config.h:
 ../car_control.h:
 ../debug_uart.h:
 ../ec11_encoder.h:

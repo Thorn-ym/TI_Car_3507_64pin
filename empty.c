@@ -3,6 +3,7 @@
  */
 
 #include "ti_msp_dl_config.h"
+#include "app_config.h"
 #include "car_control.h"
 #include "debug_uart.h"
 #include "ec11_encoder.h"
@@ -20,7 +21,9 @@ int main(void)
     Car_Init();
     OLED_Init();
     MPU6050_Init();
+#if (APP_DISPLAY_MODE == APP_DISPLAY_MODE_PROBLEM_SELECT)
     ProblemMenu_Init();
+#endif
     Debug_UART_Init();
 
     g_car.left.pid.kp = 180;
@@ -43,7 +46,9 @@ int main(void)
         MPU6050_Task();
         OLED_Task(g_car.control_tick);
         EC11_Task();
+#if (APP_DISPLAY_MODE == APP_DISPLAY_MODE_PROBLEM_SELECT)
         ProblemMenu_Task();
+#endif
         Debug_UART_Task();
         __WFI();
     }

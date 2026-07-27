@@ -150,10 +150,31 @@ EC11 的 A、B 和 SW 均按低电平有效处理，并在软件中进行旋转�
 |---|---|---|
 | TXD | PA9 | 接 MCU `UART1_RX` |
 | RXD | PA8 | 接 MCU `UART1_TX` |
-| VCC | 3.3V | 按模块要求供电 |
+| VCC | 3.3V-5V | 手册建议使用 5V 供电 |
 | GND | GND | 与开发板共地 |
 
-模块 TXD 与 MCU RX 交叉连接，模块 RXD 与 MCU TX 交叉连接。建议默认使用 `9600-8-N-1`，不启用硬件流控。
+模块 TXD 与 MCU RX 交叉连接，模块 RXD 与 MCU TX 交叉连接。通信引脚电平为 3.3V。建议默认使用 `115200-8-N-1`，不启用硬件流控。
+
+### OLED 蓝牙接收测试模式
+
+应用显示模式在 `app_config.h` 中通过 `APP_DISPLAY_MODE` 选择：
+
+```c
+#define APP_DISPLAY_MODE APP_DISPLAY_MODE_BLUETOOTH_RX
+```
+
+- `APP_DISPLAY_MODE_BLUETOOTH_RX`：默认测试模式。OLED 首行显示 `BT RX 115200 8N1`，其余七行显示 UART1 接收的可打印 ASCII 文本。
+- `APP_DISPLAY_MODE_PROBLEM_SELECT`：恢复原有 EC11 选题和题号显示界面。
+
+蓝牙测试模式仅显示收到的数据，不执行 `STOP`、`START`、PID 或 VOFA 等调试命令，也不主动发送遥测数据，因此不会通过串口修改小车控制状态。循迹控制仍由原定时器中断独立运行。
+
+电脑端测试步骤：
+
+1. HC-05 使用透明传输从机模式，正常通信波特率为 `115200`；AT 配置模式使用的 `38400` 不适用于本测试。
+2. 电脑与模块配对，默认名称为 `HC-05`、默认配对码为 `1234`，然后打开对应的经典蓝牙 SPP 串口。
+3. 串口助手选择 `115200 / 8 数据位 / 1 停止位 / 无校验 / 无流控`，并勾选发送新行。
+4. 发送 `Hello 123`。收到 CR、LF 或 CRLF 后，OLED 提交一行；每行最多 21 个字符，超长文本自动换行，超过七行后向上滚动。
+5. 不可打印字节显示为 `.`；接收环形缓冲区来不及处理时显示 `RX OVERFLOW`。
 
 ### 预留 UART2 与 UART3
 
