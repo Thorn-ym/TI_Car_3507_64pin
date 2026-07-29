@@ -169,6 +169,12 @@ extern "C" {
 /* Defines for SDA: GPIOA.1 with pinCMx 2 on package pin 34 */
 #define GPIO_OLED_SDA_PIN                                        (DL_GPIO_PIN_1)
 #define GPIO_OLED_SDA_IOMUX                                       (IOMUX_PINCM2)
+/* Port definition for Pin Group GPIO_KEY */
+#define GPIO_KEY_PORT                                                    (GPIOB)
+
+/* Defines for START: GPIOB.23 with pinCMx 51 on package pin 22 */
+#define GPIO_KEY_START_PIN                                      (DL_GPIO_PIN_23)
+#define GPIO_KEY_START_IOMUX                                     (IOMUX_PINCM51)
 /* Port definition for Pin Group GPIO_MOTOR */
 #define GPIO_MOTOR_PORT                                                  (GPIOA)
 
@@ -229,14 +235,9 @@ extern "C" {
 #define GPIO_EC11_PORT                                                   (GPIOA)
 
 /* Defines for A: GPIOA.14 with pinCMx 36 on package pin 7 */
-// pins affected by this interrupt request:["A","B"]
-#define GPIO_EC11_INT_IRQN                                      (GPIOA_INT_IRQn)
-#define GPIO_EC11_INT_IIDX                      (DL_INTERRUPT_GROUP1_IIDX_GPIOA)
-#define GPIO_EC11_A_IIDX                                    (DL_GPIO_IIDX_DIO14)
 #define GPIO_EC11_A_PIN                                         (DL_GPIO_PIN_14)
 #define GPIO_EC11_A_IOMUX                                        (IOMUX_PINCM36)
 /* Defines for B: GPIOA.15 with pinCMx 37 on package pin 8 */
-#define GPIO_EC11_B_IIDX                                    (DL_GPIO_IIDX_DIO15)
 #define GPIO_EC11_B_PIN                                         (DL_GPIO_PIN_15)
 #define GPIO_EC11_B_IOMUX                                        (IOMUX_PINCM37)
 /* Defines for SW: GPIOA.16 with pinCMx 38 on package pin 9 */

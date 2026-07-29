@@ -28,7 +28,8 @@ typedef enum
   CAR_MODE_DISABLED = 0,
   CAR_MODE_OPEN_LOOP = 1,
   CAR_MODE_SPEED_PID = 2,
-  CAR_MODE_LINE_FOLLOW = 3
+  CAR_MODE_LINE_FOLLOW = 3,
+  CAR_MODE_BRAKE_HOLD = 4
 } CarMode_t;
 
 typedef enum
@@ -128,6 +129,7 @@ extern volatile CarControl_t g_car;
 void Car_Init(void);
 void Car_ControlStep(void);
 void Car_Stop(void);
+void Car_BrakeHold(void);
 void Car_StartLineFollow(void);
 void Car_SetSpeedTargets(int32_t left_counts, int32_t right_counts);
 

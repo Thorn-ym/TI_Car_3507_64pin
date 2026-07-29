@@ -8,7 +8,7 @@
 /* USER CODE END Header */
 
 #include "car_control.h"
-#include "ec11_encoder.h"
+/* #include "ec11_encoder.h" */
 #include "line_tracker.h"
 #include "mpu6050.h"
 
@@ -232,12 +232,19 @@ void Car_Init(void)
 
   Car_Stop();
 
+  /* EC11 is unused, but its GPIO source shares the encoder IRQ group. */
+  DL_GPIO_disableInterrupt(
+      GPIO_EC11_PORT,
+      GPIO_EC11_A_PIN | GPIO_EC11_B_PIN);
+  DL_GPIO_clearInterruptStatus(
+      GPIO_EC11_PORT,
+      GPIO_EC11_A_PIN | GPIO_EC11_B_PIN);
+
   NVIC_EnableIRQ(GPIO_ENCODER_INT_IRQN);
-  NVIC_EnableIRQ(GPIO_EC11_INT_IRQN);
+  /* NVIC_EnableIRQ(GPIO_EC11_INT_IRQN); */
   NVIC_EnableIRQ(TIMER_CONTROL_INST_INT_IRQN);
   DL_TimerG_startCounter(TIMER_CONTROL_INST);
 }
-
 void Car_ControlStep(void)
 {
   int16_t left_pwm = 0;
@@ -300,6 +307,16 @@ void Car_ControlStep(void)
       }
       break;
 
+    case CAR_MODE_BRAKE_HOLD:
+      Car_RightAngleAssistStop();
+      Car_ResetLinePid();
+      Car_ResetPid(&g_car.left);
+      Car_ResetPid(&g_car.right);
+      left_pwm = 0;
+      right_pwm = 0;
+      left_short_brake = 1U;
+      right_short_brake = 1U;
+      break;
     case CAR_MODE_DISABLED:
     default:
       Car_RightAngleAssistStop();
@@ -358,12 +375,17 @@ void Car_ControlStep(void)
 void Car_Stop(void)
 {
   g_car.mode = CAR_MODE_DISABLED;
+  g_car.line.correction_counts = 0;
+  g_car.line.left_target_counts = 0;
+  g_car.line.right_target_counts = 0;
   g_car.left.target_counts = 0;
   g_car.right.target_counts = 0;
   g_car.left.manual_pwm = 0;
   g_car.right.manual_pwm = 0;
   g_car.left.pwm_output = 0;
   g_car.right.pwm_output = 0;
+  Car_RightAngleAssistStop();
+  Car_ResetLinePid();
   Car_ResetPid(&g_car.left);
   Car_ResetPid(&g_car.right);
   Car_SetDriverEnable(0U);
@@ -381,6 +403,38 @@ void Car_Stop(void)
                  GPIO_MOTOR_PORT,
                  GPIO_MOTOR_BIN2_PIN,
                  0U);
+}
+void Car_BrakeHold(void)
+{
+  Car_RightAngleAssistStop();
+  g_car.mode = CAR_MODE_BRAKE_HOLD;
+  g_car.line.correction_counts = 0;
+  g_car.line.left_target_counts = 0;
+  g_car.line.right_target_counts = 0;
+  g_car.left.target_counts = 0;
+  g_car.right.target_counts = 0;
+  g_car.left.manual_pwm = 0;
+  g_car.right.manual_pwm = 0;
+  g_car.left.pwm_output = 0;
+  g_car.right.pwm_output = 0;
+  Car_ResetLinePid();
+  Car_ResetPid(&g_car.left);
+  Car_ResetPid(&g_car.right);
+  Car_SetDriverEnable(1U);
+  Car_ApplyMotor(&g_car.left,
+                 GPIO_PWM_0_C0_IDX,
+                 GPIO_MOTOR_PORT,
+                 GPIO_MOTOR_AIN1_PIN,
+                 GPIO_MOTOR_PORT,
+                 GPIO_MOTOR_AIN2_PIN,
+                 1U);
+  Car_ApplyMotor(&g_car.right,
+                 GPIO_PWM_0_C1_IDX,
+                 GPIO_MOTOR_PORT,
+                 GPIO_MOTOR_BIN1_PIN,
+                 GPIO_MOTOR_PORT,
+                 GPIO_MOTOR_BIN2_PIN,
+                 1U);
 }
 
 void Car_StartLineFollow(void)
@@ -403,9 +457,9 @@ void GROUP1_IRQHandler(void)
   uint32_t gpiob = DL_GPIO_getEnabledInterruptStatus(
       GPIO_ENCODER_PORT,
       GPIO_ENCODER_E2A_PIN | GPIO_ENCODER_E2B_PIN);
-  uint32_t gpioa = DL_GPIO_getEnabledInterruptStatus(
-      GPIO_EC11_PORT,
-      GPIO_EC11_A_PIN | GPIO_EC11_B_PIN);
+  /* EC11 A/B interrupts are disabled in SysConfig for the H-task build. */
+  /* uint32_t gpioa = DL_GPIO_getEnabledInterruptStatus(
+      GPIO_EC11_PORT, GPIO_EC11_A_PIN | GPIO_EC11_B_PIN); */
 
   if ((gpiob & (GPIO_ENCODER_E2A_PIN | GPIO_ENCODER_E2B_PIN)) != 0U)
   {
@@ -415,13 +469,13 @@ void GROUP1_IRQHandler(void)
         gpiob & (GPIO_ENCODER_E2A_PIN | GPIO_ENCODER_E2B_PIN));
   }
 
-  if ((gpioa & (GPIO_EC11_A_PIN | GPIO_EC11_B_PIN)) != 0U)
+  /* if ((gpioa & (GPIO_EC11_A_PIN | GPIO_EC11_B_PIN)) != 0U)
   {
     EC11_HandleABInterrupt(gpioa);
     DL_GPIO_clearInterruptStatus(
         GPIO_EC11_PORT,
         gpioa & (GPIO_EC11_A_PIN | GPIO_EC11_B_PIN));
-  }
+  } */
 }
 
 static int16_t Car_LimitPwm(int32_t pwm)

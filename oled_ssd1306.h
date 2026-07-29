@@ -32,6 +32,7 @@ void OLED_DrawAscii(uint8_t x, uint8_t page, const char *text);
 void OLED_DrawChinese(uint8_t x, uint8_t page, uint8_t glyph_id);
 void OLED_DrawProblemSelect(uint8_t problem);
 void OLED_DrawProblemSelected(uint8_t problem);
+void OLED_DrawRaceTime(uint32_t centiseconds);
 
 #ifdef __cplusplus
 }

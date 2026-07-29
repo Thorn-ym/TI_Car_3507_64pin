@@ -12,10 +12,17 @@
 #define OLED_ADDR_LOW       0x3CU
 #define OLED_ADDR_HIGH      0x3DU
 #define OLED_BUFFER_SIZE    ((OLED_WIDTH * OLED_HEIGHT) / 8U)
+#define OLED_PAGE_COUNT     (OLED_HEIGHT / 8U)
 #define OLED_MENU_ITEM_COUNT 5U
 #define OLED_STARTUP_DELAY_CYCLES (CPUCLK_FREQ / 10U)
 #define OLED_SERVICE_INTERVAL_TICKS 50U
 #define OLED_CMD_NOP        0xE3U
+
+#define OLED_RACE_TIME_MAX_CENTISECONDS 9999U
+#define OLED_RACE_TIME_PAGE             3U
+#define OLED_RACE_TIME_X               28U
+#define OLED_RACE_TIME_DOT_WIDTH        8U
+#define OLED_RACE_TIME_WIDTH           72U
 
 #define OLED_GLYPH_XUAN     0U
 #define OLED_GLYPH_ZE       1U
@@ -162,6 +169,11 @@ static const uint8_t s_digit16[10][32] =
   },
 };
 
+static const uint8_t s_dot16[OLED_RACE_TIME_DOT_WIDTH * 2U] =
+{
+  0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U, 0x00U,
+  0x00U, 0x00U, 0x18U, 0x18U, 0x18U, 0x18U, 0x00U, 0x00U,
+};
 /* Compact 12x12 SimHei glyphs keep all five menu rows at their native ratio. */
 static const uint16_t s_menu_chinese12[2][12] =
 {
@@ -212,14 +224,19 @@ static const uint8_t s_oled_init_cmds[] =
 static bool OLED_WriteCommand(uint8_t cmd);
 static bool OLED_WriteCommands(const uint8_t *cmds, uint16_t len);
 static bool OLED_WriteData(const uint8_t *data, uint16_t len);
+static bool OLED_UpdatePageRange(uint8_t first_page, uint8_t last_page);
+static bool OLED_UpdateWindow(uint8_t first_page, uint8_t last_page,
+                              uint8_t x, uint8_t width);
 static bool OLED_SelectAddress(uint8_t address);
 static bool OLED_TryInitialize(void);
 static void OLED_MarkOffline(void);
+static void OLED_ClearPageRange(uint8_t first_page, uint8_t last_page);
 static void OLED_SetPixel(uint8_t x, uint8_t y);
 static void OLED_InvertPixel(uint8_t x, uint8_t y);
 static void OLED_DrawMenuGlyph12(uint8_t x, uint8_t y, const uint16_t *glyph);
 static void OLED_DrawMenuMarker(uint8_t y);
 static void OLED_DrawDigit(uint8_t x, uint8_t page, uint8_t digit);
+static void OLED_DrawDot(uint8_t x, uint8_t page);
 
 void OLED_Init(void)
 {
@@ -266,31 +283,8 @@ void OLED_Clear(void)
 
 void OLED_Update(void)
 {
-  uint8_t page = 0U;
-
-  if (g_oled.present == 0U)
-  {
-    return;
-  }
-
-  for (page = 0U; page < 8U; page++)
-  {
-    uint8_t cmd[3];
-
-    cmd[0] = (uint8_t)(0xB0U + page);
-    cmd[1] = 0x00U;
-    cmd[2] = 0x10U;
-
-    if (!OLED_WriteCommands(cmd, (uint16_t)sizeof(cmd)) ||
-        !OLED_WriteData(&s_buffer[(uint16_t)page * OLED_WIDTH], OLED_WIDTH))
-    {
-      g_oled.error_count++;
-      OLED_MarkOffline();
-      return;
-    }
-  }
+  (void)OLED_UpdatePageRange(0U, (uint8_t)(OLED_PAGE_COUNT - 1U));
 }
-
 void OLED_DrawAscii(uint8_t x, uint8_t page, const char *text)
 {
   uint8_t cursor = x;
@@ -384,7 +378,36 @@ void OLED_DrawProblemSelected(uint8_t problem)
   OLED_DrawChinese(76U, 5U, OLED_GLYPH_TI);
   OLED_Update();
 }
+void OLED_DrawRaceTime(uint32_t centiseconds)
+{
+  uint8_t seconds = 0U;
+  uint8_t fraction = 0U;
+  uint8_t x = OLED_RACE_TIME_X;
 
+  if (centiseconds > OLED_RACE_TIME_MAX_CENTISECONDS)
+  {
+    centiseconds = OLED_RACE_TIME_MAX_CENTISECONDS;
+  }
+
+  seconds = (uint8_t)(centiseconds / 100U);
+  fraction = (uint8_t)(centiseconds % 100U);
+
+  OLED_ClearPageRange(OLED_RACE_TIME_PAGE, OLED_RACE_TIME_PAGE + 1U);
+  OLED_DrawDigit(x, OLED_RACE_TIME_PAGE, (uint8_t)(seconds / 10U));
+  x = (uint8_t)(x + 16U);
+  OLED_DrawDigit(x, OLED_RACE_TIME_PAGE, (uint8_t)(seconds % 10U));
+  x = (uint8_t)(x + 16U);
+  OLED_DrawDot(x, OLED_RACE_TIME_PAGE);
+  x = (uint8_t)(x + OLED_RACE_TIME_DOT_WIDTH);
+  OLED_DrawDigit(x, OLED_RACE_TIME_PAGE, (uint8_t)(fraction / 10U));
+  x = (uint8_t)(x + 16U);
+  OLED_DrawDigit(x, OLED_RACE_TIME_PAGE, (uint8_t)(fraction % 10U));
+
+  (void)OLED_UpdateWindow(OLED_RACE_TIME_PAGE,
+                          OLED_RACE_TIME_PAGE + 1U,
+                          OLED_RACE_TIME_X,
+                          OLED_RACE_TIME_WIDTH);
+}
 static bool OLED_WriteCommand(uint8_t cmd)
 {
   uint8_t data[2];
@@ -448,7 +471,44 @@ static bool OLED_WriteData(const uint8_t *data, uint16_t len)
 
   return true;
 }
+static bool OLED_UpdatePageRange(uint8_t first_page, uint8_t last_page)
+{
+  return OLED_UpdateWindow(first_page, last_page, 0U, OLED_WIDTH);
+}
 
+static bool OLED_UpdateWindow(uint8_t first_page, uint8_t last_page,
+                              uint8_t x, uint8_t width)
+{
+  uint8_t page = 0U;
+
+  if ((g_oled.present == 0U) ||
+      (first_page > last_page) ||
+      (last_page >= OLED_PAGE_COUNT) ||
+      (width == 0U) ||
+      ((uint16_t)x + width > OLED_WIDTH))
+  {
+    return false;
+  }
+
+  for (page = first_page; page <= last_page; page++)
+  {
+    uint8_t cmd[3];
+
+    cmd[0] = (uint8_t)(0xB0U + page);
+    cmd[1] = (uint8_t)(x & 0x0FU);
+    cmd[2] = (uint8_t)(0x10U | (x >> 4U));
+
+    if (!OLED_WriteCommands(cmd, (uint16_t)sizeof(cmd)) ||
+        !OLED_WriteData(&s_buffer[((uint16_t)page * OLED_WIDTH) + x], width))
+    {
+      g_oled.error_count++;
+      OLED_MarkOffline();
+      return false;
+    }
+  }
+
+  return true;
+}
 static bool OLED_SelectAddress(uint8_t address)
 {
   g_oled.address = address;
@@ -496,7 +556,25 @@ static void OLED_MarkOffline(void)
   g_oled.present = 0U;
   g_oled.initialized = 0U;
 }
+static void OLED_ClearPageRange(uint8_t first_page, uint8_t last_page)
+{
+  uint8_t page = 0U;
 
+  if ((first_page > last_page) || (last_page >= OLED_PAGE_COUNT))
+  {
+    return;
+  }
+
+  for (page = first_page; page <= last_page; page++)
+  {
+    uint8_t x = 0U;
+
+    for (x = 0U; x < OLED_WIDTH; x++)
+    {
+      s_buffer[((uint16_t)page * OLED_WIDTH) + x] = 0U;
+    }
+  }
+}
 static void OLED_SetPixel(uint8_t x, uint8_t y)
 {
   if ((x < OLED_WIDTH) && (y < OLED_HEIGHT))
@@ -572,5 +650,22 @@ static void OLED_DrawDigit(uint8_t x, uint8_t page, uint8_t digit)
     s_buffer[((uint16_t)page * OLED_WIDTH) + x + col] = s_digit16[digit][col];
     s_buffer[((uint16_t)(page + 1U) * OLED_WIDTH) + x + col] =
         s_digit16[digit][16U + col];
+  }
+}
+static void OLED_DrawDot(uint8_t x, uint8_t page)
+{
+  uint8_t col = 0U;
+
+  if ((page > (OLED_PAGE_COUNT - 2U)) ||
+      (x > (OLED_WIDTH - OLED_RACE_TIME_DOT_WIDTH)))
+  {
+    return;
+  }
+
+  for (col = 0U; col < OLED_RACE_TIME_DOT_WIDTH; col++)
+  {
+    s_buffer[((uint16_t)page * OLED_WIDTH) + x + col] = s_dot16[col];
+    s_buffer[((uint16_t)(page + 1U) * OLED_WIDTH) + x + col] =
+        s_dot16[OLED_RACE_TIME_DOT_WIDTH + col];
   }
 }

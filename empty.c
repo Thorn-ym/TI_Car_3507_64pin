@@ -4,24 +4,26 @@
 
 #include "ti_msp_dl_config.h"
 #include "car_control.h"
-#include "debug_uart.h"
-#include "ec11_encoder.h"
+/* #include "debug_uart.h" */
+#include "competition_tasks.h"
+/* #include "ec11_encoder.h" */
 #include "line_tracker.h"
 #include "mpu6050.h"
 #include "oled_ssd1306.h"
-#include "problem_menu.h"
+/* #include "problem_menu.h" */
 
 int main(void)
 {
     SYSCFG_DL_init();
 
     LineTracker_Init();
-    EC11_Init();
+    /* EC11_Init(); */
     Car_Init();
     OLED_Init();
     MPU6050_Init();
-    ProblemMenu_Init();
-    Debug_UART_Init();
+    /* ProblemMenu_Init(); */
+    CompetitionTasks_Init();
+    /* Debug_UART_Init(); */
 
     g_car.left.pid.kp = 180;
     g_car.left.pid.ki = 0.35f;
@@ -35,16 +37,15 @@ int main(void)
     g_car.right.invert_motor = 1U;
     g_car.right.invert_encoder = 1U;
 
-    g_car.left.target_counts = 26;
-    g_car.right.target_counts = 26;
-    g_car.mode = 3;
 
     while (1) {
         MPU6050_Task();
+        CompetitionTasks_Service();
         OLED_Task(g_car.control_tick);
-        EC11_Task();
-        ProblemMenu_Task();
-        Debug_UART_Task();
+        /* EC11_Task(); */
+        /* ProblemMenu_Task(); */
+        /* UART motor commands stay disabled; KEY2 owns start and stop. */
+        /* Debug_UART_Task(); */
         __WFI();
     }
 }
@@ -54,6 +55,7 @@ void TIMER_CONTROL_INST_IRQHandler(void)
     switch (DL_TimerG_getPendingInterrupt(TIMER_CONTROL_INST)) {
         case DL_TIMER_IIDX_ZERO:
             Car_ControlStep();
+            CompetitionTasks_ControlStep();
             break;
         default:
             break;
