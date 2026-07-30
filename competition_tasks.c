@@ -16,9 +16,7 @@
 #define COMPETITION_FINISH_CONFIRM_TICKS      2U
 #define COMPETITION_MIN_RUN_TICKS           100U
 #define COMPETITION_DISPLAY_INTERVAL_TICKS   10U
-#define COMPETITION_FINISH_ACTIVE_MIN         5U
-#define COMPETITION_FINISH_LEFT_MASK        0x07U
-#define COMPETITION_FINISH_RIGHT_MASK       0x70U
+#define COMPETITION_FINISH_CENTER_MASK      0x1CU
 #define COMPETITION_MAX_CENTISECONDS        9999U
 
 volatile CompetitionTaskStatus_t g_competition_task_status =
@@ -323,12 +321,10 @@ static uint8_t CompetitionTasks_KeyPressed(uint32_t tick)
 static uint8_t CompetitionTasks_FinishLineSeen(void)
 {
   uint8_t mask = g_line.active_mask;
-  uint8_t left_seen = ((mask & COMPETITION_FINISH_LEFT_MASK) != 0U) ? 1U : 0U;
-  uint8_t right_seen = ((mask & COMPETITION_FINISH_RIGHT_MASK) != 0U) ? 1U : 0U;
 
-  return ((g_line.active_count >= COMPETITION_FINISH_ACTIVE_MIN) &&
-          (left_seen != 0U) &&
-          (right_seen != 0U)) ? 1U : 0U;
+  /* The short A-line only spans the center S3/S4/S5 sensors. */
+  return ((mask & COMPETITION_FINISH_CENTER_MASK) ==
+          COMPETITION_FINISH_CENTER_MASK) ? 1U : 0U;
 }
 
 static uint32_t CompetitionTasks_AbsDelta(int32_t value, int32_t start)

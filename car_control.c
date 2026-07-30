@@ -14,7 +14,7 @@
 
 volatile CarControl_t g_car =
 {
-  .mode = CAR_MODE_OPEN_LOOP,
+  
   .control_period_ms = CAR_CONTROL_PERIOD_MS,
   .control_tick = 0U,
   .driver_enabled = 0U,
