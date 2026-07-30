@@ -278,9 +278,37 @@ void Car_ControlStep(void)
 
       if ((g_line.line_seen != 0U) || (g_car.line.line_lost_stop == 0U))
       {
-        int32_t correction = Car_LinePidStep((int32_t)g_line.error);
+        int32_t line_error = (int32_t)g_line.error;
+        float line_integral_before = g_car.line.pid.integral;
+        int32_t correction = Car_LinePidStep(line_error);
+        int32_t correction_before_limit = correction;
+        int32_t correction_limit = g_car.line.base_counts;
         int32_t left_target = g_car.line.base_counts - correction;
         int32_t right_target = g_car.line.base_counts + correction;
+
+        if (correction_limit < 0)
+        {
+          correction_limit = 0;
+        }
+        if (correction > correction_limit)
+        {
+          correction = correction_limit;
+        }
+        else if (correction < -correction_limit)
+        {
+          correction = -correction_limit;
+        }
+
+        if ((correction_limit == 0) ||
+            ((correction_before_limit >= correction_limit) &&
+             (line_error > 0)) ||
+            ((correction_before_limit <= -correction_limit) &&
+             (line_error < 0)))
+        {
+          g_car.line.pid.integral = line_integral_before;
+        }
+        left_target = g_car.line.base_counts - correction;
+        right_target = g_car.line.base_counts + correction;
 
         g_car.line.correction_counts = correction;
         g_car.line.left_target_counts = left_target;
@@ -443,6 +471,20 @@ void Car_StartLineFollow(void)
   Car_ResetPid(&g_car.left);
   Car_ResetPid(&g_car.right);
   g_car.mode = CAR_MODE_LINE_FOLLOW;
+}
+
+void Car_SetLineFollowBaseCounts(int32_t base_counts)
+{
+  if (base_counts < 0)
+  {
+    base_counts = 0;
+  }
+  else if (base_counts > CAR_RIGHT_ANGLE_TARGET_COUNTS_MAX)
+  {
+    base_counts = CAR_RIGHT_ANGLE_TARGET_COUNTS_MAX;
+  }
+
+  g_car.line.base_counts = base_counts;
 }
 
 void Car_SetSpeedTargets(int32_t left_counts, int32_t right_counts)

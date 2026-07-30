@@ -9,6 +9,7 @@
 /* #include "ec11_encoder.h" */
 #include "line_tracker.h"
 #include "mpu6050.h"
+#include "odometer.h"
 #include "oled_ssd1306.h"
 /* #include "problem_menu.h" */
 
@@ -23,6 +24,7 @@ int main(void)
     MPU6050_Init();
     /* ProblemMenu_Init(); */
     CompetitionTasks_Init();
+    Odometer_Init();
     /* Debug_UART_Init(); */
 
     g_car.left.pid.kp = 180;
@@ -41,6 +43,7 @@ int main(void)
     while (1) {
         MPU6050_Task();
         CompetitionTasks_Service();
+        Odometer_Service();
         OLED_Task(g_car.control_tick);
         /* EC11_Task(); */
         /* ProblemMenu_Task(); */
@@ -56,6 +59,7 @@ void TIMER_CONTROL_INST_IRQHandler(void)
         case DL_TIMER_IIDX_ZERO:
             Car_ControlStep();
             CompetitionTasks_ControlStep();
+            Odometer_ControlStep();
             break;
         default:
             break;

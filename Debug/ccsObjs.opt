@@ -9,6 +9,7 @@
 "./startup_mspm0g350x_ticlang.o"
 "./line_tracker.o"
 "./mpu6050.o"
+"./odometer.o"
 "./oled_ssd1306.o"
 "./problem_menu.o"
 -l"./device_linker.cmd"

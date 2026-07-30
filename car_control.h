@@ -131,6 +131,7 @@ void Car_ControlStep(void);
 void Car_Stop(void);
 void Car_BrakeHold(void);
 void Car_StartLineFollow(void);
+void Car_SetLineFollowBaseCounts(int32_t base_counts);
 void Car_SetSpeedTargets(int32_t left_counts, int32_t right_counts);
 
 #ifdef __cplusplus
