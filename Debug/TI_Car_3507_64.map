@@ -1,7 +1,7 @@
 ******************************************************************************
             TI ARM Clang Linker PC v4.0.4                      
 ******************************************************************************
->> Linked Thu Jul 30 10:12:59 2026
+>> Linked Thu Jul 30 10:37:15 2026
 
 OUTPUT FILE NAME:   <TI_Car_3507_64.out>
 ENTRY POINT SYMBOL: "_c_int00_noargs"  address: 00003fd5
@@ -136,8 +136,7 @@ section   page    origin      length       input sections
                   00004146    00000002     --HOLE-- [fill = 0]
 
 .cinit     0    000042e8    000000b8     
-                  000042e8    00000093     (.cinit..data.load) [load image, compression = lzss]
-                  0000437b    00000001     --HOLE-- [fill = 0]
+                  000042e8    00000094     (.cinit..data.load) [load image, compression = lzss]
                   0000437c    0000000c     (__TI_handler_table)
                   00004388    00000008     (.cinit..bss.load) [load image, compression = zero_init]
                   00004390    00000010     (__TI_cinit_table)
@@ -274,15 +273,15 @@ MODULE SUMMARY
        Total:                         1088    0         0      
                                                                
        Stack:                         0       0         512    
-       Linker Generated:              0       183       0      
+       Linker Generated:              0       184       0      
     +--+------------------------------+-------+---------+---------+
-       Grand Total:                   16504   790       2412   
+       Grand Total:                   16504   791       2412   
 
 
 LINKER GENERATED COPY TABLES
 
 __TI_cinit_table @ 00004390 records: 2, size/record: 8, table size: 16
-	.data: load addr=000042e8, load size=00000093 bytes, run addr=202005dc, run size=00000190 bytes, compression=lzss
+	.data: load addr=000042e8, load size=00000094 bytes, run addr=202005dc, run size=00000190 bytes, compression=lzss
 	.bss: load addr=00004388, load size=00000008 bytes, run addr=20200000, run size=000005dc bytes, compression=zero_init
 
 

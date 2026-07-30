@@ -76,7 +76,7 @@ volatile CarControl_t g_car =
       .output_limit = 30.0f,
       .integral_limit = 1000.0f,
     },
-    .base_counts = 26,
+    .base_counts = 28,
     .correction_counts = 0,
     .left_target_counts = 0,
     .right_target_counts = 0,
