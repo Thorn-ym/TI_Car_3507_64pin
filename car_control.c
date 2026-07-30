@@ -169,13 +169,11 @@ static uint8_t s_approach_distance_reliable = 0U;
 static int32_t s_approach_fused_distance = 0;
 
 static int16_t Car_LimitPwm(int32_t pwm);
-static int16_t Car_LimitPwmStep(int16_t requested, int16_t previous);
 static float Car_AbsFloat(float value);
 static int32_t Car_AbsInt32(int32_t value);
 static float Car_LimitFloat(float value, float limit);
 static int32_t Car_LimitTargetCounts(int32_t counts);
 static int16_t Car_PidStep(volatile CarMotor_t *motor);
-static int16_t Car_LineFollowPidStep(volatile CarMotor_t *motor);
 static int32_t Car_LinePidStep(int32_t error);
 static void Car_ResetPid(volatile CarMotor_t *motor);
 static void Car_ResetLinePid(void);
@@ -318,8 +316,8 @@ void Car_ControlStep(void)
         g_car.left.target_counts = left_target;
         g_car.right.target_counts = right_target;
 
-        left_pwm = Car_LineFollowPidStep(&g_car.left);
-        right_pwm = Car_LineFollowPidStep(&g_car.right);
+        left_pwm = Car_PidStep(&g_car.left);
+        right_pwm = Car_PidStep(&g_car.right);
       }
       else
       {
@@ -537,24 +535,6 @@ static int16_t Car_LimitPwm(int32_t pwm)
   return (int16_t)pwm;
 }
 
-static int16_t Car_LimitPwmStep(int16_t requested, int16_t previous)
-{
-  int32_t minimum = (int32_t)previous - CAR_LINE_FOLLOW_PWM_SLEW_LIMIT;
-  int32_t maximum = (int32_t)previous + CAR_LINE_FOLLOW_PWM_SLEW_LIMIT;
-  int32_t result = requested;
-
-  if (result < minimum)
-  {
-    result = minimum;
-  }
-  else if (result > maximum)
-  {
-    result = maximum;
-  }
-
-  return Car_LimitPwm(result);
-}
-
 static float Car_AbsFloat(float value)
 {
   return (value < 0.0f) ? -value : value;
@@ -619,20 +599,6 @@ static int16_t Car_PidStep(volatile CarMotor_t *motor)
   output = Car_LimitFloat(output, motor->pid.output_limit);
 
   return Car_LimitPwm((int32_t)output);
-}
-
-static int16_t Car_LineFollowPidStep(volatile CarMotor_t *motor)
-{
-  float integral_before = motor->pid.integral;
-  int16_t requested_pwm = Car_PidStep(motor);
-  int16_t limited_pwm = Car_LimitPwmStep(requested_pwm, motor->pwm_output);
-
-  if (limited_pwm != requested_pwm)
-  {
-    motor->pid.integral = integral_before;
-  }
-
-  return limited_pwm;
 }
 
 static int32_t Car_LinePidStep(int32_t error_counts)
