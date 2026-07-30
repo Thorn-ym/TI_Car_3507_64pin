@@ -11,6 +11,7 @@
 #include <stdint.h>
 
 #define ODOMETER_DISPLAY_INTERVAL_TICKS 20U
+#define ODOMETER_LAP_PROGRESS_FULL_SCALE 1000U
 
 static volatile int32_t s_left_zero = 0;
 static volatile int32_t s_right_zero = 0;
@@ -24,8 +25,8 @@ static volatile uint8_t s_initialized = 0U;
 static uint32_t s_last_display_tick = 0U;
 
 static uint8_t Odometer_StateIsRunning(CompetitionTaskState_t state);
-static uint32_t Odometer_CountsToMillimetres(int32_t counts,
-                                             uint32_t counts_per_metre);
+static uint32_t Odometer_CountsToLapProgress(int32_t counts,
+                                             uint32_t counts_per_lap);
 
 void Odometer_Init(void)
 {
@@ -104,10 +105,10 @@ void Odometer_Service(void)
   int32_t right_counts;
   uint32_t tick;
   uint32_t primask;
-  uint32_t left_mm = 0U;
-  uint32_t right_mm = 0U;
-  uint32_t distance_mm = 0U;
-  uint8_t distance_valid = 0U;
+  uint32_t left_progress = 0U;
+  uint32_t right_progress = 0U;
+  uint32_t lap_progress = 0U;
+  uint8_t lap_progress_valid = 0U;
 
   if (s_initialized == 0U)
   {
@@ -139,21 +140,24 @@ void Odometer_Service(void)
     __enable_irq();
   }
 
-  if ((ODOMETER_LEFT_COUNTS_PER_METER > 0U) &&
-      (ODOMETER_RIGHT_COUNTS_PER_METER > 0U))
+  if ((ODOMETER_LEFT_COUNTS_PER_LAP > 0U) &&
+      (ODOMETER_RIGHT_COUNTS_PER_LAP > 0U) &&
+      (left_counts >= 0) &&
+      (right_counts >= 0))
   {
-    left_mm = Odometer_CountsToMillimetres(
-        left_counts, ODOMETER_LEFT_COUNTS_PER_METER);
-    right_mm = Odometer_CountsToMillimetres(
-        right_counts, ODOMETER_RIGHT_COUNTS_PER_METER);
-    distance_mm = (uint32_t)(((uint64_t)left_mm + right_mm + 1U) / 2U);
-    distance_valid = 1U;
+    left_progress = Odometer_CountsToLapProgress(
+        left_counts, ODOMETER_LEFT_COUNTS_PER_LAP);
+    right_progress = Odometer_CountsToLapProgress(
+        right_counts, ODOMETER_RIGHT_COUNTS_PER_LAP);
+    lap_progress = (uint32_t)(((uint64_t)left_progress +
+                               right_progress + 1U) / 2U);
+    lap_progress_valid = 1U;
   }
 
   OLED_DrawOdometer(left_counts,
                     right_counts,
-                    distance_mm,
-                    distance_valid);
+                    lap_progress,
+                    lap_progress_valid);
 }
 
 static uint8_t Odometer_StateIsRunning(CompetitionTaskState_t state)
@@ -163,33 +167,24 @@ static uint8_t Odometer_StateIsRunning(CompetitionTaskState_t state)
           (state == COMPETITION_STATE_FINISH_APPROACH)) ? 1U : 0U;
 }
 
-static uint32_t Odometer_CountsToMillimetres(int32_t counts,
-                                             uint32_t counts_per_metre)
+static uint32_t Odometer_CountsToLapProgress(int32_t counts,
+                                             uint32_t counts_per_lap)
 {
-  uint64_t magnitude;
-  uint64_t millimetres;
+  uint64_t progress;
 
-  if (counts_per_metre == 0U)
+  if ((counts < 0) || (counts_per_lap == 0U))
   {
     return 0U;
   }
 
-  if (counts < 0)
-  {
-    magnitude = (uint64_t)(-(int64_t)counts);
-  }
-  else
-  {
-    magnitude = (uint64_t)counts;
-  }
+  progress = (((uint64_t)(uint32_t)counts *
+               ODOMETER_LAP_PROGRESS_FULL_SCALE) +
+              (counts_per_lap / 2U)) / counts_per_lap;
 
-  millimetres = ((magnitude * 1000U) + (counts_per_metre / 2U)) /
-                counts_per_metre;
-
-  if (millimetres > UINT32_MAX)
+  if (progress > UINT32_MAX)
   {
     return UINT32_MAX;
   }
 
-  return (uint32_t)millimetres;
+  return (uint32_t)progress;
 }

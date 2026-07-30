@@ -35,8 +35,8 @@ void OLED_DrawProblemSelected(uint8_t problem);
 void OLED_DrawRaceTime(uint32_t centiseconds);
 void OLED_DrawOdometer(int32_t left_counts,
                        int32_t right_counts,
-                       uint32_t distance_mm,
-                       uint8_t distance_valid);
+                       uint32_t lap_progress_tenths,
+                       uint8_t lap_progress_valid);
 
 #ifdef __cplusplus
 }

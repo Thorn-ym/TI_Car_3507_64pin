@@ -20,6 +20,15 @@ extern "C" {
 #define ODOMETER_RIGHT_COUNTS_PER_METER 0U
 #endif
 
+/* Median encoder counts from five KEY2-to-finish whole-lap runs. */
+#ifndef ODOMETER_LEFT_COUNTS_PER_LAP
+#define ODOMETER_LEFT_COUNTS_PER_LAP 49712U
+#endif
+
+#ifndef ODOMETER_RIGHT_COUNTS_PER_LAP
+#define ODOMETER_RIGHT_COUNTS_PER_LAP 39741U
+#endif
+
 void Odometer_Init(void);
 void Odometer_ControlStep(void);
 void Odometer_Service(void);
