@@ -6,6 +6,7 @@
 
 #include "car_control.h"
 #include "line_tracker.h"
+#include "odometer.h"
 #include "oled_ssd1306.h"
 #include "ti_msp_dl_config.h"
 
@@ -18,6 +19,17 @@
 #define COMPETITION_DISPLAY_INTERVAL_TICKS   10U
 #define COMPETITION_FINISH_CENTER_MASK      0x1CU
 #define COMPETITION_MAX_CENTISECONDS        9999U
+#define COMPETITION_SMOOTHSTEP_SCALE        1024U
+
+#if COMPETITION_ACCEL_TICKS == 0U
+#error COMPETITION_ACCEL_TICKS must be greater than zero
+#endif
+#if COMPETITION_DECEL_START_PROGRESS >= COMPETITION_DECEL_END_PROGRESS
+#error COMPETITION_DECEL_START_PROGRESS must be less than the end progress
+#endif
+#if COMPETITION_FINAL_COUNTS > COMPETITION_CRUISE_COUNTS
+#error COMPETITION_FINAL_COUNTS must not exceed the cruise speed
+#endif
 
 volatile CompetitionTaskStatus_t g_competition_task_status =
 {
@@ -31,6 +43,8 @@ static uint32_t s_last_control_tick = 0U;
 static uint32_t s_last_display_tick = 0U;
 static uint32_t s_key_debounce_tick = 0U;
 static uint32_t s_key_press_tick = 0U;
+static uint32_t s_motion_start_tick = 0U;
+static uint16_t s_max_lap_progress = 0U;
 static int32_t s_finish_left_total = 0;
 static int32_t s_finish_right_total = 0;
 static uint8_t s_key_last_raw = 1U;
@@ -49,6 +63,9 @@ static uint8_t CompetitionTasks_FinishLineSeen(void);
 static uint32_t CompetitionTasks_AbsDelta(int32_t value, int32_t start);
 static uint8_t CompetitionTasks_AdvanceReached(void);
 static uint32_t CompetitionTasks_TicksToCentiseconds(uint32_t ticks);
+static uint32_t CompetitionTasks_SmoothStep(uint32_t position,
+                                            uint32_t span);
+static void CompetitionTasks_UpdateSpeedProfile(uint32_t tick);
 static void CompetitionTasks_Start(uint32_t start_tick, uint32_t now_tick);
 static void CompetitionTasks_Complete(uint32_t tick);
 
@@ -67,6 +84,8 @@ void CompetitionTasks_Init(void)
   s_last_display_tick = tick;
   s_key_debounce_tick = tick;
   s_key_press_tick = tick;
+  s_motion_start_tick = tick;
+  s_max_lap_progress = 0U;
   s_key_last_raw = raw;
   s_key_stable = raw;
   s_key_armed = (raw != 0U) ? 1U : 0U;
@@ -178,6 +197,7 @@ void CompetitionTasks_ControlStep(void)
   {
     g_competition_task_status.elapsed_ticks =
         tick - g_competition_task_status.start_tick;
+    CompetitionTasks_UpdateSpeedProfile(tick);
   }
 }
 
@@ -368,6 +388,73 @@ static uint32_t CompetitionTasks_TicksToCentiseconds(uint32_t ticks)
   return (ticks * CAR_CONTROL_PERIOD_MS) / 10U;
 }
 
+static uint32_t CompetitionTasks_SmoothStep(uint32_t position,
+                                            uint32_t span)
+{
+  uint32_t x;
+  uint32_t blend;
+
+  if ((span == 0U) || (position >= span))
+  {
+    return COMPETITION_SMOOTHSTEP_SCALE;
+  }
+
+  x = ((position << 10) + (span / 2U)) / span;
+  blend = (x * x * ((3U * COMPETITION_SMOOTHSTEP_SCALE) - (2U * x)) +
+           (1UL << 19)) >> 20;
+  return blend;
+}
+
+static void CompetitionTasks_UpdateSpeedProfile(uint32_t tick)
+{
+  uint32_t motion_ticks = tick - s_motion_start_tick;
+  uint32_t command = 0U;
+
+  if (motion_ticks < COMPETITION_ACCEL_TICKS)
+  {
+    uint32_t blend = CompetitionTasks_SmoothStep(
+        motion_ticks, COMPETITION_ACCEL_TICKS);
+    command = (COMPETITION_CRUISE_COUNTS * blend +
+               (COMPETITION_SMOOTHSTEP_SCALE / 2U)) >> 10;
+  }
+  else
+  {
+    OdometerControlProgress_t progress = Odometer_GetControlProgress();
+
+    if ((progress.valid != 0U) &&
+        (progress.lap_progress_tenths > s_max_lap_progress))
+    {
+      s_max_lap_progress = progress.lap_progress_tenths;
+    }
+
+    if ((progress.valid == 0U) ||
+        (s_max_lap_progress <= COMPETITION_DECEL_START_PROGRESS))
+    {
+      command = COMPETITION_CRUISE_COUNTS;
+    }
+    else if (s_max_lap_progress >= COMPETITION_DECEL_END_PROGRESS)
+    {
+      command = COMPETITION_FINAL_COUNTS;
+    }
+    else
+    {
+      uint32_t span = COMPETITION_DECEL_END_PROGRESS -
+                      COMPETITION_DECEL_START_PROGRESS;
+      uint32_t position = s_max_lap_progress -
+                          COMPETITION_DECEL_START_PROGRESS;
+      uint32_t blend = CompetitionTasks_SmoothStep(position, span);
+      uint32_t speed_drop = COMPETITION_CRUISE_COUNTS -
+                            COMPETITION_FINAL_COUNTS;
+
+      command = COMPETITION_CRUISE_COUNTS -
+          ((speed_drop * blend +
+            (COMPETITION_SMOOTHSTEP_SCALE / 2U)) >> 10);
+    }
+  }
+
+  Car_SetLineFollowBaseCounts((int32_t)command);
+}
+
 static void CompetitionTasks_Start(uint32_t start_tick, uint32_t now_tick)
 {
   g_competition_task_status.state = COMPETITION_STATE_LEAVING_A;
@@ -380,9 +467,12 @@ static void CompetitionTasks_Start(uint32_t start_tick, uint32_t now_tick)
   s_finish_left_total = 0;
   s_finish_right_total = 0;
   s_display_dirty = 1U;
+  s_motion_start_tick = now_tick;
+  s_max_lap_progress = 0U;
 
   g_line.right_angle_enable = 0U;
   g_car.line.right_angle_assist_enable = 0U;
+  Car_SetLineFollowBaseCounts(0);
   Car_StartLineFollow();
 }
 

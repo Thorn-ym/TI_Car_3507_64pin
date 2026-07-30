@@ -169,11 +169,13 @@ static uint8_t s_approach_distance_reliable = 0U;
 static int32_t s_approach_fused_distance = 0;
 
 static int16_t Car_LimitPwm(int32_t pwm);
+static int16_t Car_LimitPwmStep(int16_t requested, int16_t previous);
 static float Car_AbsFloat(float value);
 static int32_t Car_AbsInt32(int32_t value);
 static float Car_LimitFloat(float value, float limit);
 static int32_t Car_LimitTargetCounts(int32_t counts);
 static int16_t Car_PidStep(volatile CarMotor_t *motor);
+static int16_t Car_LineFollowPidStep(volatile CarMotor_t *motor);
 static int32_t Car_LinePidStep(int32_t error);
 static void Car_ResetPid(volatile CarMotor_t *motor);
 static void Car_ResetLinePid(void);
@@ -278,9 +280,37 @@ void Car_ControlStep(void)
 
       if ((g_line.line_seen != 0U) || (g_car.line.line_lost_stop == 0U))
       {
-        int32_t correction = Car_LinePidStep((int32_t)g_line.error);
+        int32_t line_error = (int32_t)g_line.error;
+        float line_integral_before = g_car.line.pid.integral;
+        int32_t correction = Car_LinePidStep(line_error);
+        int32_t correction_before_limit = correction;
+        int32_t correction_limit = g_car.line.base_counts;
         int32_t left_target = g_car.line.base_counts - correction;
         int32_t right_target = g_car.line.base_counts + correction;
+
+        if (correction_limit < 0)
+        {
+          correction_limit = 0;
+        }
+        if (correction > correction_limit)
+        {
+          correction = correction_limit;
+        }
+        else if (correction < -correction_limit)
+        {
+          correction = -correction_limit;
+        }
+
+        if ((correction_limit == 0) ||
+            ((correction_before_limit >= correction_limit) &&
+             (line_error > 0)) ||
+            ((correction_before_limit <= -correction_limit) &&
+             (line_error < 0)))
+        {
+          g_car.line.pid.integral = line_integral_before;
+        }
+        left_target = g_car.line.base_counts - correction;
+        right_target = g_car.line.base_counts + correction;
 
         g_car.line.correction_counts = correction;
         g_car.line.left_target_counts = left_target;
@@ -288,8 +318,8 @@ void Car_ControlStep(void)
         g_car.left.target_counts = left_target;
         g_car.right.target_counts = right_target;
 
-        left_pwm = Car_PidStep(&g_car.left);
-        right_pwm = Car_PidStep(&g_car.right);
+        left_pwm = Car_LineFollowPidStep(&g_car.left);
+        right_pwm = Car_LineFollowPidStep(&g_car.right);
       }
       else
       {
@@ -445,6 +475,20 @@ void Car_StartLineFollow(void)
   g_car.mode = CAR_MODE_LINE_FOLLOW;
 }
 
+void Car_SetLineFollowBaseCounts(int32_t base_counts)
+{
+  if (base_counts < 0)
+  {
+    base_counts = 0;
+  }
+  else if (base_counts > CAR_RIGHT_ANGLE_TARGET_COUNTS_MAX)
+  {
+    base_counts = CAR_RIGHT_ANGLE_TARGET_COUNTS_MAX;
+  }
+
+  g_car.line.base_counts = base_counts;
+}
+
 void Car_SetSpeedTargets(int32_t left_counts, int32_t right_counts)
 {
   g_car.left.target_counts = left_counts;
@@ -491,6 +535,24 @@ static int16_t Car_LimitPwm(int32_t pwm)
   }
 
   return (int16_t)pwm;
+}
+
+static int16_t Car_LimitPwmStep(int16_t requested, int16_t previous)
+{
+  int32_t minimum = (int32_t)previous - CAR_LINE_FOLLOW_PWM_SLEW_LIMIT;
+  int32_t maximum = (int32_t)previous + CAR_LINE_FOLLOW_PWM_SLEW_LIMIT;
+  int32_t result = requested;
+
+  if (result < minimum)
+  {
+    result = minimum;
+  }
+  else if (result > maximum)
+  {
+    result = maximum;
+  }
+
+  return Car_LimitPwm(result);
 }
 
 static float Car_AbsFloat(float value)
@@ -557,6 +619,20 @@ static int16_t Car_PidStep(volatile CarMotor_t *motor)
   output = Car_LimitFloat(output, motor->pid.output_limit);
 
   return Car_LimitPwm((int32_t)output);
+}
+
+static int16_t Car_LineFollowPidStep(volatile CarMotor_t *motor)
+{
+  float integral_before = motor->pid.integral;
+  int16_t requested_pwm = Car_PidStep(motor);
+  int16_t limited_pwm = Car_LimitPwmStep(requested_pwm, motor->pwm_output);
+
+  if (limited_pwm != requested_pwm)
+  {
+    motor->pid.integral = integral_before;
+  }
+
+  return limited_pwm;
 }
 
 static int32_t Car_LinePidStep(int32_t error_counts)

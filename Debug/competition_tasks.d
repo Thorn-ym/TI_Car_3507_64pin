@@ -85,7 +85,7 @@ competition_tasks.o: ../competition_tasks.c ../competition_tasks.h \
  F:/TI/mspm0_sdk_2_10_00_04/source/ti/driverlib/dl_wwdt.h \
  F:/TI/mspm0_sdk_2_10_00_04/source/ti/driverlib/m0p/dl_interrupt.h \
  F:/TI/mspm0_sdk_2_10_00_04/source/ti/driverlib/m0p/dl_systick.h \
- ../line_tracker.h ../oled_ssd1306.h
+ ../line_tracker.h ../odometer.h ../oled_ssd1306.h
 ../competition_tasks.h:
 ../car_control.h:
 ti_msp_dl_config.h:
@@ -172,4 +172,5 @@ F:/TI/mspm0_sdk_2_10_00_04/source/ti/driverlib/dl_wwdt.h:
 F:/TI/mspm0_sdk_2_10_00_04/source/ti/driverlib/m0p/dl_interrupt.h:
 F:/TI/mspm0_sdk_2_10_00_04/source/ti/driverlib/m0p/dl_systick.h:
 ../line_tracker.h:
+../odometer.h:
 ../oled_ssd1306.h:

@@ -23,6 +23,10 @@ extern "C" {
 #define CAR_PID_INTEGRAL_MAX      3199.0f
 #define CAR_RIGHT_ANGLE_TARGET_COUNTS_MAX 80
 
+#ifndef CAR_LINE_FOLLOW_PWM_SLEW_LIMIT
+#define CAR_LINE_FOLLOW_PWM_SLEW_LIMIT 320
+#endif
+
 typedef enum
 {
   CAR_MODE_DISABLED = 0,
@@ -131,6 +135,7 @@ void Car_ControlStep(void);
 void Car_Stop(void);
 void Car_BrakeHold(void);
 void Car_StartLineFollow(void);
+void Car_SetLineFollowBaseCounts(int32_t base_counts);
 void Car_SetSpeedTargets(int32_t left_counts, int32_t right_counts);
 
 #ifdef __cplusplus

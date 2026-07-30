@@ -12,6 +12,24 @@
 
 #define ODOMETER_DISPLAY_INTERVAL_TICKS 20U
 #define ODOMETER_LAP_PROGRESS_FULL_SCALE 1000U
+#define ODOMETER_PROGRESS_VALUE_MASK 0x0000FFFFU
+#define ODOMETER_PROGRESS_VALID_FLAG 0x00010000U
+#define ODOMETER_PROGRESS_FROZEN_FLAG 0x00020000U
+#define ODOMETER_PROGRESS_Q20_SHIFT 20U
+#define ODOMETER_PROGRESS_Q20_ONE (1UL << ODOMETER_PROGRESS_Q20_SHIFT)
+#define ODOMETER_PROGRESS_Q20_ROUND (ODOMETER_PROGRESS_Q20_ONE / 2U)
+#define ODOMETER_PROGRESS_SCALE_Q20(counts_per_lap)                      \
+  (((ODOMETER_LAP_PROGRESS_FULL_SCALE * ODOMETER_PROGRESS_Q20_ONE) +   \
+    ((counts_per_lap) / 2U)) / (counts_per_lap))
+#define ODOMETER_PROGRESS_LEFT_SCALE_Q20                                \
+  ODOMETER_PROGRESS_SCALE_Q20(ODOMETER_LEFT_COUNTS_PER_LAP)
+#define ODOMETER_PROGRESS_RIGHT_SCALE_Q20                               \
+  ODOMETER_PROGRESS_SCALE_Q20(ODOMETER_RIGHT_COUNTS_PER_LAP)
+
+#if (ODOMETER_LEFT_COUNTS_PER_LAP == 0U) || \
+    (ODOMETER_RIGHT_COUNTS_PER_LAP == 0U)
+#error Odometer counts per lap must be greater than zero
+#endif
 
 static volatile int32_t s_left_zero = 0;
 static volatile int32_t s_right_zero = 0;
@@ -22,9 +40,13 @@ static volatile CompetitionTaskState_t s_last_state =
 static volatile uint8_t s_frozen = 0U;
 static volatile uint8_t s_display_dirty = 0U;
 static volatile uint8_t s_initialized = 0U;
+static volatile uint32_t s_control_progress = 0U;
 static uint32_t s_last_display_tick = 0U;
 
 static uint8_t Odometer_StateIsRunning(CompetitionTaskState_t state);
+static void Odometer_UpdateControlProgress(void);
+static uint32_t Odometer_CountsToControlProgress(int32_t counts,
+                                                 uint32_t scale_q20);
 static uint32_t Odometer_CountsToLapProgress(int32_t counts,
                                              uint32_t counts_per_lap);
 
@@ -41,6 +63,7 @@ void Odometer_Init(void)
   s_last_state = g_competition_task_status.state;
   s_frozen = 0U;
   s_display_dirty = 1U;
+  s_control_progress = ODOMETER_PROGRESS_VALID_FLAG;
   s_last_display_tick = g_car.control_tick;
   s_initialized = 1U;
 
@@ -96,7 +119,21 @@ void Odometer_ControlStep(void)
     s_right_counts = g_car.right.encoder_total - s_right_zero;
   }
 
+  Odometer_UpdateControlProgress();
   s_last_state = state;
+}
+
+OdometerControlProgress_t Odometer_GetControlProgress(void)
+{
+  uint32_t packed = s_control_progress;
+  OdometerControlProgress_t progress;
+
+  progress.lap_progress_tenths =
+      (uint16_t)(packed & ODOMETER_PROGRESS_VALUE_MASK);
+  progress.valid = ((packed & ODOMETER_PROGRESS_VALID_FLAG) != 0U) ? 1U : 0U;
+  progress.frozen =
+      ((packed & ODOMETER_PROGRESS_FROZEN_FLAG) != 0U) ? 1U : 0U;
+  return progress;
 }
 
 void Odometer_Service(void)
@@ -187,4 +224,49 @@ static uint32_t Odometer_CountsToLapProgress(int32_t counts,
   }
 
   return (uint32_t)progress;
+}
+
+static void Odometer_UpdateControlProgress(void)
+{
+  uint32_t packed = 0U;
+
+  if ((s_left_counts >= 0) && (s_right_counts >= 0) &&
+      (ODOMETER_LEFT_COUNTS_PER_LAP > 0U) &&
+      (ODOMETER_RIGHT_COUNTS_PER_LAP > 0U))
+  {
+    uint32_t left_progress = Odometer_CountsToControlProgress(
+        s_left_counts, ODOMETER_PROGRESS_LEFT_SCALE_Q20);
+    uint32_t right_progress = Odometer_CountsToControlProgress(
+        s_right_counts, ODOMETER_PROGRESS_RIGHT_SCALE_Q20);
+    uint32_t progress = (left_progress / 2U) + (right_progress / 2U) +
+                        ((left_progress & right_progress) & 1U);
+
+    if (progress > UINT16_MAX)
+    {
+      progress = UINT16_MAX;
+    }
+    packed = progress | ODOMETER_PROGRESS_VALID_FLAG;
+  }
+
+  if (s_frozen != 0U)
+  {
+    packed |= ODOMETER_PROGRESS_FROZEN_FLAG;
+  }
+  s_control_progress = packed;
+}
+
+static uint32_t Odometer_CountsToControlProgress(int32_t counts,
+                                                 uint32_t scale_q20)
+{
+  uint32_t unsigned_counts = (uint32_t)counts;
+  uint32_t maximum_counts =
+      (UINT32_MAX - ODOMETER_PROGRESS_Q20_ROUND) / scale_q20;
+
+  if (unsigned_counts > maximum_counts)
+  {
+    unsigned_counts = maximum_counts;
+  }
+
+  return ((unsigned_counts * scale_q20) + ODOMETER_PROGRESS_Q20_ROUND) >>
+         ODOMETER_PROGRESS_Q20_SHIFT;
 }

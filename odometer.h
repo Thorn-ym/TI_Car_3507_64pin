@@ -29,9 +29,17 @@ extern "C" {
 #define ODOMETER_RIGHT_COUNTS_PER_LAP 39741U
 #endif
 
+typedef struct
+{
+  uint16_t lap_progress_tenths;
+  uint8_t valid;
+  uint8_t frozen;
+} OdometerControlProgress_t;
+
 void Odometer_Init(void);
 void Odometer_ControlStep(void);
 void Odometer_Service(void);
+OdometerControlProgress_t Odometer_GetControlProgress(void);
 
 #ifdef __cplusplus
 }
