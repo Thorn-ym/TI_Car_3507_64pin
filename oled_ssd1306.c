@@ -24,6 +24,23 @@
 #define OLED_RACE_TIME_DOT_WIDTH        8U
 #define OLED_RACE_TIME_WIDTH           72U
 
+#define OLED_ODOMETER_FIRST_PAGE        0U
+#define OLED_ODOMETER_LAST_PAGE         2U
+#define OLED_ODOMETER_WIDTH            66U
+#define OLED_ODOMETER_COUNT_DIGITS       8U
+#define OLED_ODOMETER_DISTANCE_DIGITS    7U
+#define OLED_ODOMETER_COUNT_MAX   99999999U
+#define OLED_ODOMETER_DISTANCE_MAX 9999999U
+
+#define OLED_FONT_SPACE  10U
+#define OLED_FONT_L      11U
+#define OLED_FONT_R      12U
+#define OLED_FONT_D      13U
+#define OLED_FONT_M      14U
+#define OLED_FONT_COLON  15U
+#define OLED_FONT_PLUS   16U
+#define OLED_FONT_MINUS  17U
+
 #define OLED_GLYPH_XUAN     0U
 #define OLED_GLYPH_ZE       1U
 #define OLED_GLYPH_DI       2U
@@ -43,7 +60,7 @@ static uint8_t s_buffer[OLED_BUFFER_SIZE];
 static uint32_t s_last_service_tick = 0U;
 
 /* Kept for the generic small numeric text helper. */
-static const uint8_t s_font5x7[11][5] =
+static const uint8_t s_font5x7[18][5] =
 {
   {0x3EU, 0x51U, 0x49U, 0x45U, 0x3EU}, /* 0 */
   {0x00U, 0x42U, 0x7FU, 0x40U, 0x00U}, /* 1 */
@@ -56,6 +73,13 @@ static const uint8_t s_font5x7[11][5] =
   {0x36U, 0x49U, 0x49U, 0x49U, 0x36U}, /* 8 */
   {0x06U, 0x49U, 0x49U, 0x29U, 0x1EU}, /* 9 */
   {0x00U, 0x00U, 0x00U, 0x00U, 0x00U}, /* space */
+  {0x7FU, 0x40U, 0x40U, 0x40U, 0x40U}, /* L */
+  {0x7FU, 0x09U, 0x19U, 0x29U, 0x46U}, /* R */
+  {0x7FU, 0x41U, 0x41U, 0x22U, 0x1CU}, /* D */
+  {0x7FU, 0x02U, 0x0CU, 0x02U, 0x7FU}, /* M */
+  {0x00U, 0x36U, 0x36U, 0x00U, 0x00U}, /* : */
+  {0x08U, 0x08U, 0x3EU, 0x08U, 0x08U}, /* + */
+  {0x08U, 0x08U, 0x08U, 0x08U, 0x08U}, /* - */
 };
 
 /* 16x16 monochrome glyphs rasterized from Windows SimHei. */
@@ -237,6 +261,13 @@ static void OLED_DrawMenuGlyph12(uint8_t x, uint8_t y, const uint16_t *glyph);
 static void OLED_DrawMenuMarker(uint8_t y);
 static void OLED_DrawDigit(uint8_t x, uint8_t page, uint8_t digit);
 static void OLED_DrawDot(uint8_t x, uint8_t page);
+static uint8_t OLED_GetAsciiGlyph(char character);
+static void OLED_FormatOdometerCount(char *text,
+                                     char label,
+                                     int32_t counts);
+static void OLED_FormatOdometerDistance(char *text,
+                                        uint32_t distance_mm,
+                                        uint8_t valid);
 
 void OLED_Init(void)
 {
@@ -296,17 +327,8 @@ void OLED_DrawAscii(uint8_t x, uint8_t page, const char *text)
 
   while ((*text != '\0') && (cursor < (OLED_WIDTH - 5U)))
   {
-    uint8_t glyph = 10U;
+    uint8_t glyph = OLED_GetAsciiGlyph(*text);
     uint8_t col = 0U;
-
-    if ((*text >= '0') && (*text <= '9'))
-    {
-      glyph = (uint8_t)(*text - '0');
-    }
-    else if (*text == ' ')
-    {
-      glyph = 10U;
-    }
 
     for (col = 0U; col < 5U; col++)
     {
@@ -407,6 +429,127 @@ void OLED_DrawRaceTime(uint32_t centiseconds)
                           OLED_RACE_TIME_PAGE + 1U,
                           OLED_RACE_TIME_X,
                           OLED_RACE_TIME_WIDTH);
+}
+void OLED_DrawOdometer(int32_t left_counts,
+                       int32_t right_counts,
+                       uint32_t distance_mm,
+                       uint8_t distance_valid)
+{
+  char left_text[12];
+  char right_text[12];
+  char distance_text[12];
+
+  OLED_FormatOdometerCount(left_text, 'L', left_counts);
+  OLED_FormatOdometerCount(right_text, 'R', right_counts);
+  OLED_FormatOdometerDistance(distance_text, distance_mm, distance_valid);
+
+  OLED_ClearPageRange(OLED_ODOMETER_FIRST_PAGE, OLED_ODOMETER_LAST_PAGE);
+  OLED_DrawAscii(0U, 0U, left_text);
+  OLED_DrawAscii(0U, 1U, right_text);
+  OLED_DrawAscii(0U, 2U, distance_text);
+  (void)OLED_UpdateWindow(OLED_ODOMETER_FIRST_PAGE,
+                          OLED_ODOMETER_LAST_PAGE,
+                          0U,
+                          OLED_ODOMETER_WIDTH);
+}
+
+static uint8_t OLED_GetAsciiGlyph(char character)
+{
+  if ((character >= '0') && (character <= '9'))
+  {
+    return (uint8_t)(character - '0');
+  }
+
+  switch (character)
+  {
+    case 'L':
+      return OLED_FONT_L;
+    case 'R':
+      return OLED_FONT_R;
+    case 'D':
+      return OLED_FONT_D;
+    case 'M':
+      return OLED_FONT_M;
+    case ':':
+      return OLED_FONT_COLON;
+    case '+':
+      return OLED_FONT_PLUS;
+    case '-':
+      return OLED_FONT_MINUS;
+    case ' ':
+    default:
+      return OLED_FONT_SPACE;
+  }
+}
+
+static void OLED_FormatOdometerCount(char *text,
+                                     char label,
+                                     int32_t counts)
+{
+  uint64_t magnitude;
+  uint8_t index;
+
+  text[0] = label;
+  text[1] = ':';
+  text[2] = (counts < 0) ? '-' : '+';
+
+  if (counts < 0)
+  {
+    magnitude = (uint64_t)(-(int64_t)counts);
+  }
+  else
+  {
+    magnitude = (uint64_t)counts;
+  }
+
+  if (magnitude > OLED_ODOMETER_COUNT_MAX)
+  {
+    magnitude = OLED_ODOMETER_COUNT_MAX;
+  }
+
+  for (index = 0U; index < OLED_ODOMETER_COUNT_DIGITS; index++)
+  {
+    uint8_t position = (uint8_t)(2U + OLED_ODOMETER_COUNT_DIGITS - index);
+
+    text[position] = (char)('0' + (magnitude % 10U));
+    magnitude /= 10U;
+  }
+  text[3U + OLED_ODOMETER_COUNT_DIGITS] = '\0';
+}
+
+static void OLED_FormatOdometerDistance(char *text,
+                                        uint32_t distance_mm,
+                                        uint8_t valid)
+{
+  uint8_t index;
+
+  text[0] = 'D';
+  text[1] = ':';
+
+  if (distance_mm > OLED_ODOMETER_DISTANCE_MAX)
+  {
+    distance_mm = OLED_ODOMETER_DISTANCE_MAX;
+  }
+
+  for (index = 0U; index < OLED_ODOMETER_DISTANCE_DIGITS; index++)
+  {
+    uint8_t position =
+        (uint8_t)(1U + OLED_ODOMETER_DISTANCE_DIGITS - index);
+
+    if (valid != 0U)
+    {
+      text[position] = (char)('0' + (distance_mm % 10U));
+      distance_mm /= 10U;
+    }
+    else
+    {
+      text[position] = '-';
+    }
+  }
+
+  text[2U + OLED_ODOMETER_DISTANCE_DIGITS] = 'M';
+  text[3U + OLED_ODOMETER_DISTANCE_DIGITS] = 'M';
+  text[4U + OLED_ODOMETER_DISTANCE_DIGITS] = '\0';
 }
 static bool OLED_WriteCommand(uint8_t cmd)
 {

@@ -1,6 +1,6 @@
 # FIXED
 
-empty.o: ../empty.c \
+odometer.o: ../odometer.c ../odometer.h ../car_control.h \
  ti_msp_dl_config.h \
  F:/TI/mspm0_sdk_2_10_00_04/source/ti/devices/msp/msp.h \
  F:/TI/mspm0_sdk_2_10_00_04/source/ti/devices/DeviceFamily.h \
@@ -84,8 +84,9 @@ empty.o: ../empty.c \
  F:/TI/mspm0_sdk_2_10_00_04/source/ti/driverlib/dl_wwdt.h \
  F:/TI/mspm0_sdk_2_10_00_04/source/ti/driverlib/m0p/dl_interrupt.h \
  F:/TI/mspm0_sdk_2_10_00_04/source/ti/driverlib/m0p/dl_systick.h \
- ../car_control.h ../competition_tasks.h ../line_tracker.h ../mpu6050.h \
- ../odometer.h ../oled_ssd1306.h
+ ../competition_tasks.h ../oled_ssd1306.h
+../odometer.h:
+../car_control.h:
 ti_msp_dl_config.h:
 F:/TI/mspm0_sdk_2_10_00_04/source/ti/devices/msp/msp.h:
 F:/TI/mspm0_sdk_2_10_00_04/source/ti/devices/DeviceFamily.h:
@@ -169,9 +170,5 @@ F:/TI/mspm0_sdk_2_10_00_04/source/ti/driverlib/dl_vref.h:
 F:/TI/mspm0_sdk_2_10_00_04/source/ti/driverlib/dl_wwdt.h:
 F:/TI/mspm0_sdk_2_10_00_04/source/ti/driverlib/m0p/dl_interrupt.h:
 F:/TI/mspm0_sdk_2_10_00_04/source/ti/driverlib/m0p/dl_systick.h:
-../car_control.h:
 ../competition_tasks.h:
-../line_tracker.h:
-../mpu6050.h:
-../odometer.h:
 ../oled_ssd1306.h:

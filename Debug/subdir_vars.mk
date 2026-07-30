@@ -20,6 +20,7 @@ C_SRCS += \
 F:/TI/mspm0_sdk_2_10_00_04/source/ti/devices/msp/m0p/startup_system_files/ticlang/startup_mspm0g350x_ticlang.c \
 ../line_tracker.c \
 ../mpu6050.c \
+../odometer.c \
 ../oled_ssd1306.c \
 ../problem_menu.c 
 
@@ -43,6 +44,7 @@ C_DEPS += \
 ./startup_mspm0g350x_ticlang.d \
 ./line_tracker.d \
 ./mpu6050.d \
+./odometer.d \
 ./oled_ssd1306.d \
 ./problem_menu.d 
 
@@ -61,6 +63,7 @@ OBJS += \
 ./startup_mspm0g350x_ticlang.o \
 ./line_tracker.o \
 ./mpu6050.o \
+./odometer.o \
 ./oled_ssd1306.o \
 ./problem_menu.o 
 
@@ -81,6 +84,7 @@ OBJS__QUOTED += \
 "startup_mspm0g350x_ticlang.o" \
 "line_tracker.o" \
 "mpu6050.o" \
+"odometer.o" \
 "oled_ssd1306.o" \
 "problem_menu.o" 
 
@@ -101,6 +105,7 @@ C_DEPS__QUOTED += \
 "startup_mspm0g350x_ticlang.d" \
 "line_tracker.d" \
 "mpu6050.d" \
+"odometer.d" \
 "oled_ssd1306.d" \
 "problem_menu.d" 
 
@@ -121,6 +126,7 @@ C_SRCS__QUOTED += \
 "F:/TI/mspm0_sdk_2_10_00_04/source/ti/devices/msp/m0p/startup_system_files/ticlang/startup_mspm0g350x_ticlang.c" \
 "../line_tracker.c" \
 "../mpu6050.c" \
+"../odometer.c" \
 "../oled_ssd1306.c" \
 "../problem_menu.c" 
 

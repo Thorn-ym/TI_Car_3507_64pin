@@ -21,6 +21,7 @@ ORDERED_OBJS += \
 "./startup_mspm0g350x_ticlang.o" \
 "./line_tracker.o" \
 "./mpu6050.o" \
+"./odometer.o" \
 "./oled_ssd1306.o" \
 "./problem_menu.o" \
 $(GEN_CMDS__FLAG) \
@@ -146,8 +147,8 @@ TI_Car_3507_64.out: $(OBJS) $(GEN_CMDS)
 # Other Targets
 clean:
 	-$(RM) $(GEN_MISC_FILES__QUOTED)$(GEN_FILES__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "board_i2c.o" "board_oled_i2c.o" "car_control.o" "competition_tasks.o" "debug_uart.o" "ec11_encoder.o" "empty.o" "ti_msp_dl_config.o" "startup_mspm0g350x_ticlang.o" "line_tracker.o" "mpu6050.o" "oled_ssd1306.o" "problem_menu.o" 
-	-$(RM) "board_i2c.d" "board_oled_i2c.d" "car_control.d" "competition_tasks.d" "debug_uart.d" "ec11_encoder.d" "empty.d" "ti_msp_dl_config.d" "startup_mspm0g350x_ticlang.d" "line_tracker.d" "mpu6050.d" "oled_ssd1306.d" "problem_menu.d" 
+	-$(RM) "board_i2c.o" "board_oled_i2c.o" "car_control.o" "competition_tasks.o" "debug_uart.o" "ec11_encoder.o" "empty.o" "ti_msp_dl_config.o" "startup_mspm0g350x_ticlang.o" "line_tracker.o" "mpu6050.o" "odometer.o" "oled_ssd1306.o" "problem_menu.o" 
+	-$(RM) "board_i2c.d" "board_oled_i2c.d" "car_control.d" "competition_tasks.d" "debug_uart.d" "ec11_encoder.d" "empty.d" "ti_msp_dl_config.d" "startup_mspm0g350x_ticlang.d" "line_tracker.d" "mpu6050.d" "odometer.d" "oled_ssd1306.d" "problem_menu.d" 
 	-@echo ' '
 
 .PHONY: all clean dependents
