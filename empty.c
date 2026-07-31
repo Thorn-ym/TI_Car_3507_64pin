@@ -6,7 +6,7 @@
 #include "car_control.h"
 /* #include "debug_uart.h" */
 #include "competition_tasks.h"
-/* #include "ec11_encoder.h" */
+#include "ec11_encoder.h"
 #include "line_tracker.h"
 #include "mpu6050.h"
 #include "odometer.h"
@@ -18,7 +18,7 @@ int main(void)
     SYSCFG_DL_init();
 
     LineTracker_Init();
-    /* EC11_Init(); */
+    EC11_Init();
     Car_Init();
     OLED_Init();
     MPU6050_Init();
@@ -45,7 +45,7 @@ int main(void)
         CompetitionTasks_Service();
         Odometer_Service();
         OLED_Task(g_car.control_tick);
-        /* EC11_Task(); */
+        EC11_Task();
         /* ProblemMenu_Task(); */
         /* UART motor commands stay disabled; KEY2 owns start and stop. */
         /* Debug_UART_Task(); */

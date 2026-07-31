@@ -5,6 +5,7 @@
 #include "competition_tasks.h"
 
 #include "car_control.h"
+#include "ec11_encoder.h"
 #include "line_tracker.h"
 #include "odometer.h"
 #include "oled_ssd1306.h"
@@ -20,6 +21,8 @@
 #define COMPETITION_FINISH_CENTER_MASK      0x1CU
 #define COMPETITION_MAX_CENTISECONDS        9999U
 #define COMPETITION_SMOOTHSTEP_SCALE        1024U
+#define COMPETITION_MAX_LAP_RECORDS          999U
+#define COMPETITION_LAP_LIST_ROWS              8U
 
 #if COMPETITION_ACCEL_TICKS == 0U
 #error COMPETITION_ACCEL_TICKS must be greater than zero
@@ -48,6 +51,7 @@ static uint32_t s_continuous_key_press_tick = 0U;
 static uint32_t s_motion_start_tick = 0U;
 static uint32_t s_last_lap_ticks = 0U;
 static uint32_t s_lap_number = 0U;
+static uint16_t s_lap_centiseconds[COMPETITION_MAX_LAP_RECORDS];
 static uint32_t s_finish_seen_tick = 0U;
 static uint16_t s_max_lap_progress = 0U;
 static int32_t s_finish_left_total = 0;
@@ -63,6 +67,9 @@ static uint8_t s_continuous_key_armed = 1U;
 static uint8_t s_continuous_key_press_pending = 0U;
 static uint8_t s_continuous_key_press_allowed = 0U;
 static uint8_t s_continuous_mode = 0U;
+static uint8_t s_lap_list_active = 0U;
+static uint16_t s_lap_list_offset = 0U;
+static uint8_t s_continuous_layout_dirty = 0U;
 static uint8_t s_leave_confirm_count = 0U;
 static uint8_t s_finish_confirm_count = 0U;
 static volatile uint8_t s_display_dirty = 0U;
@@ -107,6 +114,9 @@ void CompetitionTasks_Init(void)
   s_motion_start_tick = tick;
   s_last_lap_ticks = 0U;
   s_lap_number = 0U;
+  s_lap_list_active = 0U;
+  s_lap_list_offset = 0U;
+  s_continuous_layout_dirty = 0U;
   s_finish_seen_tick = 0U;
   s_max_lap_progress = 0U;
   s_key_last_raw = raw;
@@ -259,8 +269,14 @@ void CompetitionTasks_Service(void)
   uint32_t primask = 0U;
   uint32_t lap_number = 0U;
   uint32_t last_lap_ticks = 0U;
+  uint16_t visible_lap_times[COMPETITION_LAP_LIST_ROWS] = {0U};
+  uint16_t lap_list_offset = 0U;
+  uint8_t visible_lap_count = 0U;
   uint8_t continuous_mode = 0U;
+  uint8_t lap_list_active = 0U;
+  uint8_t continuous_layout_dirty = 0U;
   uint8_t draw = 0U;
+  int8_t encoder_delta = 0;
   CompetitionTaskState_t state;
 
   if (s_initialized == 0U)
@@ -268,6 +284,7 @@ void CompetitionTasks_Service(void)
     return;
   }
 
+  encoder_delta = EC11_GetDelta();
   primask = __get_PRIMASK();
   __disable_irq();
   state = g_competition_task_status.state;
@@ -275,6 +292,52 @@ void CompetitionTasks_Service(void)
   lap_number = s_lap_number;
   last_lap_ticks = s_last_lap_ticks;
   continuous_mode = s_continuous_mode;
+  lap_list_active = s_lap_list_active;
+
+  if ((lap_list_active != 0U) && (encoder_delta != 0))
+  {
+    int32_t next_offset = (int32_t)s_lap_list_offset + encoder_delta;
+    uint32_t max_offset = (lap_number > COMPETITION_LAP_LIST_ROWS)
+                              ? (lap_number - COMPETITION_LAP_LIST_ROWS)
+                              : 0U;
+
+    if (next_offset < 0)
+    {
+      next_offset = 0;
+    }
+    else if ((uint32_t)next_offset > max_offset)
+    {
+      next_offset = (int32_t)max_offset;
+    }
+
+    if ((uint16_t)next_offset != s_lap_list_offset)
+    {
+      s_lap_list_offset = (uint16_t)next_offset;
+      s_display_dirty = 1U;
+    }
+  }
+
+  lap_list_offset = s_lap_list_offset;
+  if (lap_list_active != 0U)
+  {
+    uint32_t remaining_laps = lap_number - lap_list_offset;
+    uint8_t index;
+
+    visible_lap_count = (remaining_laps > COMPETITION_LAP_LIST_ROWS)
+                            ? COMPETITION_LAP_LIST_ROWS
+                            : (uint8_t)remaining_laps;
+    for (index = 0U; index < visible_lap_count; index++)
+    {
+      visible_lap_times[index] =
+          s_lap_centiseconds[lap_list_offset + index];
+    }
+  }
+
+  if (s_continuous_layout_dirty != 0U)
+  {
+    s_continuous_layout_dirty = 0U;
+    continuous_layout_dirty = 1U;
+  }
 
   if (s_display_dirty != 0U)
   {
@@ -285,7 +348,6 @@ void CompetitionTasks_Service(void)
   else if (((state == COMPETITION_STATE_LEAVING_A) ||
             (state == COMPETITION_STATE_RUNNING) ||
             (state == COMPETITION_STATE_FINISH_APPROACH)) &&
-           ((continuous_mode == 0U) || (lap_number == 0U)) &&
            ((uint32_t)(tick - s_last_display_tick) >=
             COMPETITION_DISPLAY_INTERVAL_TICKS))
   {
@@ -300,10 +362,20 @@ void CompetitionTasks_Service(void)
 
   if (draw != 0U)
   {
-    if ((continuous_mode != 0U) && (lap_number > 0U))
+    if (lap_list_active != 0U)
     {
-      OLED_DrawLapTime(
-          lap_number, CompetitionTasks_TicksToCentiseconds(last_lap_ticks));
+      OLED_DrawLapList((uint32_t)lap_list_offset + 1U,
+                       visible_lap_times,
+                       visible_lap_count);
+    }
+    else if (continuous_mode != 0U)
+    {
+      OLED_DrawContinuousRaceTime(
+          lap_number + 1U,
+          CompetitionTasks_TicksToCentiseconds(elapsed_ticks),
+          lap_number,
+          CompetitionTasks_TicksToCentiseconds(last_lap_ticks),
+          continuous_layout_dirty);
     }
     else
     {
@@ -343,6 +415,8 @@ void CompetitionTasks_Exit(uint8_t problem)
   g_competition_task_status.state = COMPETITION_STATE_IDLE;
   g_competition_task_status.elapsed_ticks = 0U;
   s_continuous_mode = 0U;
+  s_lap_list_active = 0U;
+  s_continuous_layout_dirty = 0U;
   s_display_dirty = 1U;
 }
 
@@ -603,6 +677,9 @@ static void CompetitionTasks_Start(uint32_t start_tick,
   s_last_lap_ticks = 0U;
   s_lap_number = 0U;
   s_continuous_mode = (continuous_mode != 0U) ? 1U : 0U;
+  s_lap_list_active = 0U;
+  s_lap_list_offset = 0U;
+  s_continuous_layout_dirty = s_continuous_mode;
   s_finish_left_total = 0;
   s_finish_right_total = 0;
   s_display_dirty = 1U;
@@ -618,8 +695,10 @@ static void CompetitionTasks_Start(uint32_t start_tick,
 static void CompetitionTasks_CompleteLap(uint32_t tick)
 {
   s_last_lap_ticks = tick - g_competition_task_status.start_tick;
-  if (s_lap_number < UINT32_MAX)
+  if (s_lap_number < COMPETITION_MAX_LAP_RECORDS)
   {
+    s_lap_centiseconds[s_lap_number] = (uint16_t)
+        CompetitionTasks_TicksToCentiseconds(s_last_lap_ticks);
     s_lap_number++;
   }
 
@@ -631,6 +710,7 @@ static void CompetitionTasks_CompleteLap(uint32_t tick)
   s_leave_confirm_count = 0U;
   s_finish_confirm_count = 0U;
   s_finish_seen_tick = 0U;
+  s_continuous_layout_dirty = 1U;
   s_display_dirty = 1U;
 }
 
@@ -642,10 +722,13 @@ static void CompetitionTasks_StopContinuous(uint32_t tick)
   g_competition_task_status.state = COMPETITION_STATE_FINISHED;
 
   s_continuous_mode = 0U;
+  s_lap_list_active = 1U;
+  s_lap_list_offset = 0U;
+  s_continuous_layout_dirty = 0U;
   s_leave_confirm_count = 0U;
   s_finish_confirm_count = 0U;
   s_finish_seen_tick = 0U;
-  s_display_dirty = (s_lap_number == 0U) ? 1U : 0U;
+  s_display_dirty = 1U;
   Car_BrakeHold();
 }
 
@@ -656,6 +739,8 @@ static void CompetitionTasks_Complete(uint32_t tick)
       tick - g_competition_task_status.start_tick;
   g_competition_task_status.state = COMPETITION_STATE_FINISHED;
   s_continuous_mode = 0U;
+  s_lap_list_active = 0U;
+  s_continuous_layout_dirty = 0U;
   s_display_dirty = 1U;
 
   Car_BrakeHold();

@@ -84,7 +84,7 @@ car_control.o: ../car_control.c ../car_control.h \
  F:/TI/mspm0_sdk_2_10_00_04/source/ti/driverlib/dl_wwdt.h \
  F:/TI/mspm0_sdk_2_10_00_04/source/ti/driverlib/m0p/dl_interrupt.h \
  F:/TI/mspm0_sdk_2_10_00_04/source/ti/driverlib/m0p/dl_systick.h \
- ../line_tracker.h ../mpu6050.h
+ ../ec11_encoder.h ../line_tracker.h ../mpu6050.h
 ../car_control.h:
 ti_msp_dl_config.h:
 F:/TI/mspm0_sdk_2_10_00_04/source/ti/devices/msp/msp.h:
@@ -169,5 +169,6 @@ F:/TI/mspm0_sdk_2_10_00_04/source/ti/driverlib/dl_vref.h:
 F:/TI/mspm0_sdk_2_10_00_04/source/ti/driverlib/dl_wwdt.h:
 F:/TI/mspm0_sdk_2_10_00_04/source/ti/driverlib/m0p/dl_interrupt.h:
 F:/TI/mspm0_sdk_2_10_00_04/source/ti/driverlib/m0p/dl_systick.h:
+../ec11_encoder.h:
 ../line_tracker.h:
 ../mpu6050.h:

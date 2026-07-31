@@ -8,7 +8,7 @@
 /* USER CODE END Header */
 
 #include "car_control.h"
-/* #include "ec11_encoder.h" */
+#include "ec11_encoder.h"
 #include "line_tracker.h"
 #include "mpu6050.h"
 
@@ -232,19 +232,18 @@ void Car_Init(void)
 
   Car_Stop();
 
-  /* EC11 is unused, but its GPIO source shares the encoder IRQ group. */
-  DL_GPIO_disableInterrupt(
-      GPIO_EC11_PORT,
-      GPIO_EC11_A_PIN | GPIO_EC11_B_PIN);
   DL_GPIO_clearInterruptStatus(
       GPIO_EC11_PORT,
       GPIO_EC11_A_PIN | GPIO_EC11_B_PIN);
-
+  DL_GPIO_enableInterrupt(
+      GPIO_EC11_PORT,
+      GPIO_EC11_A_PIN | GPIO_EC11_B_PIN);
   NVIC_EnableIRQ(GPIO_ENCODER_INT_IRQN);
-  /* NVIC_EnableIRQ(GPIO_EC11_INT_IRQN); */
+  NVIC_EnableIRQ(GPIO_EC11_INT_IRQN);
   NVIC_EnableIRQ(TIMER_CONTROL_INST_INT_IRQN);
   DL_TimerG_startCounter(TIMER_CONTROL_INST);
 }
+
 void Car_ControlStep(void)
 {
   int16_t left_pwm = 0;
@@ -499,9 +498,8 @@ void GROUP1_IRQHandler(void)
   uint32_t gpiob = DL_GPIO_getEnabledInterruptStatus(
       GPIO_ENCODER_PORT,
       GPIO_ENCODER_E2A_PIN | GPIO_ENCODER_E2B_PIN);
-  /* EC11 A/B interrupts are disabled in SysConfig for the H-task build. */
-  /* uint32_t gpioa = DL_GPIO_getEnabledInterruptStatus(
-      GPIO_EC11_PORT, GPIO_EC11_A_PIN | GPIO_EC11_B_PIN); */
+  uint32_t gpioa = DL_GPIO_getEnabledInterruptStatus(
+      GPIO_EC11_PORT, GPIO_EC11_A_PIN | GPIO_EC11_B_PIN);
 
   if ((gpiob & (GPIO_ENCODER_E2A_PIN | GPIO_ENCODER_E2B_PIN)) != 0U)
   {
@@ -511,15 +509,14 @@ void GROUP1_IRQHandler(void)
         gpiob & (GPIO_ENCODER_E2A_PIN | GPIO_ENCODER_E2B_PIN));
   }
 
-  /* if ((gpioa & (GPIO_EC11_A_PIN | GPIO_EC11_B_PIN)) != 0U)
+  if ((gpioa & (GPIO_EC11_A_PIN | GPIO_EC11_B_PIN)) != 0U)
   {
     EC11_HandleABInterrupt(gpioa);
     DL_GPIO_clearInterruptStatus(
         GPIO_EC11_PORT,
         gpioa & (GPIO_EC11_A_PIN | GPIO_EC11_B_PIN));
-  } */
+  }
 }
-
 static int16_t Car_LimitPwm(int32_t pwm)
 {
   if (pwm > CAR_PWM_MAX)

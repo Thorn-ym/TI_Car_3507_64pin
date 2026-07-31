@@ -34,6 +34,14 @@ void OLED_DrawProblemSelect(uint8_t problem);
 void OLED_DrawProblemSelected(uint8_t problem);
 void OLED_DrawRaceTime(uint32_t centiseconds);
 void OLED_DrawLapTime(uint32_t lap_number, uint32_t centiseconds);
+void OLED_DrawContinuousRaceTime(uint32_t current_lap_number,
+                                 uint32_t current_centiseconds,
+                                 uint32_t previous_lap_number,
+                                 uint32_t previous_centiseconds,
+                                 uint8_t redraw_layout);
+void OLED_DrawLapList(uint32_t first_lap_number,
+                      const uint16_t *centiseconds,
+                      uint8_t count);
 void OLED_DrawOdometer(int32_t left_counts,
                        int32_t right_counts,
                        uint32_t lap_progress_tenths,
