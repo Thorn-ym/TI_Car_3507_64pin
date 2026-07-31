@@ -49,6 +49,8 @@
 #define OLED_GLYPH_TI       3U
 #define OLED_GLYPH_YI       4U
 #define OLED_GLYPH_JING     5U
+#define OLED_GLYPH_QUAN     6U
+#define OLED_GLYPH_MIAO     7U
 
 volatile OLED_t g_oled =
 {
@@ -131,6 +133,20 @@ static const uint8_t s_chinese16[][32] =
     0x22U, 0x32U, 0x3AU, 0x26U, 0x42U, 0xC0U, 0x00U, 0x00U,
     0x32U, 0x13U, 0x13U, 0x12U, 0x12U, 0x2AU, 0x21U, 0x21U,
     0x21U, 0x3FU, 0x21U, 0x21U, 0x21U, 0x20U, 0x00U, 0x00U
+  },
+  /* 圈 */
+  {
+    0x02U, 0xFEU, 0x82U, 0xA2U, 0xBAU, 0xA2U, 0xFAU, 0xA2U,
+    0xB2U, 0xAAU, 0xA2U, 0x02U, 0xFEU, 0xFEU, 0x00U, 0x00U,
+    0x00U, 0xFFU, 0x42U, 0x42U, 0x4FU, 0x5EU, 0x52U, 0x56U,
+    0x57U, 0x53U, 0x5AU, 0x42U, 0xFFU, 0xFFU, 0x00U, 0x00U
+  },
+  /* 秒 */
+  {
+    0x20U, 0x24U, 0xE2U, 0xFEU, 0xA2U, 0x22U, 0xC0U, 0x78U,
+    0x00U, 0xFFU, 0x00U, 0x08U, 0x98U, 0x30U, 0x00U, 0x00U,
+    0x0CU, 0x07U, 0x01U, 0x7FU, 0x00U, 0x23U, 0x20U, 0x20U,
+    0x10U, 0x19U, 0x0CU, 0x06U, 0x03U, 0x00U, 0x00U, 0x00U
   },
 };
 
@@ -434,6 +450,60 @@ void OLED_DrawRaceTime(uint32_t centiseconds)
                           OLED_RACE_TIME_PAGE + 1U,
                           OLED_RACE_TIME_X,
                           OLED_RACE_TIME_WIDTH);
+}
+void OLED_DrawLapTime(uint32_t lap_number, uint32_t centiseconds)
+{
+  uint8_t seconds;
+  uint8_t fraction;
+  uint8_t digit_count;
+  uint8_t x;
+
+  if (lap_number > 999U)
+  {
+    lap_number = 999U;
+  }
+  if (centiseconds > OLED_RACE_TIME_MAX_CENTISECONDS)
+  {
+    centiseconds = OLED_RACE_TIME_MAX_CENTISECONDS;
+  }
+
+  seconds = (uint8_t)(centiseconds / 100U);
+  fraction = (uint8_t)(centiseconds % 100U);
+  digit_count = (lap_number >= 100U) ? 3U :
+                ((lap_number >= 10U) ? 2U : 1U);
+  x = (uint8_t)((OLED_WIDTH - (38U + (16U * digit_count))) / 2U);
+  OLED_Clear();
+
+  OLED_DrawChinese(x, 0U, OLED_GLYPH_DI);
+  x = (uint8_t)(x + 16U);
+  if (digit_count == 3U)
+  {
+    OLED_DrawDigit(x, 0U, (uint8_t)(lap_number / 100U));
+    x = (uint8_t)(x + 16U);
+  }
+  if (digit_count >= 2U)
+  {
+    OLED_DrawDigit(x, 0U, (uint8_t)((lap_number / 10U) % 10U));
+    x = (uint8_t)(x + 16U);
+  }
+  OLED_DrawDigit(x, 0U, (uint8_t)(lap_number % 10U));
+  x = (uint8_t)(x + 16U);
+  OLED_DrawChinese(x, 0U, OLED_GLYPH_QUAN);
+  x = (uint8_t)(x + 18U);
+  OLED_DrawAscii(x, 0U, ":");
+
+  x = 12U;
+  OLED_DrawDigit(x, 4U, (uint8_t)(seconds / 10U));
+  x = (uint8_t)(x + 16U);
+  OLED_DrawDigit(x, 4U, (uint8_t)(seconds % 10U));
+  x = (uint8_t)(x + 16U);
+  OLED_DrawDot(x, 4U);
+  x = (uint8_t)(x + OLED_RACE_TIME_DOT_WIDTH);
+  OLED_DrawDigit(x, 4U, (uint8_t)(fraction / 10U));
+  x = (uint8_t)(x + 16U);
+  OLED_DrawDigit(x, 4U, (uint8_t)(fraction % 10U));
+  OLED_DrawChinese(88U, 4U, OLED_GLYPH_MIAO);
+  OLED_Update();
 }
 void OLED_DrawOdometer(int32_t left_counts,
                        int32_t right_counts,

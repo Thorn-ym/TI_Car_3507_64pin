@@ -175,6 +175,9 @@ extern "C" {
 /* Defines for START: GPIOB.23 with pinCMx 51 on package pin 22 */
 #define GPIO_KEY_START_PIN                                      (DL_GPIO_PIN_23)
 #define GPIO_KEY_START_IOMUX                                     (IOMUX_PINCM51)
+/* Defines for CONTINUOUS: GPIOB.24 with pinCMx 52 on package pin 23 */
+#define GPIO_KEY_CONTINUOUS_PIN                                 (DL_GPIO_PIN_24)
+#define GPIO_KEY_CONTINUOUS_IOMUX                                (IOMUX_PINCM52)
 /* Port definition for Pin Group GPIO_MOTOR */
 #define GPIO_MOTOR_PORT                                                  (GPIOA)
 

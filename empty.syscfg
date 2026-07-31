@@ -44,10 +44,13 @@ GPIO_OLED_CFG.associatedPins[1].initialValue = "CLEARED";
 GPIO_OLED_CFG.associatedPins[1].internalResistor = "PULL_UP";
 GPIO_OLED_CFG.associatedPins[1].pin.$assign = "PA1";
 GPIO_KEY_CFG.$name = "GPIO_KEY";
-GPIO_KEY_CFG.associatedPins.create(1);
+GPIO_KEY_CFG.associatedPins.create(2);
 GPIO_KEY_CFG.associatedPins[0].$name = "START";
 GPIO_KEY_CFG.associatedPins[0].direction = "INPUT";
 GPIO_KEY_CFG.associatedPins[0].pin.$assign = "PB23";
+GPIO_KEY_CFG.associatedPins[1].$name = "CONTINUOUS";
+GPIO_KEY_CFG.associatedPins[1].direction = "INPUT";
+GPIO_KEY_CFG.associatedPins[1].pin.$assign = "PB24";
 
 
 GPIO_MOTOR_CFG.$name = "GPIO_MOTOR";

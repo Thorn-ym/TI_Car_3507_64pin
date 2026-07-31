@@ -42,8 +42,13 @@ volatile CompetitionTaskStatus_t g_competition_task_status =
 static uint32_t s_last_control_tick = 0U;
 static uint32_t s_last_display_tick = 0U;
 static uint32_t s_key_debounce_tick = 0U;
+static uint32_t s_continuous_key_debounce_tick = 0U;
 static uint32_t s_key_press_tick = 0U;
+static uint32_t s_continuous_key_press_tick = 0U;
 static uint32_t s_motion_start_tick = 0U;
+static uint32_t s_last_lap_ticks = 0U;
+static uint32_t s_lap_number = 0U;
+static uint32_t s_finish_seen_tick = 0U;
 static uint16_t s_max_lap_progress = 0U;
 static int32_t s_finish_left_total = 0;
 static int32_t s_finish_right_total = 0;
@@ -52,6 +57,12 @@ static uint8_t s_key_stable = 1U;
 static uint8_t s_key_armed = 1U;
 static uint8_t s_key_press_pending = 0U;
 static uint8_t s_key_press_allowed = 0U;
+static uint8_t s_continuous_key_last_raw = 1U;
+static uint8_t s_continuous_key_stable = 1U;
+static uint8_t s_continuous_key_armed = 1U;
+static uint8_t s_continuous_key_press_pending = 0U;
+static uint8_t s_continuous_key_press_allowed = 0U;
+static uint8_t s_continuous_mode = 0U;
 static uint8_t s_leave_confirm_count = 0U;
 static uint8_t s_finish_confirm_count = 0U;
 static volatile uint8_t s_display_dirty = 0U;
@@ -59,6 +70,8 @@ static volatile uint8_t s_initialized = 0U;
 
 static uint8_t CompetitionTasks_ReadKeyRaw(void);
 static uint8_t CompetitionTasks_KeyPressed(uint32_t tick);
+static uint8_t CompetitionTasks_ReadContinuousKeyRaw(void);
+static uint8_t CompetitionTasks_ContinuousKeyPressed(uint32_t tick);
 static uint8_t CompetitionTasks_FinishLineSeen(void);
 static uint32_t CompetitionTasks_AbsDelta(int32_t value, int32_t start);
 static uint8_t CompetitionTasks_AdvanceReached(void);
@@ -66,13 +79,17 @@ static uint32_t CompetitionTasks_TicksToCentiseconds(uint32_t ticks);
 static uint32_t CompetitionTasks_SmoothStep(uint32_t position,
                                             uint32_t span);
 static void CompetitionTasks_UpdateSpeedProfile(uint32_t tick);
-static void CompetitionTasks_Start(uint32_t start_tick, uint32_t now_tick);
+static void CompetitionTasks_Start(uint32_t start_tick,
+                                   uint32_t now_tick,
+                                   uint8_t continuous_mode);
+static void CompetitionTasks_CompleteLap(uint32_t tick);
 static void CompetitionTasks_Complete(uint32_t tick);
 
 void CompetitionTasks_Init(void)
 {
   uint32_t tick = g_car.control_tick;
   uint8_t raw = CompetitionTasks_ReadKeyRaw();
+  uint8_t continuous_raw = CompetitionTasks_ReadContinuousKeyRaw();
 
   s_initialized = 0U;
   g_competition_task_status.state = COMPETITION_STATE_IDLE;
@@ -83,14 +100,25 @@ void CompetitionTasks_Init(void)
   s_last_control_tick = tick;
   s_last_display_tick = tick;
   s_key_debounce_tick = tick;
+  s_continuous_key_debounce_tick = tick;
   s_key_press_tick = tick;
+  s_continuous_key_press_tick = tick;
   s_motion_start_tick = tick;
+  s_last_lap_ticks = 0U;
+  s_lap_number = 0U;
+  s_finish_seen_tick = 0U;
   s_max_lap_progress = 0U;
   s_key_last_raw = raw;
   s_key_stable = raw;
   s_key_armed = (raw != 0U) ? 1U : 0U;
   s_key_press_pending = 0U;
   s_key_press_allowed = 0U;
+  s_continuous_key_last_raw = continuous_raw;
+  s_continuous_key_stable = continuous_raw;
+  s_continuous_key_armed = (continuous_raw != 0U) ? 1U : 0U;
+  s_continuous_key_press_pending = 0U;
+  s_continuous_key_press_allowed = 0U;
+  s_continuous_mode = 0U;
   s_leave_confirm_count = 0U;
   s_finish_confirm_count = 0U;
   s_finish_left_total = 0;
@@ -108,6 +136,7 @@ void CompetitionTasks_ControlStep(void)
 {
   uint32_t tick = g_car.control_tick;
   uint8_t key_pressed = 0U;
+  uint8_t continuous_key_pressed = 0U;
 
   if ((s_initialized == 0U) || (tick == s_last_control_tick))
   {
@@ -116,11 +145,19 @@ void CompetitionTasks_ControlStep(void)
   s_last_control_tick = tick;
 
   key_pressed = CompetitionTasks_KeyPressed(tick);
-  if ((key_pressed != 0U) &&
+  continuous_key_pressed = CompetitionTasks_ContinuousKeyPressed(tick);
+  if (((key_pressed != 0U) || (continuous_key_pressed != 0U)) &&
       ((g_competition_task_status.state == COMPETITION_STATE_IDLE) ||
        (g_competition_task_status.state == COMPETITION_STATE_FINISHED)))
   {
-    CompetitionTasks_Start(s_key_press_tick, tick);
+    if (continuous_key_pressed != 0U)
+    {
+      CompetitionTasks_Start(s_continuous_key_press_tick, tick, 1U);
+    }
+    else
+    {
+      CompetitionTasks_Start(s_key_press_tick, tick, 0U);
+    }
   }
 
   switch (g_competition_task_status.state)
@@ -151,6 +188,10 @@ void CompetitionTasks_ControlStep(void)
            COMPETITION_MIN_RUN_TICKS) &&
           (CompetitionTasks_FinishLineSeen() != 0U))
       {
+        if (s_finish_confirm_count == 0U)
+        {
+          s_finish_seen_tick = tick;
+        }
         if (s_finish_confirm_count < COMPETITION_FINISH_CONFIRM_TICKS)
         {
           s_finish_confirm_count++;
@@ -159,6 +200,7 @@ void CompetitionTasks_ControlStep(void)
       else
       {
         s_finish_confirm_count = 0U;
+        s_finish_seen_tick = 0U;
       }
 
       if (s_finish_confirm_count >= COMPETITION_FINISH_CONFIRM_TICKS)
@@ -166,7 +208,11 @@ void CompetitionTasks_ControlStep(void)
         s_finish_left_total = g_car.left.encoder_total;
         s_finish_right_total = g_car.right.encoder_total;
 
-        if (COMPETITION_FINISH_ADVANCE_COUNTS == 0U)
+        if (s_continuous_mode != 0U)
+        {
+          CompetitionTasks_CompleteLap(s_finish_seen_tick);
+        }
+        else if (COMPETITION_FINISH_ADVANCE_COUNTS == 0U)
         {
           CompetitionTasks_Complete(tick);
         }
@@ -206,6 +252,9 @@ void CompetitionTasks_Service(void)
   uint32_t tick = g_car.control_tick;
   uint32_t elapsed_ticks = 0U;
   uint32_t primask = 0U;
+  uint32_t lap_number = 0U;
+  uint32_t last_lap_ticks = 0U;
+  uint8_t continuous_mode = 0U;
   uint8_t draw = 0U;
   CompetitionTaskState_t state;
 
@@ -218,6 +267,9 @@ void CompetitionTasks_Service(void)
   __disable_irq();
   state = g_competition_task_status.state;
   elapsed_ticks = g_competition_task_status.elapsed_ticks;
+  lap_number = s_lap_number;
+  last_lap_ticks = s_last_lap_ticks;
+  continuous_mode = s_continuous_mode;
 
   if (s_display_dirty != 0U)
   {
@@ -228,6 +280,7 @@ void CompetitionTasks_Service(void)
   else if (((state == COMPETITION_STATE_LEAVING_A) ||
             (state == COMPETITION_STATE_RUNNING) ||
             (state == COMPETITION_STATE_FINISH_APPROACH)) &&
+           ((continuous_mode == 0U) || (lap_number == 0U)) &&
            ((uint32_t)(tick - s_last_display_tick) >=
             COMPETITION_DISPLAY_INTERVAL_TICKS))
   {
@@ -242,7 +295,15 @@ void CompetitionTasks_Service(void)
 
   if (draw != 0U)
   {
-    OLED_DrawRaceTime(CompetitionTasks_TicksToCentiseconds(elapsed_ticks));
+    if ((continuous_mode != 0U) && (lap_number > 0U))
+    {
+      OLED_DrawLapTime(
+          lap_number, CompetitionTasks_TicksToCentiseconds(last_lap_ticks));
+    }
+    else
+    {
+      OLED_DrawRaceTime(CompetitionTasks_TicksToCentiseconds(elapsed_ticks));
+    }
   }
 }
 
@@ -253,7 +314,7 @@ void CompetitionTasks_Enter(uint8_t problem)
     return;
   }
 
-  /* The retired menu remains link-compatible; only KEY2 starts a run. */
+  /* The retired menu remains link-compatible with the KEY2/KEY3 build. */
 }
 
 void CompetitionTasks_Task(uint8_t problem)
@@ -276,6 +337,7 @@ void CompetitionTasks_Exit(uint8_t problem)
   Car_Stop();
   g_competition_task_status.state = COMPETITION_STATE_IDLE;
   g_competition_task_status.elapsed_ticks = 0U;
+  s_continuous_mode = 0U;
   s_display_dirty = 1U;
 }
 
@@ -332,6 +394,67 @@ static uint8_t CompetitionTasks_KeyPressed(uint32_t tick)
     {
       s_key_press_pending = 0U;
       s_key_press_allowed = 0U;
+    }
+  }
+
+  return 0U;
+}
+
+static uint8_t CompetitionTasks_ReadContinuousKeyRaw(void)
+{
+  return (DL_GPIO_readPins(GPIO_KEY_PORT, GPIO_KEY_CONTINUOUS_PIN) != 0U)
+             ? 1U
+             : 0U;
+}
+
+static uint8_t CompetitionTasks_ContinuousKeyPressed(uint32_t tick)
+{
+  uint8_t raw = CompetitionTasks_ReadContinuousKeyRaw();
+
+  if (raw != s_continuous_key_last_raw)
+  {
+    s_continuous_key_last_raw = raw;
+    s_continuous_key_debounce_tick = tick;
+    if ((raw == 0U) && (s_continuous_key_press_pending == 0U))
+    {
+      s_continuous_key_press_pending = 1U;
+      s_continuous_key_press_tick = tick;
+      s_continuous_key_press_allowed =
+          ((s_continuous_key_armed != 0U) &&
+           ((g_competition_task_status.state == COMPETITION_STATE_IDLE) ||
+            (g_competition_task_status.state == COMPETITION_STATE_FINISHED)))
+              ? 1U
+              : 0U;
+    }
+  }
+
+  if ((uint32_t)(tick - s_continuous_key_debounce_tick) >=
+      COMPETITION_KEY_DEBOUNCE_TICKS)
+  {
+    if (raw != s_continuous_key_stable)
+    {
+      s_continuous_key_stable = raw;
+
+      if (s_continuous_key_stable != 0U)
+      {
+        s_continuous_key_armed = 1U;
+        s_continuous_key_press_pending = 0U;
+        s_continuous_key_press_allowed = 0U;
+      }
+      else if (s_continuous_key_armed != 0U)
+      {
+        uint8_t pressed = s_continuous_key_press_allowed;
+
+        s_continuous_key_armed = 0U;
+        s_continuous_key_press_pending = 0U;
+        s_continuous_key_press_allowed = 0U;
+        return pressed;
+      }
+    }
+    else if ((raw != 0U) && (s_continuous_key_press_pending != 0U))
+    {
+      s_continuous_key_press_pending = 0U;
+      s_continuous_key_press_allowed = 0U;
     }
   }
 
@@ -417,6 +540,10 @@ static void CompetitionTasks_UpdateSpeedProfile(uint32_t tick)
     command = (COMPETITION_CRUISE_COUNTS * blend +
                (COMPETITION_SMOOTHSTEP_SCALE / 2U)) >> 10;
   }
+  else if (s_continuous_mode != 0U)
+  {
+    command = COMPETITION_CRUISE_COUNTS;
+  }
   else
   {
     OdometerControlProgress_t progress = Odometer_GetControlProgress();
@@ -455,7 +582,9 @@ static void CompetitionTasks_UpdateSpeedProfile(uint32_t tick)
   Car_SetLineFollowBaseCounts((int32_t)command);
 }
 
-static void CompetitionTasks_Start(uint32_t start_tick, uint32_t now_tick)
+static void CompetitionTasks_Start(uint32_t start_tick,
+                                   uint32_t now_tick,
+                                   uint8_t continuous_mode)
 {
   g_competition_task_status.state = COMPETITION_STATE_LEAVING_A;
   g_competition_task_status.start_tick = start_tick;
@@ -464,6 +593,10 @@ static void CompetitionTasks_Start(uint32_t start_tick, uint32_t now_tick)
 
   s_leave_confirm_count = 0U;
   s_finish_confirm_count = 0U;
+  s_finish_seen_tick = 0U;
+  s_last_lap_ticks = 0U;
+  s_lap_number = 0U;
+  s_continuous_mode = (continuous_mode != 0U) ? 1U : 0U;
   s_finish_left_total = 0;
   s_finish_right_total = 0;
   s_display_dirty = 1U;
@@ -476,12 +609,32 @@ static void CompetitionTasks_Start(uint32_t start_tick, uint32_t now_tick)
   Car_StartLineFollow();
 }
 
+static void CompetitionTasks_CompleteLap(uint32_t tick)
+{
+  s_last_lap_ticks = tick - g_competition_task_status.start_tick;
+  if (s_lap_number < UINT32_MAX)
+  {
+    s_lap_number++;
+  }
+
+  g_competition_task_status.finish_tick = tick;
+  g_competition_task_status.elapsed_ticks = 0U;
+  g_competition_task_status.start_tick = tick;
+  g_competition_task_status.state = COMPETITION_STATE_LEAVING_A;
+
+  s_leave_confirm_count = 0U;
+  s_finish_confirm_count = 0U;
+  s_finish_seen_tick = 0U;
+  s_display_dirty = 1U;
+}
+
 static void CompetitionTasks_Complete(uint32_t tick)
 {
   g_competition_task_status.finish_tick = tick;
   g_competition_task_status.elapsed_ticks =
       tick - g_competition_task_status.start_tick;
   g_competition_task_status.state = COMPETITION_STATE_FINISHED;
+  s_continuous_mode = 0U;
   s_display_dirty = 1U;
 
   Car_BrakeHold();
