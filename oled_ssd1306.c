@@ -23,7 +23,10 @@
 #define OLED_RACE_TIME_X               28U
 #define OLED_RACE_TIME_DOT_WIDTH        8U
 #define OLED_RACE_TIME_WIDTH           72U
-#define OLED_LAP_LIST_ROWS              8U
+#define OLED_LAP_LIST_ROWS              2U
+#define OLED_LAP_PANEL_TIME_X           18U
+#define OLED_LAP_PANEL_SECONDS_X        92U
+#define OLED_LAP_PANEL_TIME_WIDTH       90U
 
 #define OLED_ODOMETER_FIRST_PAGE        0U
 #define OLED_ODOMETER_LAST_PAGE         2U
@@ -283,10 +286,12 @@ static void OLED_DrawMenuGlyph12(uint8_t x, uint8_t y, const uint16_t *glyph);
 static void OLED_DrawMenuMarker(uint8_t y);
 static void OLED_DrawDigit(uint8_t x, uint8_t page, uint8_t digit);
 static void OLED_DrawDot(uint8_t x, uint8_t page);
-static void OLED_DrawRaceTimeBuffer(uint32_t centiseconds);
-static void OLED_FormatLapEntry(char *text,
-                                uint32_t lap_number,
-                                uint32_t centiseconds);
+static void OLED_DrawRaceTimeAtPage(uint8_t x,
+                                    uint8_t page,
+                                    uint32_t centiseconds);
+static void OLED_DrawLapPanel(uint8_t first_page,
+                              uint32_t lap_number,
+                              uint32_t centiseconds);
 static uint8_t OLED_GetAsciiGlyph(char character);
 static void OLED_FormatOdometerCount(char *text,
                                      char label,
@@ -428,7 +433,9 @@ void OLED_DrawProblemSelected(uint8_t problem)
 }
 void OLED_DrawRaceTime(uint32_t centiseconds)
 {
-  OLED_DrawRaceTimeBuffer(centiseconds);
+  OLED_DrawRaceTimeAtPage(OLED_RACE_TIME_X,
+                          OLED_RACE_TIME_PAGE,
+                          centiseconds);
   (void)OLED_UpdateWindow(OLED_RACE_TIME_PAGE,
                           OLED_RACE_TIME_PAGE + 1U,
                           OLED_RACE_TIME_X,
@@ -498,56 +505,27 @@ void OLED_DrawContinuousRaceTime(uint32_t current_lap_number,
 {
   if (redraw_layout != 0U)
   {
-    uint8_t digit_count;
-    uint8_t x;
-
-    if (current_lap_number > 999U)
-    {
-      current_lap_number = 999U;
-    }
-
-    digit_count = (current_lap_number >= 100U) ? 3U :
-                  ((current_lap_number >= 10U) ? 2U : 1U);
-    x = (uint8_t)((OLED_WIDTH - (38U + (16U * digit_count))) / 2U);
     OLED_Clear();
-    OLED_DrawChinese(x, 0U, OLED_GLYPH_DI);
-    x = (uint8_t)(x + 16U);
-
-    if (digit_count == 3U)
-    {
-      OLED_DrawDigit(x, 0U, (uint8_t)(current_lap_number / 100U));
-      x = (uint8_t)(x + 16U);
-    }
-    if (digit_count >= 2U)
-    {
-      OLED_DrawDigit(
-          x, 0U, (uint8_t)((current_lap_number / 10U) % 10U));
-      x = (uint8_t)(x + 16U);
-    }
-    OLED_DrawDigit(x, 0U, (uint8_t)(current_lap_number % 10U));
-    x = (uint8_t)(x + 16U);
-    OLED_DrawChinese(x, 0U, OLED_GLYPH_QUAN);
-    x = (uint8_t)(x + 18U);
-    OLED_DrawAscii(x, 0U, ":");
-
+    OLED_DrawLapPanel(0U, current_lap_number, current_centiseconds);
     if (previous_lap_number > 0U)
     {
-      char previous[11];
-
-      OLED_FormatLapEntry(previous,
-                          previous_lap_number,
-                          previous_centiseconds);
-      OLED_DrawAscii(34U, 7U, previous);
+      OLED_DrawLapPanel(4U, previous_lap_number, previous_centiseconds);
     }
-
-    OLED_DrawRaceTimeBuffer(current_centiseconds);
     OLED_Update();
   }
   else
   {
-    OLED_DrawRaceTime(current_centiseconds);
+    OLED_DrawRaceTimeAtPage(OLED_LAP_PANEL_TIME_X,
+                            2U,
+                            current_centiseconds);
+    OLED_DrawChinese(OLED_LAP_PANEL_SECONDS_X, 2U, OLED_GLYPH_MIAO);
+    (void)OLED_UpdateWindow(2U,
+                            3U,
+                            OLED_LAP_PANEL_TIME_X,
+                            OLED_LAP_PANEL_TIME_WIDTH);
   }
 }
+
 void OLED_DrawLapList(uint32_t first_lap_number,
                       const uint16_t *centiseconds,
                       uint8_t count)
@@ -557,7 +535,6 @@ void OLED_DrawLapList(uint32_t first_lap_number,
   OLED_Clear();
   if ((centiseconds == (const uint16_t *)0) || (count == 0U))
   {
-    OLED_DrawAscii(34U, 3U, "L000:--.--");
     OLED_Update();
     return;
   }
@@ -569,12 +546,9 @@ void OLED_DrawLapList(uint32_t first_lap_number,
 
   for (row = 0U; row < count; row++)
   {
-    char entry[11];
-
-    OLED_FormatLapEntry(entry,
-                        first_lap_number + row,
-                        centiseconds[row]);
-    OLED_DrawAscii(34U, row, entry);
+    OLED_DrawLapPanel((uint8_t)(row * 4U),
+                      first_lap_number + row,
+                      centiseconds[row]);
   }
   OLED_Update();
 }
@@ -606,12 +580,18 @@ void OLED_DrawOdometer(int32_t left_counts,
                           OLED_ODOMETER_WIDTH);
 }
 
-static void OLED_DrawRaceTimeBuffer(uint32_t centiseconds)
+static void OLED_DrawRaceTimeAtPage(uint8_t x,
+                                    uint8_t page,
+                                    uint32_t centiseconds)
 {
   uint8_t seconds = 0U;
   uint8_t fraction = 0U;
-  uint8_t x = OLED_RACE_TIME_X;
 
+  if ((page > (OLED_PAGE_COUNT - 2U)) ||
+      (x > (OLED_WIDTH - OLED_RACE_TIME_WIDTH)))
+  {
+    return;
+  }
   if (centiseconds > OLED_RACE_TIME_MAX_CENTISECONDS)
   {
     centiseconds = OLED_RACE_TIME_MAX_CENTISECONDS;
@@ -619,42 +599,61 @@ static void OLED_DrawRaceTimeBuffer(uint32_t centiseconds)
 
   seconds = (uint8_t)(centiseconds / 100U);
   fraction = (uint8_t)(centiseconds % 100U);
-  OLED_ClearPageRange(OLED_RACE_TIME_PAGE, OLED_RACE_TIME_PAGE + 1U);
-  OLED_DrawDigit(x, OLED_RACE_TIME_PAGE, (uint8_t)(seconds / 10U));
+  OLED_ClearPageRange(page, page + 1U);
+  OLED_DrawDigit(x, page, (uint8_t)(seconds / 10U));
   x = (uint8_t)(x + 16U);
-  OLED_DrawDigit(x, OLED_RACE_TIME_PAGE, (uint8_t)(seconds % 10U));
+  OLED_DrawDigit(x, page, (uint8_t)(seconds % 10U));
   x = (uint8_t)(x + 16U);
-  OLED_DrawDot(x, OLED_RACE_TIME_PAGE);
+  OLED_DrawDot(x, page);
   x = (uint8_t)(x + OLED_RACE_TIME_DOT_WIDTH);
-  OLED_DrawDigit(x, OLED_RACE_TIME_PAGE, (uint8_t)(fraction / 10U));
+  OLED_DrawDigit(x, page, (uint8_t)(fraction / 10U));
   x = (uint8_t)(x + 16U);
-  OLED_DrawDigit(x, OLED_RACE_TIME_PAGE, (uint8_t)(fraction % 10U));
+  OLED_DrawDigit(x, page, (uint8_t)(fraction % 10U));
 }
 
-static void OLED_FormatLapEntry(char *text,
-                                uint32_t lap_number,
-                                uint32_t centiseconds)
+static void OLED_DrawLapPanel(uint8_t first_page,
+                              uint32_t lap_number,
+                              uint32_t centiseconds)
 {
+  uint8_t digit_count;
+  uint8_t x;
+
+  if (first_page > (OLED_PAGE_COUNT - 4U))
+  {
+    return;
+  }
   if (lap_number > 999U)
   {
     lap_number = 999U;
   }
-  if (centiseconds > OLED_RACE_TIME_MAX_CENTISECONDS)
-  {
-    centiseconds = OLED_RACE_TIME_MAX_CENTISECONDS;
-  }
 
-  text[0] = 'L';
-  text[1] = (char)('0' + ((lap_number / 100U) % 10U));
-  text[2] = (char)('0' + ((lap_number / 10U) % 10U));
-  text[3] = (char)('0' + (lap_number % 10U));
-  text[4] = ':';
-  text[5] = (char)('0' + ((centiseconds / 1000U) % 10U));
-  text[6] = (char)('0' + ((centiseconds / 100U) % 10U));
-  text[7] = '.';
-  text[8] = (char)('0' + ((centiseconds / 10U) % 10U));
-  text[9] = (char)('0' + (centiseconds % 10U));
-  text[10] = '\0';
+  digit_count = (lap_number >= 100U) ? 3U :
+                ((lap_number >= 10U) ? 2U : 1U);
+  x = (uint8_t)((OLED_WIDTH - (32U + (16U * digit_count))) / 2U);
+
+  OLED_DrawChinese(x, first_page, OLED_GLYPH_DI);
+  x = (uint8_t)(x + 16U);
+  if (digit_count == 3U)
+  {
+    OLED_DrawDigit(x, first_page, (uint8_t)(lap_number / 100U));
+    x = (uint8_t)(x + 16U);
+  }
+  if (digit_count >= 2U)
+  {
+    OLED_DrawDigit(
+        x, first_page, (uint8_t)((lap_number / 10U) % 10U));
+    x = (uint8_t)(x + 16U);
+  }
+  OLED_DrawDigit(x, first_page, (uint8_t)(lap_number % 10U));
+  x = (uint8_t)(x + 16U);
+  OLED_DrawChinese(x, first_page, OLED_GLYPH_QUAN);
+
+  OLED_DrawRaceTimeAtPage(OLED_LAP_PANEL_TIME_X,
+                          (uint8_t)(first_page + 2U),
+                          centiseconds);
+  OLED_DrawChinese(OLED_LAP_PANEL_SECONDS_X,
+                   (uint8_t)(first_page + 2U),
+                   OLED_GLYPH_MIAO);
 }
 static uint8_t OLED_GetAsciiGlyph(char character)
 {
