@@ -176,11 +176,19 @@ enum
   CAR_LINE_FILTER_DIRECT_LIMIT = 33,
   CAR_LINE_FILTER_CENTER_ALPHA_Q8 = 64,
   CAR_LINE_FILTER_DEADBAND = 2,
+  CAR_LINE_CENTER_ENTER_FILTERED = 3,
+  CAR_LINE_CENTER_ENTER_RAW = 8,
+  CAR_LINE_CENTER_EXIT = 12,
+  CAR_LINE_CENTER_CONFIRM_TICKS = 2U,
   CAR_LINE_LOST_CONFIRM_TICKS = 3U
 };
 
 static int32_t s_line_error_filter_q8 = 0;
 static uint8_t s_line_error_filter_valid = 0U;
+static uint8_t s_line_center_locked = 0U;
+static uint8_t s_line_center_confirm_count = 0U;
+static float s_line_derivative_filtered = 0.0f;
+static uint8_t s_line_derivative_valid = 0U;
 static uint8_t s_line_lost_count = 0U;
 
 static int16_t Car_LimitPwm(int32_t pwm);
@@ -189,7 +197,7 @@ static int32_t Car_AbsInt32(int32_t value);
 static float Car_LimitFloat(float value, float limit);
 static int32_t Car_LimitTargetCounts(int32_t counts);
 static int16_t Car_PidStep(volatile CarMotor_t *motor);
-static int32_t Car_LinePidStep(int32_t error);
+static int32_t Car_LinePidStep(int32_t error, uint8_t adaptive_d_enable);
 static int32_t Car_FilterLineError(int32_t raw_error);
 static void Car_ResetPid(volatile CarMotor_t *motor);
 static void Car_ResetLinePid(void);
@@ -296,7 +304,7 @@ void Car_ControlStep(void)
       {
         int32_t line_error = Car_FilterLineError((int32_t)g_line.error);
         float line_integral_before = g_car.line.pid.integral;
-        int32_t correction = Car_LinePidStep(line_error);
+        int32_t correction = Car_LinePidStep(line_error, 1U);
         int32_t correction_before_limit = correction;
         int32_t correction_limit = g_car.line.base_counts;
         int32_t left_target = g_car.line.base_counts - correction;
@@ -339,6 +347,9 @@ void Car_ControlStep(void)
       else if (s_line_lost_count < (CAR_LINE_LOST_CONFIRM_TICKS - 1U))
       {
         s_line_lost_count++;
+        s_line_center_confirm_count = 0U;
+        s_line_derivative_filtered = 0.0f;
+        s_line_derivative_valid = 0U;
         left_pwm = Car_PidStep(&g_car.left);
         right_pwm = Car_PidStep(&g_car.right);
       }
@@ -634,12 +645,63 @@ static int16_t Car_PidStep(volatile CarMotor_t *motor)
   return Car_LimitPwm((int32_t)output);
 }
 
-static int32_t Car_LinePidStep(int32_t error_counts)
+static int32_t Car_LinePidStep(int32_t error_counts,
+                               uint8_t adaptive_d_enable)
 {
   volatile CarPid_t *pid = &g_car.line.pid;
   float error = (float)error_counts;
   float derivative = error - pid->previous_error;
   float output = 0.0f;
+
+  if (adaptive_d_enable != 0U)
+  {
+    if (s_line_center_locked != 0U)
+    {
+      derivative = 0.0f;
+      s_line_derivative_filtered = 0.0f;
+      s_line_derivative_valid = 1U;
+      pid->previous_error = 0.0f;
+    }
+    else if (s_line_derivative_valid == 0U)
+    {
+      derivative = 0.0f;
+      s_line_derivative_filtered = 0.0f;
+      s_line_derivative_valid = 1U;
+    }
+    else
+    {
+      int32_t magnitude = Car_AbsInt32(error_counts);
+
+      if (magnitude >= CAR_LINE_FILTER_DIRECT_LIMIT)
+      {
+        s_line_derivative_filtered = 0.0f;
+      }
+      else
+      {
+        int32_t alpha_q8;
+        float alpha;
+
+        if (magnitude <= CAR_LINE_FILTER_CENTER_LIMIT)
+        {
+          alpha_q8 = CAR_LINE_FILTER_CENTER_ALPHA_Q8;
+        }
+        else
+        {
+          alpha_q8 = CAR_LINE_FILTER_CENTER_ALPHA_Q8 +
+              (12 * (magnitude - CAR_LINE_FILTER_CENTER_LIMIT));
+          if (alpha_q8 > CAR_LINE_FILTER_Q8_ONE)
+          {
+            alpha_q8 = CAR_LINE_FILTER_Q8_ONE;
+          }
+        }
+
+        alpha = (float)alpha_q8 / (float)CAR_LINE_FILTER_Q8_ONE;
+        s_line_derivative_filtered +=
+            alpha * (derivative - s_line_derivative_filtered);
+        derivative = s_line_derivative_filtered;
+      }
+    }
+  }
 
   pid->integral += error;
   pid->integral = Car_LimitFloat(pid->integral, pid->integral_limit);
@@ -732,6 +794,42 @@ static int32_t Car_FilterLineError(int32_t raw_error)
     filtered_error = 0;
   }
 
+  filter_magnitude = Car_AbsInt32(filtered_error);
+  control_magnitude = (raw_magnitude > filter_magnitude) ?
+                      raw_magnitude : filter_magnitude;
+
+  if (s_line_center_locked != 0U)
+  {
+    if (control_magnitude >= CAR_LINE_CENTER_EXIT)
+    {
+      s_line_center_locked = 0U;
+      s_line_center_confirm_count = 0U;
+    }
+    else
+    {
+      return 0;
+    }
+  }
+
+  if ((raw_magnitude <= CAR_LINE_CENTER_ENTER_RAW) &&
+      (filter_magnitude <= CAR_LINE_CENTER_ENTER_FILTERED))
+  {
+    if (s_line_center_confirm_count < CAR_LINE_CENTER_CONFIRM_TICKS)
+    {
+      s_line_center_confirm_count++;
+    }
+
+    if (s_line_center_confirm_count >= CAR_LINE_CENTER_CONFIRM_TICKS)
+    {
+      s_line_center_locked = 1U;
+      return 0;
+    }
+  }
+  else
+  {
+    s_line_center_confirm_count = 0U;
+  }
+
   return filtered_error;
 }
 
@@ -747,6 +845,10 @@ static void Car_ResetLinePid(void)
   g_car.line.pid.previous_error = 0.0f;
   s_line_error_filter_q8 = 0;
   s_line_error_filter_valid = 0U;
+  s_line_center_locked = 0U;
+  s_line_center_confirm_count = 0U;
+  s_line_derivative_filtered = 0.0f;
+  s_line_derivative_valid = 0U;
 }
 
 static uint8_t Car_RightAngleCenterSeen(void)
@@ -1475,7 +1577,7 @@ static uint8_t Car_RightAngleRecoveryStep(int16_t *left_pwm, int16_t *right_pwm)
     base = g_car.line.base_counts;
   }
 
-  correction = Car_LinePidStep((int32_t)g_line.error);
+  correction = Car_LinePidStep((int32_t)g_line.error, 0U);
   g_car.line.correction_counts = correction;
   Car_RightAngleSetTargets(base - correction,
                            base + correction,
