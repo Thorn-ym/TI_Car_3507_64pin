@@ -68,7 +68,7 @@ volatile CarControl_t g_car =
   {
     .pid =
     {
-      .kp = 0.9f,
+      .kp = 0.6f,
       .ki = 0.05f,
       .kd = 0.2f,
       .integral = 0.0f,
@@ -168,6 +168,21 @@ static uint8_t s_approach_mismatch_ticks = 0U;
 static uint8_t s_approach_distance_reliable = 0U;
 static int32_t s_approach_fused_distance = 0;
 
+enum
+{
+  CAR_LINE_FILTER_Q8_SHIFT = 8U,
+  CAR_LINE_FILTER_Q8_ONE = 1U << CAR_LINE_FILTER_Q8_SHIFT,
+  CAR_LINE_FILTER_CENTER_LIMIT = 16,
+  CAR_LINE_FILTER_DIRECT_LIMIT = 33,
+  CAR_LINE_FILTER_CENTER_ALPHA_Q8 = 64,
+  CAR_LINE_FILTER_DEADBAND = 2,
+  CAR_LINE_LOST_CONFIRM_TICKS = 3U
+};
+
+static int32_t s_line_error_filter_q8 = 0;
+static uint8_t s_line_error_filter_valid = 0U;
+static uint8_t s_line_lost_count = 0U;
+
 static int16_t Car_LimitPwm(int32_t pwm);
 static float Car_AbsFloat(float value);
 static int32_t Car_AbsInt32(int32_t value);
@@ -175,6 +190,7 @@ static float Car_LimitFloat(float value, float limit);
 static int32_t Car_LimitTargetCounts(int32_t counts);
 static int16_t Car_PidStep(volatile CarMotor_t *motor);
 static int32_t Car_LinePidStep(int32_t error);
+static int32_t Car_FilterLineError(int32_t raw_error);
 static void Car_ResetPid(volatile CarMotor_t *motor);
 static void Car_ResetLinePid(void);
 static uint8_t Car_RightAngleCenterSeen(void);
@@ -275,9 +291,10 @@ void Car_ControlStep(void)
         break;
       }
 
-      if ((g_line.line_seen != 0U) || (g_car.line.line_lost_stop == 0U))
+      if ((g_line.line_seen != 0U) ||
+          (g_car.line.line_lost_stop == 0U))
       {
-        int32_t line_error = (int32_t)g_line.error;
+        int32_t line_error = Car_FilterLineError((int32_t)g_line.error);
         float line_integral_before = g_car.line.pid.integral;
         int32_t correction = Car_LinePidStep(line_error);
         int32_t correction_before_limit = correction;
@@ -285,6 +302,7 @@ void Car_ControlStep(void)
         int32_t left_target = g_car.line.base_counts - correction;
         int32_t right_target = g_car.line.base_counts + correction;
 
+        s_line_lost_count = 0U;
         if (correction_limit < 0)
         {
           correction_limit = 0;
@@ -318,8 +336,20 @@ void Car_ControlStep(void)
         left_pwm = Car_PidStep(&g_car.left);
         right_pwm = Car_PidStep(&g_car.right);
       }
+      else if (s_line_lost_count < (CAR_LINE_LOST_CONFIRM_TICKS - 1U))
+      {
+        s_line_lost_count++;
+        left_pwm = Car_PidStep(&g_car.left);
+        right_pwm = Car_PidStep(&g_car.right);
+      }
       else
       {
+        if (s_line_lost_count < CAR_LINE_LOST_CONFIRM_TICKS)
+        {
+          s_line_lost_count++;
+          s_line_error_filter_valid = 0U;
+        }
+
         Car_RightAngleAssistStop();
         g_car.line.correction_counts = 0;
         g_car.line.left_target_counts = 0;
@@ -401,6 +431,8 @@ void Car_ControlStep(void)
 
 void Car_Stop(void)
 {
+  s_line_lost_count = 0U;
+  s_line_error_filter_valid = 0U;
   g_car.mode = CAR_MODE_DISABLED;
   g_car.line.correction_counts = 0;
   g_car.line.left_target_counts = 0;
@@ -433,6 +465,8 @@ void Car_Stop(void)
 }
 void Car_BrakeHold(void)
 {
+  s_line_lost_count = 0U;
+  s_line_error_filter_valid = 0U;
   Car_RightAngleAssistStop();
   g_car.mode = CAR_MODE_BRAKE_HOLD;
   g_car.line.correction_counts = 0;
@@ -466,6 +500,8 @@ void Car_BrakeHold(void)
 
 void Car_StartLineFollow(void)
 {
+  s_line_lost_count = 0U;
+  s_line_error_filter_valid = 0U;
   Car_ResetLinePid();
   Car_ResetPid(&g_car.left);
   Car_ResetPid(&g_car.right);
@@ -619,6 +655,86 @@ static int32_t Car_LinePidStep(int32_t error_counts)
   return (int32_t)output;
 }
 
+static int32_t Car_FilterLineError(int32_t raw_error)
+{
+  int32_t raw_q8 = raw_error * CAR_LINE_FILTER_Q8_ONE;
+  int32_t raw_magnitude = Car_AbsInt32(raw_error);
+  int32_t filtered_error;
+  int32_t filter_magnitude;
+  int32_t control_magnitude;
+  int32_t alpha_q8;
+
+  if (s_line_error_filter_valid == 0U)
+  {
+    s_line_error_filter_q8 = raw_q8;
+    s_line_error_filter_valid = 1U;
+  }
+  else
+  {
+    if (s_line_error_filter_q8 >= 0)
+    {
+      filtered_error =
+          (s_line_error_filter_q8 + (CAR_LINE_FILTER_Q8_ONE / 2)) >>
+          CAR_LINE_FILTER_Q8_SHIFT;
+    }
+    else
+    {
+      filtered_error = -(((-s_line_error_filter_q8) +
+                           (CAR_LINE_FILTER_Q8_ONE / 2)) >>
+                          CAR_LINE_FILTER_Q8_SHIFT);
+    }
+
+    filter_magnitude = Car_AbsInt32(filtered_error);
+    control_magnitude = (raw_magnitude > filter_magnitude) ?
+                        raw_magnitude : filter_magnitude;
+
+    if (control_magnitude >= CAR_LINE_FILTER_DIRECT_LIMIT)
+    {
+      s_line_error_filter_q8 = raw_q8;
+    }
+    else
+    {
+      if (control_magnitude <= CAR_LINE_FILTER_CENTER_LIMIT)
+      {
+        alpha_q8 = CAR_LINE_FILTER_CENTER_ALPHA_Q8;
+      }
+      else
+      {
+        alpha_q8 = CAR_LINE_FILTER_CENTER_ALPHA_Q8 +
+            (12 * (control_magnitude - CAR_LINE_FILTER_CENTER_LIMIT));
+        if (alpha_q8 > CAR_LINE_FILTER_Q8_ONE)
+        {
+          alpha_q8 = CAR_LINE_FILTER_Q8_ONE;
+        }
+      }
+
+      s_line_error_filter_q8 +=
+          ((raw_q8 - s_line_error_filter_q8) * alpha_q8) >>
+          CAR_LINE_FILTER_Q8_SHIFT;
+    }
+  }
+
+  if (s_line_error_filter_q8 >= 0)
+  {
+    filtered_error =
+        (s_line_error_filter_q8 + (CAR_LINE_FILTER_Q8_ONE / 2)) >>
+        CAR_LINE_FILTER_Q8_SHIFT;
+  }
+  else
+  {
+    filtered_error = -(((-s_line_error_filter_q8) +
+                         (CAR_LINE_FILTER_Q8_ONE / 2)) >>
+                        CAR_LINE_FILTER_Q8_SHIFT);
+  }
+
+  if (Car_AbsInt32(filtered_error) <= CAR_LINE_FILTER_DEADBAND)
+  {
+    filtered_error = 0;
+  }
+
+  return filtered_error;
+}
+
 static void Car_ResetPid(volatile CarMotor_t *motor)
 {
   motor->pid.integral = 0.0f;
@@ -629,6 +745,8 @@ static void Car_ResetLinePid(void)
 {
   g_car.line.pid.integral = 0.0f;
   g_car.line.pid.previous_error = 0.0f;
+  s_line_error_filter_q8 = 0;
+  s_line_error_filter_valid = 0U;
 }
 
 static uint8_t Car_RightAngleCenterSeen(void)
