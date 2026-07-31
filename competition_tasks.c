@@ -83,6 +83,7 @@ static void CompetitionTasks_Start(uint32_t start_tick,
                                    uint32_t now_tick,
                                    uint8_t continuous_mode);
 static void CompetitionTasks_CompleteLap(uint32_t tick);
+static void CompetitionTasks_StopContinuous(uint32_t tick);
 static void CompetitionTasks_Complete(uint32_t tick);
 
 void CompetitionTasks_Init(void)
@@ -146,9 +147,13 @@ void CompetitionTasks_ControlStep(void)
 
   key_pressed = CompetitionTasks_KeyPressed(tick);
   continuous_key_pressed = CompetitionTasks_ContinuousKeyPressed(tick);
-  if (((key_pressed != 0U) || (continuous_key_pressed != 0U)) &&
-      ((g_competition_task_status.state == COMPETITION_STATE_IDLE) ||
-       (g_competition_task_status.state == COMPETITION_STATE_FINISHED)))
+  if ((continuous_key_pressed != 0U) && (s_continuous_mode != 0U))
+  {
+    CompetitionTasks_StopContinuous(tick);
+  }
+  else if (((key_pressed != 0U) || (continuous_key_pressed != 0U)) &&
+           ((g_competition_task_status.state == COMPETITION_STATE_IDLE) ||
+            (g_competition_task_status.state == COMPETITION_STATE_FINISHED)))
   {
     if (continuous_key_pressed != 0U)
     {
@@ -421,8 +426,9 @@ static uint8_t CompetitionTasks_ContinuousKeyPressed(uint32_t tick)
       s_continuous_key_press_tick = tick;
       s_continuous_key_press_allowed =
           ((s_continuous_key_armed != 0U) &&
-           ((g_competition_task_status.state == COMPETITION_STATE_IDLE) ||
-            (g_competition_task_status.state == COMPETITION_STATE_FINISHED)))
+           (((g_competition_task_status.state == COMPETITION_STATE_IDLE) ||
+             (g_competition_task_status.state == COMPETITION_STATE_FINISHED)) ||
+            (s_continuous_mode != 0U)))
               ? 1U
               : 0U;
     }
@@ -626,6 +632,21 @@ static void CompetitionTasks_CompleteLap(uint32_t tick)
   s_finish_confirm_count = 0U;
   s_finish_seen_tick = 0U;
   s_display_dirty = 1U;
+}
+
+static void CompetitionTasks_StopContinuous(uint32_t tick)
+{
+  g_competition_task_status.finish_tick = tick;
+  g_competition_task_status.elapsed_ticks =
+      tick - g_competition_task_status.start_tick;
+  g_competition_task_status.state = COMPETITION_STATE_FINISHED;
+
+  s_continuous_mode = 0U;
+  s_leave_confirm_count = 0U;
+  s_finish_confirm_count = 0U;
+  s_finish_seen_tick = 0U;
+  s_display_dirty = (s_lap_number == 0U) ? 1U : 0U;
+  Car_BrakeHold();
 }
 
 static void CompetitionTasks_Complete(uint32_t tick)
