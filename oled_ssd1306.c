@@ -440,6 +440,9 @@ void OLED_DrawOdometer(int32_t left_counts,
                        uint32_t lap_progress_tenths,
                        uint8_t lap_progress_valid)
 {
+  /* Formal competition mode displays only the race timer. */
+  return;
+
   char left_text[12];
   char right_text[12];
   char progress_text[9];
