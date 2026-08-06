@@ -1,0 +1,5780 @@
+{
+  "path": "C:\\Users\\Thorn\\workspace_ccstheia\\TI_Car_3507_64\\report_work\\inputs\\template_converted.docx",
+  "sections": [
+    {
+      "page_width_cm": 20.998,
+      "page_height_cm": 29.697,
+      "top_margin_cm": 3.0,
+      "bottom_margin_cm": 2.54,
+      "left_margin_cm": 3.175,
+      "right_margin_cm": 3.175,
+      "header_distance_cm": 1.501,
+      "footer_distance_cm": 1.75,
+      "different_first_page_header_footer": true,
+      "header": [
+        {
+          "text": "",
+          "style": "Normal",
+          "alignment": null,
+          "line_spacing": null,
+          "space_before_pt": null,
+          "space_after_pt": null,
+          "first_line_indent_cm": null,
+          "left_indent_cm": null,
+          "keep_with_next": null,
+          "page_break_before": null,
+          "runs": []
+        }
+      ],
+      "footer": [
+        {
+          "text": "III",
+          "style": "Footer",
+          "alignment": null,
+          "line_spacing": null,
+          "space_before_pt": null,
+          "space_after_pt": null,
+          "first_line_indent_cm": null,
+          "left_indent_cm": null,
+          "keep_with_next": null,
+          "page_break_before": null,
+          "runs": [
+            {
+              "text": "III",
+              "font": null,
+              "size_pt": null,
+              "bold": null,
+              "italic": null,
+              "underline": null
+            }
+          ]
+        },
+        {
+          "text": "",
+          "style": "Footer",
+          "alignment": null,
+          "line_spacing": null,
+          "space_before_pt": null,
+          "space_after_pt": null,
+          "first_line_indent_cm": null,
+          "left_indent_cm": null,
+          "keep_with_next": null,
+          "page_break_before": null,
+          "runs": []
+        }
+      ]
+    },
+    {
+      "page_width_cm": 20.998,
+      "page_height_cm": 29.697,
+      "top_margin_cm": 3.0,
+      "bottom_margin_cm": 2.54,
+      "left_margin_cm": 3.175,
+      "right_margin_cm": 3.175,
+      "header_distance_cm": 1.501,
+      "footer_distance_cm": 1.75,
+      "different_first_page_header_footer": false,
+      "header": [
+        {
+          "text": "",
+          "style": "Normal",
+          "alignment": null,
+          "line_spacing": null,
+          "space_before_pt": null,
+          "space_after_pt": null,
+          "first_line_indent_cm": null,
+          "left_indent_cm": null,
+          "keep_with_next": null,
+          "page_break_before": null,
+          "runs": []
+        }
+      ],
+      "footer": [
+        {
+          "text": "III",
+          "style": "Footer",
+          "alignment": null,
+          "line_spacing": null,
+          "space_before_pt": null,
+          "space_after_pt": null,
+          "first_line_indent_cm": null,
+          "left_indent_cm": null,
+          "keep_with_next": null,
+          "page_break_before": null,
+          "runs": [
+            {
+              "text": "III",
+              "font": null,
+              "size_pt": null,
+              "bold": null,
+              "italic": null,
+              "underline": null
+            }
+          ]
+        },
+        {
+          "text": "",
+          "style": "Footer",
+          "alignment": null,
+          "line_spacing": null,
+          "space_before_pt": null,
+          "space_after_pt": null,
+          "first_line_indent_cm": null,
+          "left_indent_cm": null,
+          "keep_with_next": null,
+          "page_break_before": null,
+          "runs": []
+        }
+      ]
+    },
+    {
+      "page_width_cm": 20.998,
+      "page_height_cm": 29.697,
+      "top_margin_cm": 3.0,
+      "bottom_margin_cm": 2.501,
+      "left_margin_cm": 2.501,
+      "right_margin_cm": 2.501,
+      "header_distance_cm": 1.501,
+      "footer_distance_cm": 1.75,
+      "different_first_page_header_footer": false,
+      "header": [
+        {
+          "text": "",
+          "style": "Normal",
+          "alignment": null,
+          "line_spacing": null,
+          "space_before_pt": null,
+          "space_after_pt": null,
+          "first_line_indent_cm": null,
+          "left_indent_cm": null,
+          "keep_with_next": null,
+          "page_break_before": null,
+          "runs": []
+        }
+      ],
+      "footer": [
+        {
+          "text": "2",
+          "style": "Footer",
+          "alignment": null,
+          "line_spacing": null,
+          "space_before_pt": null,
+          "space_after_pt": null,
+          "first_line_indent_cm": null,
+          "left_indent_cm": null,
+          "keep_with_next": null,
+          "page_break_before": null,
+          "runs": [
+            {
+              "text": "2",
+              "font": null,
+              "size_pt": null,
+              "bold": null,
+              "italic": null,
+              "underline": null
+            }
+          ]
+        },
+        {
+          "text": "",
+          "style": "Footer",
+          "alignment": null,
+          "line_spacing": null,
+          "space_before_pt": null,
+          "space_after_pt": null,
+          "first_line_indent_cm": null,
+          "left_indent_cm": null,
+          "keep_with_next": null,
+          "page_break_before": null,
+          "runs": []
+        }
+      ]
+    },
+    {
+      "page_width_cm": 20.998,
+      "page_height_cm": 29.697,
+      "top_margin_cm": 3.0,
+      "bottom_margin_cm": 2.501,
+      "left_margin_cm": 2.501,
+      "right_margin_cm": 2.501,
+      "header_distance_cm": 1.501,
+      "footer_distance_cm": 1.75,
+      "different_first_page_header_footer": false,
+      "header": [
+        {
+          "text": "",
+          "style": "Normal",
+          "alignment": null,
+          "line_spacing": null,
+          "space_before_pt": null,
+          "space_after_pt": null,
+          "first_line_indent_cm": null,
+          "left_indent_cm": null,
+          "keep_with_next": null,
+          "page_break_before": null,
+          "runs": []
+        }
+      ],
+      "footer": [
+        {
+          "text": "2",
+          "style": "Footer",
+          "alignment": null,
+          "line_spacing": null,
+          "space_before_pt": null,
+          "space_after_pt": null,
+          "first_line_indent_cm": null,
+          "left_indent_cm": null,
+          "keep_with_next": null,
+          "page_break_before": null,
+          "runs": [
+            {
+              "text": "2",
+              "font": null,
+              "size_pt": null,
+              "bold": null,
+              "italic": null,
+              "underline": null
+            }
+          ]
+        },
+        {
+          "text": "",
+          "style": "Footer",
+          "alignment": null,
+          "line_spacing": null,
+          "space_before_pt": null,
+          "space_after_pt": null,
+          "first_line_indent_cm": null,
+          "left_indent_cm": null,
+          "keep_with_next": null,
+          "page_break_before": null,
+          "runs": []
+        }
+      ]
+    },
+    {
+      "page_width_cm": 20.998,
+      "page_height_cm": 29.697,
+      "top_margin_cm": 3.0,
+      "bottom_margin_cm": 2.501,
+      "left_margin_cm": 2.501,
+      "right_margin_cm": 2.501,
+      "header_distance_cm": 1.501,
+      "footer_distance_cm": 1.75,
+      "different_first_page_header_footer": false,
+      "header": [
+        {
+          "text": "",
+          "style": "Normal",
+          "alignment": null,
+          "line_spacing": null,
+          "space_before_pt": null,
+          "space_after_pt": null,
+          "first_line_indent_cm": null,
+          "left_indent_cm": null,
+          "keep_with_next": null,
+          "page_break_before": null,
+          "runs": []
+        }
+      ],
+      "footer": [
+        {
+          "text": "2",
+          "style": "Footer",
+          "alignment": null,
+          "line_spacing": null,
+          "space_before_pt": null,
+          "space_after_pt": null,
+          "first_line_indent_cm": null,
+          "left_indent_cm": null,
+          "keep_with_next": null,
+          "page_break_before": null,
+          "runs": [
+            {
+              "text": "2",
+              "font": null,
+              "size_pt": null,
+              "bold": null,
+              "italic": null,
+              "underline": null
+            }
+          ]
+        },
+        {
+          "text": "",
+          "style": "Footer",
+          "alignment": null,
+          "line_spacing": null,
+          "space_before_pt": null,
+          "space_after_pt": null,
+          "first_line_indent_cm": null,
+          "left_indent_cm": null,
+          "keep_with_next": null,
+          "page_break_before": null,
+          "runs": []
+        }
+      ]
+    }
+  ],
+  "paragraphs": [
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": null,
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": null,
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": null,
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "2026年全国大学生电子设计竞赛",
+      "style": "Normal",
+      "alignment": "CENTER (1)",
+      "line_spacing": null,
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "20",
+          "font": null,
+          "size_pt": 24.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "26",
+          "font": null,
+          "size_pt": 24.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "年全国大学生电子设计竞赛",
+          "font": null,
+          "size_pt": 24.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "广东赛区竞赛",
+      "style": "Normal",
+      "alignment": "CENTER (1)",
+      "line_spacing": null,
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "广东赛区竞赛",
+          "font": null,
+          "size_pt": 24.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": "CENTER (1)",
+      "line_spacing": null,
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": "CENTER (1)",
+      "line_spacing": null,
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "XXX系统（A/B/C…/H题）",
+      "style": "Normal",
+      "alignment": "CENTER (1)",
+      "line_spacing": null,
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "XXX",
+          "font": null,
+          "size_pt": 18.0,
+          "bold": true,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "系统",
+          "font": null,
+          "size_pt": 18.0,
+          "bold": true,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "（",
+          "font": null,
+          "size_pt": 18.0,
+          "bold": true,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "A/B/C",
+          "font": null,
+          "size_pt": 18.0,
+          "bold": true,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "…",
+          "font": null,
+          "size_pt": 18.0,
+          "bold": true,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "/H",
+          "font": null,
+          "size_pt": 18.0,
+          "bold": true,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "题）",
+          "font": null,
+          "size_pt": 18.0,
+          "bold": true,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": "CENTER (1)",
+      "line_spacing": null,
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": "CENTER (1)",
+      "line_spacing": null,
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": "CENTER (1)",
+      "line_spacing": null,
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": "CENTER (1)",
+      "line_spacing": null,
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": "CENTER (1)",
+      "line_spacing": null,
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": "CENTER (1)",
+      "line_spacing": null,
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": "CENTER (1)",
+      "line_spacing": null,
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": "CENTER (1)",
+      "line_spacing": null,
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": "CENTER (1)",
+      "line_spacing": null,
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": "CENTER (1)",
+      "line_spacing": null,
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": "CENTER (1)",
+      "line_spacing": null,
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": "CENTER (1)",
+      "line_spacing": null,
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "2026年8月1日",
+      "style": "Normal",
+      "alignment": "CENTER (1)",
+      "line_spacing": null,
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "20",
+          "font": null,
+          "size_pt": 16.0,
+          "bold": true,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "26",
+          "font": null,
+          "size_pt": 16.0,
+          "bold": true,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "年",
+          "font": null,
+          "size_pt": 16.0,
+          "bold": true,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "8",
+          "font": null,
+          "size_pt": 16.0,
+          "bold": true,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "月",
+          "font": null,
+          "size_pt": 16.0,
+          "bold": true,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "1",
+          "font": null,
+          "size_pt": 16.0,
+          "bold": true,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "日",
+          "font": null,
+          "size_pt": 16.0,
+          "bold": true,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": "CENTER (1)",
+      "line_spacing": null,
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "摘    要 ",
+      "style": "Normal",
+      "alignment": "CENTER (1)",
+      "line_spacing": null,
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "摘",
+          "font": null,
+          "size_pt": 16.0,
+          "bold": true,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "    ",
+          "font": null,
+          "size_pt": 16.0,
+          "bold": true,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "要",
+          "font": null,
+          "size_pt": 16.0,
+          "bold": true,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": " ",
+          "font": null,
+          "size_pt": 16.0,
+          "bold": true,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": "CENTER (1)",
+      "line_spacing": null,
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": " ",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": " ",
+          "font": null,
+          "size_pt": null,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "（小四、宋体，300字以内）",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": -0.157,
+      "left_indent_cm": 0.995,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "（小四、宋体，300字以内）",
+          "font": "SimSun",
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "关键词：脉宽；脉冲；数显；电容（小四、宋体）",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "关键词：",
+          "font": "SimHei",
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "脉宽；脉冲；数显；电容",
+          "font": "SimSun",
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "（",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "小四、宋体）",
+          "font": null,
+          "size_pt": null,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": "CENTER (1)",
+      "line_spacing": null,
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": "CENTER (1)",
+      "line_spacing": null,
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "XXX系统（A/B/C…/H题）",
+      "style": "Normal",
+      "alignment": "CENTER (1)",
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "XXX",
+          "font": null,
+          "size_pt": 18.0,
+          "bold": true,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "系统",
+          "font": null,
+          "size_pt": 18.0,
+          "bold": true,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "（",
+          "font": null,
+          "size_pt": 18.0,
+          "bold": true,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "A/B/C",
+          "font": null,
+          "size_pt": 18.0,
+          "bold": true,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "…",
+          "font": null,
+          "size_pt": 18.0,
+          "bold": true,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "/H",
+          "font": null,
+          "size_pt": 18.0,
+          "bold": true,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "题",
+          "font": null,
+          "size_pt": 18.0,
+          "bold": true,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "）",
+          "font": null,
+          "size_pt": 18.0,
+          "bold": true,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": "CENTER (1)",
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "一、系统方案",
+      "style": "Heading 1",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "一、",
+          "font": null,
+          "size_pt": 16.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "系统方案",
+          "font": null,
+          "size_pt": 16.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "本系统主要由单片机控制模块、XXX模块、XXX模块、电源模块组成，下面分别论证这几个模块的选择。",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "279400",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 1.083,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "本系统主要由",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "单片机控制",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "模块、",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "XXX",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "模块、",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "XXX",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "模块、电源模块组成，下面分别论证这几个模块的选择。",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "1、主控制器件的论证与选择",
+      "style": "Heading 2",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "1",
+          "font": "SimSun",
+          "size_pt": 14.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "、主控制器件",
+          "font": "SimSun",
+          "size_pt": 14.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "的论证与选择",
+          "font": "SimSun",
+          "size_pt": 14.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "1.1.1控制器选用",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "279400",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "1.1.1控制器选用",
+          "font": "SimSun",
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "单片机比较",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "279400",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "单片机比较",
+          "font": "SimSun",
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "方案一：采用传统的51系列单片机。",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "279400",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "方案一：采用传统的51系列单片机。",
+          "font": "SimSun",
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "     XXXXXX.",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "279400",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "     XXXXXX.",
+          "font": "SimSun",
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "方案二：采用以增强型80C51内核的STC系列单片机",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "279400",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "方案二：采用以增强型80C51内核的STC系列单片机",
+          "font": "SimSun",
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "     XXXXXX",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "279400",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "     XXXXXX",
+          "font": "SimSun",
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "    通过比较，我们选择方案二。",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "279400",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "    通过比较，我们选择方案二。",
+          "font": "SimSun",
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "1.1.2控制系统方案选择",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "279400",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "1.1.2控制系统方案选择",
+          "font": "SimSun",
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "方案一：采用在面包板上搭建简易单片机系统",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "279400",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "方案一：采用在面包板上搭建简易单片机系统",
+          "font": "SimSun",
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "    在面包板上搭建单片机系统可以方便的对硬件做随时修改，也易于搭建，但是系统连线较多，不仅相互干扰，使电路杂乱无章，而且系统可靠性低，不适合本系统使用。",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "279400",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "    在面包板上搭建单片机系统可以方便的对硬件做随时修改，也易于搭建，但是系统连线较多，不仅相互干扰，使电路杂乱无章，而且系统可靠性低，不适合本系统使用。",
+          "font": "SimSun",
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "方案二：自制单片机印刷电路板",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "279400",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "方案二：自制单片机印刷电路板",
+          "font": "SimSun",
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "    自制印刷电路实现较为困难，实现周期长，此外也会花费较多的时间，影响整体设计进程。不宜采用该方案。 ",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "279400",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "    自制印刷电路实现较为困难，实现周期长，此外也会花费较多的时间，影响整体设计进程。不宜采用该方案。 ",
+          "font": "SimSun",
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "方案三：采用单片机最小系统。",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "279400",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "方案三：采用单片机最小系统。",
+          "font": "SimSun",
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "    单片机最小系统包含了显示、矩阵键盘、A/D、D/A等模块，能明显减少外围电路的设计，降低系统设计的难度，非常适合本系统的设计。",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "279400",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "    单片机最小系统包含了显示、矩阵键盘、A/D、D/A等模块，能明显减少外围电路的设计，降低系统设计的难度，非常适合本系统的设计。",
+          "font": "SimSun",
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "    综合以上三种方案，选择方案三。",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "279400",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "    综合以上三种方案，选择方案三。",
+          "font": "SimSun",
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "2、XXXX的论证与选择",
+      "style": "Heading 2",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "2",
+          "font": "SimSun",
+          "size_pt": 14.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "、",
+          "font": "SimSun",
+          "size_pt": 14.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "XXXX",
+          "font": "SimSun",
+          "size_pt": 14.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "的论证与选择",
+          "font": "SimSun",
+          "size_pt": 14.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "方案一：XXX。XXXX",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "方案一：",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "XXX",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "。",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "XXXX",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "方案二：XXX。XXXX",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "方案二：",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "XXX",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "。",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "XXXX",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "方案三：XXX。XXXX",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "方案三：",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "XXX",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "。",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "XXXX",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "综合以上三种方案，选择方案三。",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "综合以上三种方案，选择方案三。",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "3、控制系统的论证与选择",
+      "style": "Heading 2",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "3",
+          "font": "SimSun",
+          "size_pt": 14.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "、",
+          "font": "SimSun",
+          "size_pt": 14.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "控制系统的论证与选择",
+          "font": "SimSun",
+          "size_pt": 14.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "方案一：XXX。XXXX",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "方案一：",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "XXX",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "。",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "XXXX",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "方案二：XXX。XXXX",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "方案二：",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "XXX",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "。",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "XXXX",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "综合考虑采用XXXXX。",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.829,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "综合考虑采用",
+          "font": null,
+          "size_pt": null,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "XXXXX",
+          "font": null,
+          "size_pt": null,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "。",
+          "font": null,
+          "size_pt": null,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.829,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "二、系统理论分析与计算",
+      "style": "Heading 1",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "二、",
+          "font": null,
+          "size_pt": 16.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "系统理论分析与计算",
+          "font": null,
+          "size_pt": 16.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "1、XXXX的分析    ",
+      "style": "Heading 2",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "1",
+          "font": "SimSun",
+          "size_pt": 14.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "、",
+          "font": "SimSun",
+          "size_pt": 14.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "XXXX",
+          "font": "SimSun",
+          "size_pt": 14.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "的分析",
+          "font": "SimSun",
+          "size_pt": 14.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "    ",
+          "font": "SimSun",
+          "size_pt": 14.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "（1）XXX",
+      "style": "Heading 3",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "（",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "1",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "）",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "XXX",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "XXXX",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "XXXX",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "（2）XXX",
+      "style": "Heading 3",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "（",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "2",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "）",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "XXX",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "XXXX",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "XXXX",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "（3）XXX",
+      "style": "Heading 3",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "（",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "3",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "）",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "XXX",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "XXXX",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "XXXX",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "2、XXXX的计算  ",
+      "style": "Heading 2",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "2",
+          "font": "SimSun",
+          "size_pt": 14.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "、",
+          "font": "SimSun",
+          "size_pt": 14.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "XXXX",
+          "font": "SimSun",
+          "size_pt": 14.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "的计算",
+          "font": "SimSun",
+          "size_pt": 14.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "  ",
+          "font": "SimSun",
+          "size_pt": 14.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "（1）XXX",
+      "style": "Heading 3",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "（",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "1",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "）",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "XXX",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "XXXX",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "XXXX",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "（2）XXX",
+      "style": "Heading 3",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "（",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "2",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "）",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "XXX",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "XXXX",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "XXXX",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "（3）XXX",
+      "style": "Heading 3",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "（",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "3",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "）",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "XXX",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "XXXX",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "XXXX",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "3、XXXX的计算   ",
+      "style": "Heading 2",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "3",
+          "font": "SimSun",
+          "size_pt": 14.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "、",
+          "font": "SimSun",
+          "size_pt": 14.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "XXXX",
+          "font": "SimSun",
+          "size_pt": 14.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "的计算",
+          "font": "SimSun",
+          "size_pt": 14.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "   ",
+          "font": "SimSun",
+          "size_pt": 14.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "（1）XXX",
+      "style": "Heading 3",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "（",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "1",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "）",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "XXX",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "XXXX",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "XXXX",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "（2）XXX",
+      "style": "Heading 3",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "（",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "2",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "）",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "XXX",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "XXXX",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "XXXX",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "（3）XXX",
+      "style": "Heading 3",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "（",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "3",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "）",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "XXX",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "XXXX",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "XXXX",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "三、电路与程序设计",
+      "style": "Heading 1",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "三、",
+          "font": null,
+          "size_pt": 16.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "电路与程序设计",
+          "font": null,
+          "size_pt": 16.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "1、电路的设计",
+      "style": "Heading 2",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "1",
+          "font": "SimSun",
+          "size_pt": 14.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "、",
+          "font": "SimSun",
+          "size_pt": 14.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "电路的设计",
+          "font": "SimSun",
+          "size_pt": 14.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "（1）系统总体框图",
+      "style": "Heading 3",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "（",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "1",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "）",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "系统总体框图",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "系统总体框图如图X所示，XXXXXX",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "系统总体框图如图",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "X",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "所示，",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "XXXXXX",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": "CENTER (1)",
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.829,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "图X   系统总体框图",
+      "style": "Normal",
+      "alignment": "CENTER (1)",
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.829,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "图",
+          "font": null,
+          "size_pt": null,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "X   ",
+          "font": null,
+          "size_pt": null,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "系统总体框图",
+          "font": null,
+          "size_pt": null,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "（2）XXXX子系统框图与电路原理图",
+      "style": "Heading 3",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "（",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "2",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "）",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "XXXX",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "子系统框图与电路原理图",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "1、XXXX子系统框图",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "1",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "、",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "XXXX",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "子系统框图",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": "CENTER (1)",
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.829,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "图X   XXXX子系统框图",
+      "style": "Normal",
+      "alignment": "CENTER (1)",
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.829,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "图",
+          "font": null,
+          "size_pt": null,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "X   XXXX",
+          "font": null,
+          "size_pt": null,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "子系统框图",
+          "font": null,
+          "size_pt": null,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "2、XXXXX子系统电路",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "2",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "、",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "XXXXX",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "子系统电路",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "图X   XXXX子系统电路",
+      "style": "Normal",
+      "alignment": "CENTER (1)",
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.829,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "图",
+          "font": null,
+          "size_pt": null,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "X   XXXX",
+          "font": null,
+          "size_pt": null,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "子系统电路",
+          "font": null,
+          "size_pt": null,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "（3）XXXX子系统框图与电路原理图",
+      "style": "Heading 3",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "（",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "3",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "）",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "XXXX",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "子系统框图与电路原理图",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "1、XXXX子系统框图",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "1",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "、",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "XXXX",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "子系统框图",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "图X   XXXX子系统框图",
+      "style": "Normal",
+      "alignment": "CENTER (1)",
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.829,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "图",
+          "font": null,
+          "size_pt": null,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "X   XXXX",
+          "font": null,
+          "size_pt": null,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "子系统框图",
+          "font": null,
+          "size_pt": null,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "2、XXXXX子系统电路",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "2",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "、",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "XXXXX",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "子系统电路",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "图X   XXXX子系统电路",
+      "style": "Normal",
+      "alignment": "CENTER (1)",
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.829,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "图",
+          "font": null,
+          "size_pt": null,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "X   XXXX",
+          "font": null,
+          "size_pt": null,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "子系统电路",
+          "font": null,
+          "size_pt": null,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "（4）电源",
+      "style": "Heading 3",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "（",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "4",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "）",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "电源",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "电源由变压部分、滤波部分、稳压部分组成。为整个系统提供5V或者12V电压，确保电路的正常稳定工作。这部分电路比较简单，都采用三端稳压管实现，故不作详述。",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "电源由变压部分、滤波部分、稳压部分组成。为整个系统提供",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "5V",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "或者",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "12V",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "电压，确保电路的正常稳定工作。这部分电路比较简单，都采用三端稳压管实现，故不作详述。",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "2、程序的设计",
+      "style": "Heading 2",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "2",
+          "font": "SimSun",
+          "size_pt": 14.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "、",
+          "font": "SimSun",
+          "size_pt": 14.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "程序的设计",
+          "font": "SimSun",
+          "size_pt": 14.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "（1）程序功能描述与设计思路",
+      "style": "Heading 3",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "（",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "1",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "）",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "程序功能描述与设计思路",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "1、程序功能描述",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "1",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "、程序功能描述",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "根据题目要求软件部分主要实现键盘的设置和显示。",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "根据题目要求软件部分主要实现键盘的设置和显示。",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "1）键盘实现功能：设置频率值、频段、电压值以及设置输出信号类型。",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "1",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "）键盘实现功能：设置频率值、频段、电压值以及设置输出信号类型。",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "2）显示部分：显示电压值、频段、步进值、信号类型、频率。",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "2",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "）显示部分：显示电压值、频段、步进值、信号类型、频率。",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "2、程序设计思路",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "2",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "、程序设计思路",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "（2）程序流程图",
+      "style": "Heading 3",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "（",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "2",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "）",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "程序流程图",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "1、主程序流程图",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "1",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "、主程序流程图",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "2、XXX子程序流程图",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "2",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "、",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "XXX",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "子程序流程图",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "3、XXX子程序流程图",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "3",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "、",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "XXX",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "子程序流程图",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "4、XXX子程序流程图",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "4",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "、",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "XXX",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "子程序流程图",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "四、测试方案与测试结果",
+      "style": "Heading 1",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "四、",
+          "font": null,
+          "size_pt": 16.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "测试方案与测试结果",
+          "font": null,
+          "size_pt": 16.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "1、测试方案",
+      "style": "Heading 2",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "1",
+          "font": "SimSun",
+          "size_pt": 14.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "、",
+          "font": "SimSun",
+          "size_pt": 14.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "测试方案",
+          "font": "SimSun",
+          "size_pt": 14.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "（1）硬件测试",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "（",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "1",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "）",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "硬件测试",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "（2）软件仿真测试",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "（",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "2",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "）",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "软件仿真测试",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "（3）硬件软件联调",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "（",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "3",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "）",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "硬件软件联调",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "2、测试条件与仪器",
+      "style": "Heading 2",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "2",
+          "font": "SimSun",
+          "size_pt": 14.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "、",
+          "font": "SimSun",
+          "size_pt": 14.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "测试条件与仪器",
+          "font": "SimSun",
+          "size_pt": 14.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "测试条件：检查多次，仿真电路和硬件电路必须与系统原理图完全相同，并且检查无误，硬件电路保证无虚焊。",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "测试条件：检查多次，仿真电路和硬件电路必须与系统原理图完全相同，并且检查无误，硬件电路保证无虚焊。",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "测试仪器：高精度的数字毫伏表，模拟示波器，数字示波器，数字万用表，指针式万用表。",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "测试仪器：高精度的数字毫伏表，模拟示波器，数字示波器，数字万用表，指针式万用表。",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "3、测试结果及分析",
+      "style": "Heading 2",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "3",
+          "font": "SimSun",
+          "size_pt": 14.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "、",
+          "font": "SimSun",
+          "size_pt": 14.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "测试结果及分析",
+          "font": "SimSun",
+          "size_pt": 14.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "（1）测试结果(数据)",
+      "style": "Heading 3",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "（",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "1",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "）",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "测试结果",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "(",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "数据",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": ")",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "2V档信号测试结果好下表所示：                               （单位/V）",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "2V",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "档信号测试结果好下表所示：",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "                               ",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "（单位",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "/V",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "）",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "（2）测试分析与结论",
+      "style": "Heading 3",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "（",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "2",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "）",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "测试分析与结论",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "根据上述测试数据，XXXXXXXXXXXXXXXXXXXXXXXXXXXXX，由此可以得出以下结论：",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "根据上述测试数据，",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "，由此可以得出以下结论：",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "1、",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "1",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "、",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "2、",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "2",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "、",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "3、",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "3",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "、",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "综上所述，本设计达到设计要求。",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "综上所述，本设计达到设计要求。",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.949,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "五、参考文献",
+      "style": "Heading 1",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "五、",
+          "font": null,
+          "size_pt": 16.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "参考文献",
+          "font": null,
+          "size_pt": 16.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "[1] 谭浩强.C语言程序设计[M].北京:清华大学出版社,2012",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.741,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "[1]",
+          "font": "Arial",
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": " ",
+          "font": "Arial",
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "谭浩强.C语言程序设计[M].北京:清华大学出版社,2012",
+          "font": "SimSun",
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.741,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "附录1：电路原理图",
+      "style": "Heading 1",
+      "alignment": null,
+      "line_spacing": "1.0",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "附录",
+          "font": null,
+          "size_pt": 16.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "1",
+          "font": null,
+          "size_pt": 16.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "：电路原理图",
+          "font": null,
+          "size_pt": 16.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": null,
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": null,
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "附录2：源程序",
+      "style": "Heading 1",
+      "alignment": null,
+      "line_spacing": "1.0",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "附录",
+          "font": null,
+          "size_pt": 16.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "2",
+          "font": null,
+          "size_pt": 16.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "：源程序",
+          "font": null,
+          "size_pt": 16.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.847,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.847,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.847,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.847,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.847,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.847,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "格式说明：《设计报告》为A4纸张，首页为不超过500字中文摘要，正文控制在 8 页以内（不含封面、摘要、目录、附录、参考文献）。正文小四号宋体，行距固定为22磅，不得加页眉页脚。每页右下端注明页码。单页打印。",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.847,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "格式说明：《设计报告》为",
+          "font": "Arial",
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "A4",
+          "font": "Arial",
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "纸张，首页为",
+          "font": "Arial",
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "不超过",
+          "font": "Arial",
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "5",
+          "font": "Arial",
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "00",
+          "font": "Arial",
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "字中文摘要，",
+          "font": "Arial",
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "正文控制在",
+          "font": "Arial",
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": " 8 ",
+          "font": "Arial",
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "页以内（不含封面、摘要、目录、附录、参考文献）",
+          "font": "Arial",
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "。",
+          "font": "Arial",
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "正文小四号宋体，行距固定为",
+          "font": "Arial",
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "22",
+          "font": "Arial",
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "磅，不得加页眉页脚。每页右下端注明页码。单页打印。",
+          "font": "Arial",
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "注意事项：为保障竞赛评审工作公平公正，本次竞赛采用匿名评审机制。《设计报告》正文及附录所有内容中，严禁出现能够识别参赛队伍所属院校、指导教师、参赛队员姓名、学号等相关单位及个人身份信息。请勿使用包含单位名称的水印、图表标注、致谢、参考文献备注等形式泄露队伍信息。凡违规标注相关信息的作品，组委会有权按竞赛相关规定予以处理。",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.847,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": [
+        {
+          "text": "注意事项：",
+          "font": "Arial",
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "为保障竞赛评审工作公平公正，本次竞赛采用匿名评审机制。",
+          "font": "Arial",
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "《设计报告》",
+          "font": "Arial",
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "正文及附录所有内容中，",
+          "font": "Arial",
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "严禁出现能够识别参赛队伍所属院校、指导教师、参赛队员姓名、学号等相关单位及个人身份信息",
+          "font": null,
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        },
+        {
+          "text": "。请勿使用包含单位名称的水印、图表标注、致谢、参考文献备注等形式泄露队伍信息。凡违规标注相关信息的作品，组委会有权按竞赛相关规定予以处理。",
+          "font": "Arial",
+          "size_pt": 12.0,
+          "bold": null,
+          "italic": null,
+          "underline": null
+        }
+      ]
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": "1.25",
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.847,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    },
+    {
+      "text": "",
+      "style": "Normal",
+      "alignment": null,
+      "line_spacing": null,
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": 0.85,
+      "left_indent_cm": null,
+      "keep_with_next": null,
+      "page_break_before": null,
+      "runs": []
+    }
+  ],
+  "tables": [
+    {
+      "index": 1,
+      "style": "Normal Table",
+      "rows": [
+        [
+          [
+            {
+              "text": "信号值",
+              "style": "Normal",
+              "alignment": "CENTER (1)",
+              "line_spacing": "1.25",
+              "space_before_pt": null,
+              "space_after_pt": null,
+              "first_line_indent_cm": null,
+              "left_indent_cm": null,
+              "keep_with_next": null,
+              "page_break_before": null,
+              "runs": [
+                {
+                  "text": "信号值",
+                  "font": null,
+                  "size_pt": null,
+                  "bold": null,
+                  "italic": null,
+                  "underline": null
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "text": "0.2050",
+              "style": "Normal",
+              "alignment": "CENTER (1)",
+              "line_spacing": "1.25",
+              "space_before_pt": null,
+              "space_after_pt": null,
+              "first_line_indent_cm": null,
+              "left_indent_cm": null,
+              "keep_with_next": null,
+              "page_break_before": null,
+              "runs": [
+                {
+                  "text": "0.2050",
+                  "font": null,
+                  "size_pt": null,
+                  "bold": null,
+                  "italic": null,
+                  "underline": null
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "text": "0.2100",
+              "style": "Normal",
+              "alignment": "CENTER (1)",
+              "line_spacing": "1.25",
+              "space_before_pt": null,
+              "space_after_pt": null,
+              "first_line_indent_cm": null,
+              "left_indent_cm": null,
+              "keep_with_next": null,
+              "page_break_before": null,
+              "runs": [
+                {
+                  "text": "0.2100",
+                  "font": null,
+                  "size_pt": null,
+                  "bold": null,
+                  "italic": null,
+                  "underline": null
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "text": "0.2045",
+              "style": "Normal",
+              "alignment": "CENTER (1)",
+              "line_spacing": "1.25",
+              "space_before_pt": null,
+              "space_after_pt": null,
+              "first_line_indent_cm": null,
+              "left_indent_cm": null,
+              "keep_with_next": null,
+              "page_break_before": null,
+              "runs": [
+                {
+                  "text": "0.2045",
+                  "font": null,
+                  "size_pt": null,
+                  "bold": null,
+                  "italic": null,
+                  "underline": null
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "text": "0.4026",
+              "style": "Normal",
+              "alignment": "CENTER (1)",
+              "line_spacing": "1.25",
+              "space_before_pt": null,
+              "space_after_pt": null,
+              "first_line_indent_cm": null,
+              "left_indent_cm": null,
+              "keep_with_next": null,
+              "page_break_before": null,
+              "runs": [
+                {
+                  "text": "0.4026",
+                  "font": null,
+                  "size_pt": null,
+                  "bold": null,
+                  "italic": null,
+                  "underline": null
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "text": "1.007",
+              "style": "Normal",
+              "alignment": "CENTER (1)",
+              "line_spacing": "1.25",
+              "space_before_pt": null,
+              "space_after_pt": null,
+              "first_line_indent_cm": null,
+              "left_indent_cm": null,
+              "keep_with_next": null,
+              "page_break_before": null,
+              "runs": [
+                {
+                  "text": "1.007",
+                  "font": null,
+                  "size_pt": null,
+                  "bold": null,
+                  "italic": null,
+                  "underline": null
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "text": "1.542",
+              "style": "Normal",
+              "alignment": "CENTER (1)",
+              "line_spacing": "1.25",
+              "space_before_pt": null,
+              "space_after_pt": null,
+              "first_line_indent_cm": null,
+              "left_indent_cm": null,
+              "keep_with_next": null,
+              "page_break_before": null,
+              "runs": [
+                {
+                  "text": "1.542",
+                  "font": null,
+                  "size_pt": null,
+                  "bold": null,
+                  "italic": null,
+                  "underline": null
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "text": "1.669",
+              "style": "Normal",
+              "alignment": "CENTER (1)",
+              "line_spacing": "1.25",
+              "space_before_pt": null,
+              "space_after_pt": null,
+              "first_line_indent_cm": null,
+              "left_indent_cm": null,
+              "keep_with_next": null,
+              "page_break_before": null,
+              "runs": [
+                {
+                  "text": "1.669",
+                  "font": null,
+                  "size_pt": null,
+                  "bold": null,
+                  "italic": null,
+                  "underline": null
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "text": "1.999",
+              "style": "Normal",
+              "alignment": "CENTER (1)",
+              "line_spacing": "1.25",
+              "space_before_pt": null,
+              "space_after_pt": null,
+              "first_line_indent_cm": null,
+              "left_indent_cm": null,
+              "keep_with_next": null,
+              "page_break_before": null,
+              "runs": [
+                {
+                  "text": "1.999",
+                  "font": null,
+                  "size_pt": null,
+                  "bold": null,
+                  "italic": null,
+                  "underline": null
+                }
+              ]
+            }
+          ]
+        ],
+        [
+          [
+            {
+              "text": "显示",
+              "style": "Normal",
+              "alignment": "CENTER (1)",
+              "line_spacing": "1.25",
+              "space_before_pt": null,
+              "space_after_pt": null,
+              "first_line_indent_cm": null,
+              "left_indent_cm": null,
+              "keep_with_next": null,
+              "page_break_before": null,
+              "runs": [
+                {
+                  "text": "显示",
+                  "font": null,
+                  "size_pt": null,
+                  "bold": null,
+                  "italic": null,
+                  "underline": null
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "text": "0.2051",
+              "style": "Normal",
+              "alignment": "CENTER (1)",
+              "line_spacing": "1.25",
+              "space_before_pt": null,
+              "space_after_pt": null,
+              "first_line_indent_cm": null,
+              "left_indent_cm": null,
+              "keep_with_next": null,
+              "page_break_before": null,
+              "runs": [
+                {
+                  "text": "0.2051",
+                  "font": null,
+                  "size_pt": null,
+                  "bold": null,
+                  "italic": null,
+                  "underline": null
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "text": "0.2100",
+              "style": "Normal",
+              "alignment": "CENTER (1)",
+              "line_spacing": "1.25",
+              "space_before_pt": null,
+              "space_after_pt": null,
+              "first_line_indent_cm": null,
+              "left_indent_cm": null,
+              "keep_with_next": null,
+              "page_break_before": null,
+              "runs": [
+                {
+                  "text": "0.2100",
+                  "font": null,
+                  "size_pt": null,
+                  "bold": null,
+                  "italic": null,
+                  "underline": null
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "text": "0.2044",
+              "style": "Normal",
+              "alignment": "CENTER (1)",
+              "line_spacing": "1.25",
+              "space_before_pt": null,
+              "space_after_pt": null,
+              "first_line_indent_cm": null,
+              "left_indent_cm": null,
+              "keep_with_next": null,
+              "page_break_before": null,
+              "runs": [
+                {
+                  "text": "0.2044",
+                  "font": null,
+                  "size_pt": null,
+                  "bold": null,
+                  "italic": null,
+                  "underline": null
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "text": "0.4026",
+              "style": "Normal",
+              "alignment": "CENTER (1)",
+              "line_spacing": "1.25",
+              "space_before_pt": null,
+              "space_after_pt": null,
+              "first_line_indent_cm": null,
+              "left_indent_cm": null,
+              "keep_with_next": null,
+              "page_break_before": null,
+              "runs": [
+                {
+                  "text": "0.4026",
+                  "font": null,
+                  "size_pt": null,
+                  "bold": null,
+                  "italic": null,
+                  "underline": null
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "text": "1.006",
+              "style": "Normal",
+              "alignment": "CENTER (1)",
+              "line_spacing": "1.25",
+              "space_before_pt": null,
+              "space_after_pt": null,
+              "first_line_indent_cm": null,
+              "left_indent_cm": null,
+              "keep_with_next": null,
+              "page_break_before": null,
+              "runs": [
+                {
+                  "text": "1.006",
+                  "font": null,
+                  "size_pt": null,
+                  "bold": null,
+                  "italic": null,
+                  "underline": null
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "text": "1.542",
+              "style": "Normal",
+              "alignment": "CENTER (1)",
+              "line_spacing": "1.25",
+              "space_before_pt": null,
+              "space_after_pt": null,
+              "first_line_indent_cm": null,
+              "left_indent_cm": null,
+              "keep_with_next": null,
+              "page_break_before": null,
+              "runs": [
+                {
+                  "text": "1.542",
+                  "font": null,
+                  "size_pt": null,
+                  "bold": null,
+                  "italic": null,
+                  "underline": null
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "text": "1.669",
+              "style": "Normal",
+              "alignment": "CENTER (1)",
+              "line_spacing": "1.25",
+              "space_before_pt": null,
+              "space_after_pt": null,
+              "first_line_indent_cm": null,
+              "left_indent_cm": null,
+              "keep_with_next": null,
+              "page_break_before": null,
+              "runs": [
+                {
+                  "text": "1.669",
+                  "font": null,
+                  "size_pt": null,
+                  "bold": null,
+                  "italic": null,
+                  "underline": null
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "text": "1.999",
+              "style": "Normal",
+              "alignment": "CENTER (1)",
+              "line_spacing": "1.25",
+              "space_before_pt": null,
+              "space_after_pt": null,
+              "first_line_indent_cm": null,
+              "left_indent_cm": null,
+              "keep_with_next": null,
+              "page_break_before": null,
+              "runs": [
+                {
+                  "text": "1.999",
+                  "font": null,
+                  "size_pt": null,
+                  "bold": null,
+                  "italic": null,
+                  "underline": null
+                }
+              ]
+            }
+          ]
+        ]
+      ]
+    }
+  ],
+  "styles": [
+    {
+      "name": "Normal",
+      "base_style": null,
+      "font": null,
+      "size_pt": 10.5,
+      "bold": null,
+      "alignment": "JUSTIFY (3)",
+      "line_spacing": null,
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null
+    },
+    {
+      "name": "Heading 1",
+      "base_style": "Normal",
+      "font": null,
+      "size_pt": 22.0,
+      "bold": true,
+      "alignment": null,
+      "line_spacing": "2.408333333333333",
+      "space_before_pt": 17.0,
+      "space_after_pt": 16.5,
+      "first_line_indent_cm": null
+    },
+    {
+      "name": "Heading 2",
+      "base_style": "Normal",
+      "font": "Arial",
+      "size_pt": 16.0,
+      "bold": true,
+      "alignment": null,
+      "line_spacing": "1.7333333333333334",
+      "space_before_pt": 13.0,
+      "space_after_pt": 13.0,
+      "first_line_indent_cm": null
+    },
+    {
+      "name": "Heading 3",
+      "base_style": "Normal",
+      "font": null,
+      "size_pt": 16.0,
+      "bold": true,
+      "alignment": null,
+      "line_spacing": "1.7333333333333334",
+      "space_before_pt": 13.0,
+      "space_after_pt": 13.0,
+      "first_line_indent_cm": null
+    },
+    {
+      "name": "toc 3",
+      "base_style": "Normal",
+      "font": null,
+      "size_pt": null,
+      "bold": null,
+      "alignment": null,
+      "line_spacing": null,
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null
+    },
+    {
+      "name": "toc 1",
+      "base_style": "Normal",
+      "font": "SimSun",
+      "size_pt": null,
+      "bold": null,
+      "alignment": null,
+      "line_spacing": null,
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null
+    },
+    {
+      "name": "Footer",
+      "base_style": "Normal",
+      "font": null,
+      "size_pt": 9.0,
+      "bold": null,
+      "alignment": "LEFT (0)",
+      "line_spacing": null,
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null
+    },
+    {
+      "name": "Header",
+      "base_style": "Normal",
+      "font": null,
+      "size_pt": 9.0,
+      "bold": null,
+      "alignment": "CENTER (1)",
+      "line_spacing": null,
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null
+    },
+    {
+      "name": "Date",
+      "base_style": "Normal",
+      "font": null,
+      "size_pt": null,
+      "bold": null,
+      "alignment": null,
+      "line_spacing": null,
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null
+    },
+    {
+      "name": "toc 2",
+      "base_style": "Normal",
+      "font": null,
+      "size_pt": null,
+      "bold": null,
+      "alignment": null,
+      "line_spacing": null,
+      "space_before_pt": null,
+      "space_after_pt": null,
+      "first_line_indent_cm": null
+    }
+  ],
+  "inline_shapes": 0
+}

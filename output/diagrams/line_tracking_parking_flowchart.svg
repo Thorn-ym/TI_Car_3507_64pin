@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="2000" height="1400" viewBox="0 0 2000 1400">
+  <defs>
+    <style>
+      .domain { font: 700 23px "SimHei", "Microsoft YaHei", sans-serif; fill: #000; }
+      .node-title { font: 700 21px "SimSun", "Microsoft YaHei", serif; fill: #000; }
+      .node-sub { font: 17px "SimSun", "Microsoft YaHei", serif; fill: #000; }
+      .label { font: 16px "SimSun", "Microsoft YaHei", serif; fill: #000; }
+      .domain-box { fill: #fff; stroke: #000; stroke-width: 2.2; }
+      .process { fill: #fff; stroke: #000; stroke-width: 2.5; }
+      .terminator { fill: #fff; stroke: #000; stroke-width: 2.5; }
+      .decision { fill: #fff; stroke: #000; stroke-width: 2.5; }
+      .signal { fill: none; stroke: #000; stroke-width: 2.7; marker-end: url(#arrow); }
+      .signal-thin { fill: none; stroke: #000; stroke-width: 2.1; marker-end: url(#arrow); }
+    </style>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="#000"/>
+    </marker>
+  </defs>
+  <rect width="2000" height="1400" fill="#fff"/>
+
+  <rect x="55" y="50" width="1890" height="1280" class="domain-box"/>
+  <rect x="90" y="36" width="445" height="36" fill="#fff"/>
+  <text x="108" y="64" class="domain">MSPM0G3507 循迹、速度闭环、计时与停车流程</text>
+
+  <rect x="760" y="85" width="480" height="82" rx="40" class="terminator"/>
+  <text x="1000" y="118" text-anchor="middle" class="node-title">循迹底盘程序启动</text>
+  <text x="1000" y="146" text-anchor="middle" class="node-sub">底盘驱动默认关闭</text>
+
+  <rect x="760" y="210" width="480" height="100" class="process"/>
+  <text x="1000" y="248" text-anchor="middle" class="node-title">初始化 MSPM0G3507 外设</text>
+  <text x="1000" y="280" text-anchor="middle" class="node-sub">GPIO / QEI / PWM / 10 ms 定时器 / OLED / 按键</text>
+
+  <polygon points="1000,355 1180,440 1000,525 820,440" class="decision"/>
+  <text x="1000" y="428" text-anchor="middle" class="node-title">MSPM0 独立按键按下？</text>
+  <text x="1000" y="460" text-anchor="middle" class="node-sub">启动底盘任务</text>
+
+  <rect x="300" y="380" width="330" height="120" class="process"/>
+  <text x="465" y="421" text-anchor="middle" class="node-title">待机与参数显示</text>
+  <text x="465" y="455" text-anchor="middle" class="node-sub">PWM 输出为零</text>
+  <text x="465" y="484" text-anchor="middle" class="node-sub">等待按键交互</text>
+
+  <rect x="760" y="575" width="480" height="105" class="process"/>
+  <text x="1000" y="614" text-anchor="middle" class="node-title">启动 10 ms 计时并使能底盘</text>
+  <text x="1000" y="647" text-anchor="middle" class="node-sub">循迹控制与计时显示同步运行</text>
+
+  <rect x="170" y="755" width="350" height="110" class="process"/>
+  <text x="345" y="796" text-anchor="middle" class="node-title">采样七路红外阵列</text>
+  <text x="345" y="830" text-anchor="middle" class="node-sub">GPIO 采样与二值化</text>
+
+  <rect x="600" y="755" width="350" height="110" class="process"/>
+  <text x="775" y="796" text-anchor="middle" class="node-title">路径偏差与循迹 PID</text>
+  <text x="775" y="830" text-anchor="middle" class="node-sub">计算差速修正量</text>
+
+  <rect x="1050" y="755" width="350" height="110" class="process"/>
+  <text x="1225" y="796" text-anchor="middle" class="node-title">读取双编码器反馈</text>
+  <text x="1225" y="830" text-anchor="middle" class="node-sub">QEI 转速与里程计算</text>
+
+  <rect x="1480" y="755" width="350" height="110" class="process"/>
+  <text x="1655" y="796" text-anchor="middle" class="node-title">双轮速度 PID 闭环</text>
+  <text x="1655" y="830" text-anchor="middle" class="node-sub">速度规划 + 循迹差速修正</text>
+
+  <rect x="1480" y="925" width="350" height="110" class="process"/>
+  <text x="1655" y="966" text-anchor="middle" class="node-title">PWM + 方向输出</text>
+  <text x="1655" y="1000" text-anchor="middle" class="node-sub">驱动四轮两驱差速底盘</text>
+
+  <rect x="170" y="925" width="350" height="110" class="process"/>
+  <text x="345" y="966" text-anchor="middle" class="node-title">更新 OLED 显示</text>
+  <text x="345" y="1000" text-anchor="middle" class="node-sub">计时 / 运行状态 / 调试信息</text>
+
+  <polygon points="1000,915 1180,1000 1000,1085 820,1000" class="decision"/>
+  <text x="1000" y="988" text-anchor="middle" class="node-title">检测到返回 A 点？</text>
+  <text x="1000" y="1020" text-anchor="middle" class="node-sub">启停线状态机确认终点</text>
+
+  <polygon points="1000,1130 1160,1205 1000,1280 840,1205" class="decision"/>
+  <text x="1000" y="1194" text-anchor="middle" class="node-title">终点确认有效？</text>
+  <text x="1000" y="1226" text-anchor="middle" class="node-sub">去抖与状态连续性判断</text>
+
+  <rect x="1390" y="1145" width="400" height="120" class="process"/>
+  <text x="1590" y="1186" text-anchor="middle" class="node-title">执行短接制动</text>
+  <text x="1590" y="1220" text-anchor="middle" class="node-sub">撤销 PWM 驱动输出</text>
+  <text x="1590" y="1249" text-anchor="middle" class="node-sub">停止 10 ms 计时</text>
+
+  <rect x="1390" y="1290" width="400" height="82" rx="40" class="terminator"/>
+  <text x="1590" y="1323" text-anchor="middle" class="node-title">保持最终时间显示</text>
+  <text x="1590" y="1351" text-anchor="middle" class="node-sub">底盘停车完成</text>
+
+  <path d="M 1000 167 V 210" class="signal"/>
+  <path d="M 1000 310 V 355" class="signal"/>
+  <path d="M 820 440 H 630" class="signal"/>
+  <text x="760" y="423" class="label">否</text>
+  <path d="M 465 380 V 340 H 1000 V 355" class="signal-thin"/>
+  <path d="M 1000 525 V 575" class="signal"/>
+  <text x="1018" y="555" class="label">是</text>
+  <path d="M 1000 680 V 715 H 345 V 755" class="signal"/>
+  <path d="M 1000 715 H 1225 V 755" class="signal"/>
+  <text x="1018" y="707" class="label">并行采样</text>
+  <path d="M 520 810 H 600" class="signal"/>
+  <path d="M 950 810 H 1425 V 740 H 1655 V 755" class="signal"/>
+  <path d="M 1400 810 H 1480" class="signal"/>
+  <path d="M 1655 865 V 925" class="signal"/>
+  <path d="M 1480 980 H 1180" class="signal"/>
+  <path d="M 1000 1085 V 1130" class="signal"/>
+  <text x="1018" y="1110" class="label">是</text>
+  <path d="M 840 1205 H 80 V 790 H 170" class="signal-thin"/>
+  <text x="105" y="1188" class="label">否：继续运行</text>
+  <path d="M 1160 1205 H 1390" class="signal"/>
+  <text x="1210" y="1188" class="label">是</text>
+  <path d="M 1590 1265 V 1290" class="signal"/>
+  <path d="M 1000 915 V 890 H 650 V 980 H 520" class="signal-thin"/>
+  <text x="860" y="906" class="label">计时与状态同步更新</text>
+  <path d="M 820 1000 H 110 V 830 H 170" class="signal-thin"/>
+  <text x="130" y="984" class="label">否：下一控制周期</text>
+</svg>

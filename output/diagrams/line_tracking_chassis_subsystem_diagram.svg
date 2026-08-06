@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="2000" height="1180" viewBox="0 0 2000 1180">
+  <defs>
+    <style>
+      .module-title { font: 700 22px "SimSun", "Microsoft YaHei", serif; fill: #000; }
+      .module-sub { font: 17px "SimSun", "Microsoft YaHei", serif; fill: #000; }
+      .link-label { font: 17px "SimSun", "Microsoft YaHei", serif; fill: #000; }
+      .caption { font: 22px "SimSun", "Microsoft YaHei", serif; fill: #000; }
+      .box { fill: #fff; stroke: #000; stroke-width: 2.6; shape-rendering: crispEdges; }
+      .group { fill: #fff; stroke: #000; stroke-width: 2.2; shape-rendering: crispEdges; }
+      .signal { fill: none; stroke: #000; stroke-width: 2.8; marker-end: url(#arrow); }
+      .feedback { fill: none; stroke: #000; stroke-width: 2.2; marker-end: url(#arrow); }
+      .branch { fill: none; stroke: #000; stroke-width: 2.2; marker-end: url(#arrow); }
+    </style>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="#000"/>
+    </marker>
+  </defs>
+  <rect width="2000" height="1180" fill="#fff"/>
+
+  <rect x="55" y="75" width="1890" height="925" class="group"/>
+  <rect x="93" y="61" width="350" height="36" fill="#fff"/>
+  <text x="110" y="89" class="module-title">循迹、速度闭环与计时控制链路</text>
+
+  <rect x="100" y="175" width="230" height="112" class="box"/>
+  <text x="215" y="219" text-anchor="middle" class="module-title">七路红外阵列</text>
+  <text x="215" y="255" text-anchor="middle" class="module-sub">轨迹信号输入</text>
+
+  <rect x="390" y="175" width="250" height="112" class="box"/>
+  <text x="515" y="219" text-anchor="middle" class="module-title">信号采样</text>
+  <text x="515" y="255" text-anchor="middle" class="module-sub">与二值化</text>
+
+  <rect x="700" y="175" width="250" height="112" class="box"/>
+  <text x="825" y="219" text-anchor="middle" class="module-title">路径偏差计算</text>
+  <text x="825" y="255" text-anchor="middle" class="module-sub">加权位置误差</text>
+
+  <rect x="1010" y="175" width="250" height="112" class="box"/>
+  <text x="1135" y="219" text-anchor="middle" class="module-title">循迹 PID 运算</text>
+  <text x="1135" y="255" text-anchor="middle" class="module-sub">差速修正量</text>
+
+  <rect x="1320" y="175" width="250" height="112" class="box"/>
+  <text x="1445" y="219" text-anchor="middle" class="module-title">速度规划</text>
+  <text x="1445" y="255" text-anchor="middle" class="module-sub">左右轮目标转速</text>
+
+  <path d="M 330 231 H 390" class="signal"/>
+  <path d="M 640 231 H 700" class="signal"/>
+  <path d="M 950 231 H 1010" class="signal"/>
+  <path d="M 1260 231 H 1320" class="signal"/>
+
+  <rect x="1010" y="425" width="300" height="118" class="box"/>
+  <text x="1160" y="470" text-anchor="middle" class="module-title">双轮速度 PID 闭环</text>
+  <text x="1160" y="507" text-anchor="middle" class="module-sub">左右轮独立调速</text>
+  <path d="M 1445 287 V 350 H 1160 V 425" class="signal"/>
+
+  <rect x="1390" y="425" width="230" height="118" class="box"/>
+  <text x="1505" y="470" text-anchor="middle" class="module-title">PWM 输出</text>
+  <text x="1505" y="507" text-anchor="middle" class="module-sub">方向 + 占空比</text>
+  <path d="M 1310 484 H 1390" class="signal"/>
+
+  <rect x="1700" y="425" width="220" height="118" class="box"/>
+  <text x="1810" y="470" text-anchor="middle" class="module-title">差速底盘电机</text>
+  <text x="1810" y="507" text-anchor="middle" class="module-sub">四轮两驱执行</text>
+  <path d="M 1620 484 H 1700" class="signal"/>
+
+  <rect x="100" y="425" width="230" height="118" class="box"/>
+  <text x="215" y="470" text-anchor="middle" class="module-title">双编码器反馈</text>
+  <text x="215" y="507" text-anchor="middle" class="module-sub">左右轮脉冲输入</text>
+
+  <rect x="390" y="425" width="250" height="118" class="box"/>
+  <text x="515" y="470" text-anchor="middle" class="module-title">转速计算</text>
+  <text x="515" y="507" text-anchor="middle" class="module-sub">轮速 / 里程估计</text>
+  <path d="M 330 484 H 390" class="signal"/>
+  <path d="M 640 484 H 1010" class="signal"/>
+  <path d="M 1810 543 V 620 H 215 V 543" class="feedback"/>
+  <text x="980" y="610" text-anchor="middle" class="link-label">机械转动 → 编码器测速反馈</text>
+
+  <rect x="735" y="710" width="300" height="125" class="box"/>
+  <text x="885" y="752" text-anchor="middle" class="module-title">启停线状态机</text>
+  <text x="885" y="788" text-anchor="middle" class="module-sub">启动 / 运行 / 终点确认</text>
+  <text x="885" y="817" text-anchor="middle" class="module-sub">按键与标志线判定</text>
+  <path d="M 825 287 V 660 H 885 V 710" class="branch"/>
+
+  <rect x="1130" y="710" width="300" height="125" class="box"/>
+  <text x="1280" y="752" text-anchor="middle" class="module-title">计时 / 短接制动</text>
+  <text x="1280" y="788" text-anchor="middle" class="module-sub">10 ms 计时</text>
+  <text x="1280" y="817" text-anchor="middle" class="module-sub">终点撤销驱动输出</text>
+  <path d="M 1035 772 H 1130" class="signal"/>
+  <path d="M 1430 772 H 1650 V 484 H 1700" class="branch"/>
+
+  <rect x="355" y="710" width="280" height="125" class="box"/>
+  <text x="495" y="752" text-anchor="middle" class="module-title">OLED 显示</text>
+  <text x="495" y="788" text-anchor="middle" class="module-sub">计时 / 状态 / 调试信息</text>
+  <text x="495" y="817" text-anchor="middle" class="module-sub">按键交互</text>
+  <path d="M 735 772 H 635" class="branch"/>
+  <path d="M 1130 800 H 1080 V 900 H 495 V 835" class="branch"/>
+
+  <text x="1000" y="1090" text-anchor="middle" class="caption">图 4　循迹底盘子系统详细框图</text>
+</svg>

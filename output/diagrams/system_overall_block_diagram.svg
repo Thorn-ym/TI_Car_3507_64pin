@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="2000" height="1414" viewBox="0 0 2000 1414">
+  <defs>
+    <style>
+      .domain { font: 700 24px "SimHei", "Microsoft YaHei", sans-serif; fill: #000; }
+      .module-title { font: 700 23px "SimSun", "Microsoft YaHei", serif; fill: #000; }
+      .module-sub { font: 19px "SimSun", "Microsoft YaHei", serif; fill: #000; }
+      .link-label { font: 18px "SimSun", "Microsoft YaHei", serif; fill: #000; }
+      .small { font: 16px "SimSun", "Microsoft YaHei", serif; fill: #000; }
+      .lane { font: 700 18px "SimSun", "Microsoft YaHei", serif; fill: #000; }
+      .caption { font: 22px "SimSun", "Microsoft YaHei", serif; fill: #000; }
+      .box { fill: #fff; stroke: #000; stroke-width: 2.6; shape-rendering: crispEdges; }
+      .domain-box { fill: #fff; stroke: #000; stroke-width: 2.2; shape-rendering: crispEdges; }
+      .signal { fill: none; stroke: #000; stroke-width: 2.8; marker-end: url(#arrow); }
+      .signal-thin { fill: none; stroke: #000; stroke-width: 2.2; marker-end: url(#arrow); }
+      .power { fill: none; stroke: #000; stroke-width: 2.4; stroke-dasharray: 12 9; marker-end: url(#arrow-open); }
+      .separator { fill: none; stroke: #000; stroke-width: 1.6; stroke-dasharray: 7 7; }
+      .leader { fill: none; stroke: #000; stroke-width: 1.8; }
+    </style>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="#000"/>
+    </marker>
+    <marker id="arrow-open" markerWidth="13" markerHeight="13" refX="11" refY="6.5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 1 1 L 11 6.5 L 1 12" fill="none" stroke="#000" stroke-width="1.8"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="2000" height="1414" fill="#fff"/>
+
+  <!-- The power system is the only shared hardware resource; control chains remain independent. -->
+  <rect x="22" y="1000" width="150" height="180" class="box"/>
+  <text x="97" y="1050" text-anchor="middle" class="module-title">3S 电池</text>
+  <text x="97" y="1087" text-anchor="middle" class="module-title">与分路电源</text>
+  <line x1="45" y1="1109" x2="149" y2="1109" class="leader"/>
+  <text x="97" y="1139" text-anchor="middle" class="small">动力 / 5 V / 3.3 V</text>
+  <text x="97" y="1165" text-anchor="middle" class="small">全系统共地</text>
+  <path d="M 97 1000 V 175 H 190" class="power"/>
+  <path d="M 97 510 H 190" class="power"/>
+  <path d="M 97 805 H 190" class="power"/>
+  <rect x="23" y="198" width="145" height="58" fill="#fff"/>
+  <text x="95" y="222" text-anchor="middle" class="small">5 V 视觉 / 图传</text>
+  <text x="95" y="246" text-anchor="middle" class="small">分路供电</text>
+  <rect x="23" y="533" width="145" height="58" fill="#fff"/>
+  <text x="95" y="557" text-anchor="middle" class="small">逻辑 / 执行器</text>
+  <text x="95" y="581" text-anchor="middle" class="small">分路供电</text>
+  <rect x="23" y="828" width="145" height="58" fill="#fff"/>
+  <text x="95" y="852" text-anchor="middle" class="small">底盘动力 / 逻辑</text>
+  <text x="95" y="876" text-anchor="middle" class="small">分路供电</text>
+
+  <!-- Visual subsystem -->
+  <rect x="190" y="40" width="1760" height="270" class="domain-box"/>
+  <rect x="218" y="26" width="350" height="36" fill="#fff"/>
+  <text x="235" y="54" class="domain">Ⅰ 视觉测量与图传子系统</text>
+  <rect x="270" y="112" width="350" height="118" class="box"/>
+  <text x="445" y="150" text-anchor="middle" class="module-title">USB 摄像头</text>
+  <text x="445" y="187" text-anchor="middle" class="module-sub">动态端点与钢球图像采集</text>
+  <text x="445" y="215" text-anchor="middle" class="small">覆盖完整摆杆区域</text>
+  <rect x="800" y="112" width="430" height="118" class="box"/>
+  <text x="1015" y="150" text-anchor="middle" class="module-title">树莓派 5</text>
+  <text x="1015" y="187" text-anchor="middle" class="module-sub">视觉测量 / 录像 / 图传</text>
+  <text x="1015" y="215" text-anchor="middle" class="small">位置、速度、状态与时间戳生成</text>
+  <rect x="1530" y="112" width="350" height="118" class="box"/>
+  <text x="1705" y="150" text-anchor="middle" class="module-title">外部接收显示</text>
+  <text x="1705" y="183" text-anchor="middle" class="module-title">存储装置</text>
+  <text x="1705" y="214" text-anchor="middle" class="small">实时显示 / 存储 / 回放</text>
+  <path d="M 620 171 H 800" class="signal"/>
+  <rect x="635" y="126" width="150" height="65" fill="#fff"/>
+  <text x="710" y="149" text-anchor="middle" class="link-label">USB 视频流</text>
+  <text x="710" y="173" text-anchor="middle" class="small">640×480 · MJPG</text>
+  <text x="710" y="196" text-anchor="middle" class="small">60 帧/s</text>
+  <path d="M 1230 171 H 1530" class="signal"/>
+  <rect x="1280" y="136" width="202" height="50" fill="#fff"/>
+  <text x="1381" y="159" text-anchor="middle" class="link-label">UDP / H.264</text>
+  <text x="1381" y="182" text-anchor="middle" class="small">无线图传链路（预留）</text>
+
+  <!-- Ball-balance subsystem -->
+  <rect x="190" y="360" width="1760" height="295" class="domain-box"/>
+  <rect x="218" y="346" width="390" height="36" fill="#fff"/>
+  <text x="235" y="374" class="domain">Ⅱ 滚球平衡控制与摆杆执行子系统</text>
+  <rect x="270" y="445" width="350" height="110" class="box"/>
+  <text x="445" y="483" text-anchor="middle" class="module-title">BMI088</text>
+  <text x="445" y="520" text-anchor="middle" class="module-sub">小车纵向加速度前馈</text>
+  <text x="445" y="547" text-anchor="middle" class="small">平衡子系统独立传感器</text>
+  <rect x="820" y="425" width="430" height="145" class="box"/>
+  <text x="1035" y="468" text-anchor="middle" class="module-title">STM32F407</text>
+  <text x="1035" y="506" text-anchor="middle" class="module-sub">滚球平衡控制</text>
+  <text x="1035" y="537" text-anchor="middle" class="small">位置外环 / 角度反算 / 电机双环</text>
+  <rect x="1540" y="425" width="340" height="145" class="box"/>
+  <text x="1710" y="468" text-anchor="middle" class="module-title">M2006 电机 + C610 电调</text>
+  <text x="1710" y="506" text-anchor="middle" class="module-sub">摆杆执行机构</text>
+  <text x="1710" y="537" text-anchor="middle" class="small">编码器 / 速度 / 温度反馈</text>
+  <path d="M 620 500 H 820" class="signal"/>
+  <rect x="648" y="458" width="150" height="49" fill="#fff"/>
+  <text x="723" y="480" text-anchor="middle" class="link-label">SPI1</text>
+  <text x="723" y="503" text-anchor="middle" class="small">加速度前馈</text>
+  <path d="M 1250 468 H 1540" class="signal"/>
+  <rect x="1310" y="430" width="170" height="44" fill="#fff"/>
+  <text x="1395" y="458" text-anchor="middle" class="link-label">CAN · 1 Mbit/s</text>
+  <path d="M 1540 532 H 1250" class="signal"/>
+  <rect x="1285" y="506" width="222" height="49" fill="#fff"/>
+  <text x="1396" y="528" text-anchor="middle" class="link-label">编码器 / 速度 / 温度</text>
+  <text x="1396" y="551" text-anchor="middle" class="small">执行机构反馈</text>
+
+  <!-- USB CDC crosses subsystem boundaries along the outside of both domain frames. -->
+  <path d="M 1190 230 V 330 H 1135 V 425" class="signal"/>
+  <rect x="1260" y="304" width="260" height="54" fill="#fff"/>
+  <text x="1390" y="327" text-anchor="middle" class="link-label">USB CDC · 50 Hz</text>
+  <text x="1390" y="350" text-anchor="middle" class="link-label">24 字节 + CRC</text>
+
+  <!-- Chassis subsystem: all infrared and encoder signals terminate only at MSPM0G3507. -->
+  <rect x="190" y="700" width="1760" height="205" class="domain-box"/>
+  <rect x="218" y="686" width="350" height="36" fill="#fff"/>
+  <text x="235" y="714" class="domain">Ⅲ 循迹、计时与差速底盘子系统</text>
+  <rect x="270" y="755" width="350" height="105" class="box"/>
+  <text x="445" y="793" text-anchor="middle" class="module-title">七路红外阵列 + 双编码器</text>
+  <text x="445" y="830" text-anchor="middle" class="module-sub">轨迹检测 / 轮速与里程采集</text>
+  <rect x="820" y="755" width="430" height="105" class="box"/>
+  <text x="1035" y="793" text-anchor="middle" class="module-title">MSPM0G3507</text>
+  <text x="1035" y="830" text-anchor="middle" class="module-sub">循迹运算 / 里程计算 / 计时显示</text>
+  <rect x="1540" y="755" width="340" height="105" class="box"/>
+  <text x="1710" y="793" text-anchor="middle" class="module-title">四轮两驱差速底盘</text>
+  <text x="1710" y="830" text-anchor="middle" class="module-sub">差速转向 / 启停 / 短接制动</text>
+  <path d="M 620 808 H 820" class="signal"/>
+  <rect x="648" y="772" width="150" height="50" fill="#fff"/>
+  <text x="723" y="795" text-anchor="middle" class="link-label">GPIO / QEI</text>
+  <text x="723" y="818" text-anchor="middle" class="small">100 Hz 采样</text>
+  <path d="M 1250 808 H 1540" class="signal"/>
+  <rect x="1294" y="772" width="202" height="50" fill="#fff"/>
+  <text x="1395" y="795" text-anchor="middle" class="link-label">PWM + 方向控制</text>
+  <text x="1395" y="818" text-anchor="middle" class="small">左右轮差速驱动</text>
+
+  <!-- Two independent runtime chains. There is no STM32/MSPM0 or Raspberry Pi/MSPM0 link. -->
+  <rect x="190" y="935" width="1760" height="410" class="domain-box"/>
+  <rect x="218" y="921" width="360" height="36" fill="#fff"/>
+  <text x="235" y="949" class="domain">Ⅳ 独立并行工作流程与安全保护</text>
+  <text x="225" y="995" class="lane">视觉与平衡控制链（独立运行）</text>
+  <rect x="245" y="1015" width="150" height="72" class="box"/>
+  <text x="320" y="1060" text-anchor="middle" class="module-title">系统上电</text>
+  <rect x="450" y="1015" width="310" height="72" class="box"/>
+  <text x="605" y="1044" text-anchor="middle" class="module-title">视觉与图传启动</text>
+  <text x="605" y="1072" text-anchor="middle" class="small">采集 / 录像 / H.264 图传</text>
+  <rect x="815" y="1015" width="300" height="72" class="box"/>
+  <text x="965" y="1044" text-anchor="middle" class="module-title">持续发送测量数据</text>
+  <text x="965" y="1072" text-anchor="middle" class="small">USB CDC · 50 Hz</text>
+  <rect x="1170" y="1015" width="290" height="72" class="box"/>
+  <text x="1315" y="1044" text-anchor="middle" class="module-title">STM32 独立按键</text>
+  <text x="1315" y="1072" text-anchor="middle" class="small">使能滚球平衡控制</text>
+  <rect x="1515" y="1015" width="330" height="72" class="box"/>
+  <text x="1680" y="1044" text-anchor="middle" class="module-title">滚球平衡闭环运行</text>
+  <text x="1680" y="1072" text-anchor="middle" class="small">控制 M2006 摆杆执行机构</text>
+  <path d="M 395 1051 H 450" class="signal"/>
+  <path d="M 760 1051 H 815" class="signal"/>
+  <path d="M 1115 1051 H 1170" class="signal"/>
+  <path d="M 1460 1051 H 1515" class="signal"/>
+
+  <line x1="220" y1="1112" x2="1920" y2="1112" class="separator"/>
+  <text x="1000" y="1136" text-anchor="middle" class="small">两条控制链同时运行且硬件完全解耦；MSPM0G3507 与 STM32F407、树莓派 5 之间均无通信链路</text>
+
+  <text x="225" y="1170" class="lane">循迹底盘与计时链（独立运行）</text>
+  <rect x="245" y="1185" width="255" height="68" class="box"/>
+  <text x="372" y="1213" text-anchor="middle" class="module-title">MSPM0 独立按键</text>
+  <text x="372" y="1240" text-anchor="middle" class="small">启动底盘任务</text>
+  <rect x="570" y="1158" width="300" height="62" class="box"/>
+  <text x="720" y="1185" text-anchor="middle" class="module-title">底盘循迹行驶</text>
+  <text x="720" y="1211" text-anchor="middle" class="small">差速控制持续运行</text>
+  <rect x="570" y="1230" width="300" height="62" class="box"/>
+  <text x="720" y="1257" text-anchor="middle" class="module-title">10 ms 计时与显示</text>
+  <text x="720" y="1283" text-anchor="middle" class="small">与循迹行驶同步启动</text>
+  <rect x="1030" y="1158" width="260" height="62" class="box"/>
+  <text x="1160" y="1185" text-anchor="middle" class="module-title">返回 A 点</text>
+  <text x="1160" y="1211" text-anchor="middle" class="small">终点条件确认</text>
+  <rect x="1490" y="1158" width="355" height="62" class="box"/>
+  <text x="1667" y="1185" text-anchor="middle" class="module-title">执行短接制动</text>
+  <text x="1667" y="1211" text-anchor="middle" class="small">撤销底盘驱动输出</text>
+  <rect x="1490" y="1230" width="355" height="62" class="box"/>
+  <text x="1667" y="1257" text-anchor="middle" class="module-title">停止计时</text>
+  <text x="1667" y="1283" text-anchor="middle" class="small">保持最终时间显示</text>
+  <path d="M 500 1219 H 530 V 1189 H 570" class="signal"/>
+  <path d="M 530 1219 V 1261 H 570" class="signal"/>
+  <path d="M 870 1189 H 1030" class="signal"/>
+  <path d="M 1290 1189 H 1490" class="signal"/>
+  <path d="M 1290 1189 H 1380 V 1261 H 1490" class="signal-thin"/>
+  <path d="M 870 1261 H 1490" class="signal-thin"/>
+
+  <rect x="445" y="1305" width="1110" height="40" class="box"/>
+  <text x="1000" y="1331" text-anchor="middle" class="small">本地安全保护：CRC / 序号 / 时效 / 状态 / CAN / 限位 / 欠压异常 → 对应控制器撤销所属驱动输出</text>
+
+  <!-- Centered legend and report caption. -->
+  <line x1="650" y1="1364" x2="735" y2="1364" class="signal-thin"/>
+  <text x="760" y="1371" class="small">数据 / 控制信号</text>
+  <line x1="1040" y1="1364" x2="1125" y2="1364" class="power"/>
+  <text x="1150" y="1371" class="small">电源供电链路（虚线）</text>
+  <text x="1000" y="1400" text-anchor="middle" class="caption">图 1　系统总体框图与整体工作流程</text>
+</svg>

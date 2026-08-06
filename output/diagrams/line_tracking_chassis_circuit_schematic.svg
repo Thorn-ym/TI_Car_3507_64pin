@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="2300" height="1450" viewBox="0 0 2300 1450">
+  <defs>
+    <style>
+      .domain-title { font:700 23px "SimHei","Microsoft YaHei",sans-serif; fill:#000; }
+      .title { font:700 22px "SimSun","Microsoft YaHei",serif; fill:#000; }
+      .sub { font:17px "SimSun","Microsoft YaHei",serif; fill:#000; }
+      .label { font:16px "SimSun","Microsoft YaHei",serif; fill:#000; }
+      .net { font:700 16px "Consolas","SimSun",monospace; fill:#000; }
+      .box { fill:#fff; stroke:#000; stroke-width:2.6; }
+      .domain { fill:#fff; stroke:#000; stroke-width:2; stroke-dasharray:10 8; }
+      .wire { fill:none; stroke:#000; stroke-width:2.6; marker-end:url(#arrow); }
+      .power { fill:none; stroke:#000; stroke-width:2.4; stroke-dasharray:12 9; marker-end:url(#arrow-open); }
+    </style>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth"><path d="M0 0 L12 6 L0 12 Z" fill="#000"/></marker>
+    <marker id="arrow-open" markerWidth="13" markerHeight="13" refX="11" refY="6.5" orient="auto" markerUnits="strokeWidth"><path d="M1 1 L11 6.5 L1 12" fill="none" stroke="#000" stroke-width="1.8"/></marker>
+  </defs>
+  <rect width="2300" height="1450" fill="#fff"/>
+
+  <rect x="55" y="55" width="2190" height="245" class="domain"/>
+  <rect x="90" y="41" width="250" height="36" fill="#fff"/>
+  <text x="108" y="69" class="domain-title">底盘供电与稳压</text>
+  <rect x="110" y="120" width="280" height="105" class="box"/>
+  <text x="250" y="160" text-anchor="middle" class="title">底盘电源输入</text>
+  <text x="250" y="195" text-anchor="middle" class="sub">保险丝 + 防反接 + TVS</text>
+  <rect x="560" y="120" width="300" height="105" class="box"/>
+  <text x="710" y="160" text-anchor="middle" class="title">系统稳压电源</text>
+  <text x="710" y="195" text-anchor="middle" class="sub">电机电源与逻辑电源分路</text>
+  <rect x="1050" y="105" width="1030" height="135" class="box"/>
+  <text x="1565" y="145" text-anchor="middle" class="title">电源网络</text>
+  <text x="1565" y="180" text-anchor="middle" class="sub">VM：TB6612 与左右电机　　5 V：红外阵列 / 编码器 / OLED</text>
+  <text x="1565" y="212" text-anchor="middle" class="sub">3.3 V：MSPM0G3507 与逻辑接口；各模块就近去耦</text>
+  <path d="M390 172 H560" class="wire"/><path d="M860 172 H1050" class="wire"/>
+  <text x="475" y="153" text-anchor="middle" class="net">VIN_PROTECTED</text><text x="955" y="153" text-anchor="middle" class="net">VM / +5V / +3V3</text>
+
+  <rect x="55" y="355" width="2190" height="850" class="domain"/>
+  <rect x="90" y="341" width="280" height="36" fill="#fff"/>
+  <text x="108" y="369" class="domain-title">检测、控制与执行电路</text>
+
+  <rect x="875" y="515" width="550" height="330" class="box"/>
+  <text x="1150" y="560" text-anchor="middle" class="title">MSPM0G3507 主控模块</text>
+  <text x="1150" y="605" text-anchor="middle" class="sub">复位 / 时钟 / 电源去耦</text>
+  <text x="1150" y="650" text-anchor="middle" class="sub">循迹运算、双轮速度闭环与计时显示</text>
+  <text x="1150" y="695" text-anchor="middle" class="sub">PWM、方向、I2C、编码器与按键接口</text>
+  <text x="1150" y="760" text-anchor="middle" class="label">供电：3.3 V</text>
+
+  <rect x="110" y="430" width="370" height="190" class="box"/>
+  <text x="295" y="475" text-anchor="middle" class="title">七路红外检测阵列</text>
+  <text x="295" y="515" text-anchor="middle" class="sub">红外发射管 + 光电接收管</text>
+  <text x="295" y="555" text-anchor="middle" class="sub">分压 / 比较器 / 上拉输出</text>
+  <text x="295" y="590" text-anchor="middle" class="label">S1～S7 二值循迹信号</text>
+  <path d="M480 525 H680 V610 H875" class="wire"/>
+  <text x="655" y="507" text-anchor="middle" class="net">LINE_S1…S7</text>
+
+  <rect x="110" y="735" width="370" height="190" class="box"/>
+  <text x="295" y="780" text-anchor="middle" class="title">双正交编码器接口</text>
+  <text x="295" y="820" text-anchor="middle" class="sub">左右编码器 A/B 相</text>
+  <text x="295" y="860" text-anchor="middle" class="sub">上拉电阻 + RC 滤波</text>
+  <text x="295" y="895" text-anchor="middle" class="label">QEI / GPIO 正交解码</text>
+  <path d="M480 830 H680 V725 H875" class="wire"/>
+  <text x="655" y="812" text-anchor="middle" class="net">ENC_L / ENC_R</text>
+
+  <rect x="110" y="1010" width="370" height="135" class="box"/>
+  <text x="295" y="1055" text-anchor="middle" class="title">启停按键电路</text>
+  <text x="295" y="1095" text-anchor="middle" class="sub">按键 + 上拉电阻 + RC 消抖</text>
+  <text x="295" y="1125" text-anchor="middle" class="label">启动 / 连续运行</text>
+  <path d="M480 1078 H735 V790 H875" class="wire"/>
+
+  <rect x="1760" y="430" width="400" height="230" class="box"/>
+  <text x="1960" y="475" text-anchor="middle" class="title">TB6612FNG 电机驱动</text>
+  <text x="1960" y="515" text-anchor="middle" class="sub">双路 H 桥</text>
+  <text x="1960" y="555" text-anchor="middle" class="sub">PWM + 方向 + STBY</text>
+  <text x="1960" y="595" text-anchor="middle" class="sub">电源滤波与驱动去耦</text>
+  <text x="1960" y="630" text-anchor="middle" class="label">支持正反转与短接制动</text>
+  <path d="M1425 625 H1600 V545 H1760" class="wire"/>
+  <text x="1590" y="527" text-anchor="middle" class="net">PWM / DIR / STBY</text>
+
+  <rect x="1770" y="760" width="380" height="170" class="box"/>
+  <text x="1960" y="805" text-anchor="middle" class="title">左右直流减速电机</text>
+  <text x="1960" y="845" text-anchor="middle" class="sub">四轮两驱差速底盘</text>
+  <text x="1960" y="885" text-anchor="middle" class="label">双路电机输出接口</text>
+  <path d="M1960 660 V760" class="wire"/>
+
+  <rect x="1760" y="1010" width="400" height="135" class="box"/>
+  <text x="1960" y="1055" text-anchor="middle" class="title">SSD1306 OLED 接口</text>
+  <text x="1960" y="1095" text-anchor="middle" class="sub">I2C 数据与时钟上拉</text>
+  <text x="1960" y="1125" text-anchor="middle" class="label">计时 / 状态 / 调试信息</text>
+  <path d="M1425 790 H1600 V1078 H1760" class="wire"/>
+  <text x="1590" y="1060" text-anchor="middle" class="net">I2C</text>
+
+  <path d="M1565 240 V320 H1150 V515" class="power"/>
+  <path d="M1565 320 H295 V430" class="power"/>
+  <path d="M1565 320 H295 V735" class="power"/>
+  <path d="M1565 320 H1960 V430" class="power"/>
+  <path d="M1565 320 H1960 V1010" class="power"/>
+
+  <line x1="810" y1="1265" x2="900" y2="1265" class="wire"/><text x="925" y="1272" class="label">数据 / 控制信号</text>
+  <line x1="1230" y1="1265" x2="1320" y2="1265" class="power"/><text x="1345" y="1272" class="label">电源供电</text>
+  <text x="1150" y="1400" text-anchor="middle" class="domain-title">循迹底盘子系统电路图</text>
+</svg>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="2200" height="1400" viewBox="0 0 2200 1400">
+  <defs>
+    <style>
+      .domain-title { font:700 23px "SimHei","Microsoft YaHei",sans-serif; fill:#000; }
+      .title { font:700 22px "SimSun","Microsoft YaHei",serif; fill:#000; }
+      .sub { font:17px "SimSun","Microsoft YaHei",serif; fill:#000; }
+      .label { font:16px "SimSun","Microsoft YaHei",serif; fill:#000; }
+      .net { font:700 16px "Consolas","SimSun",monospace; fill:#000; }
+      .box { fill:#fff; stroke:#000; stroke-width:2.6; }
+      .domain { fill:#fff; stroke:#000; stroke-width:2; stroke-dasharray:10 8; }
+      .wire { fill:none; stroke:#000; stroke-width:2.6; marker-end:url(#arrow); }
+      .power { fill:none; stroke:#000; stroke-width:2.4; stroke-dasharray:12 9; marker-end:url(#arrow-open); }
+    </style>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth"><path d="M0 0 L12 6 L0 12 Z" fill="#000"/></marker>
+    <marker id="arrow-open" markerWidth="13" markerHeight="13" refX="11" refY="6.5" orient="auto" markerUnits="strokeWidth"><path d="M1 1 L11 6.5 L1 12" fill="none" stroke="#000" stroke-width="1.8"/></marker>
+  </defs>
+  <rect width="2200" height="1400" fill="#fff"/>
+
+  <rect x="55" y="55" width="2090" height="245" class="domain"/>
+  <rect x="90" y="41" width="245" height="36" fill="#fff"/>
+  <text x="108" y="69" class="domain-title">电源转换与分配</text>
+  <rect x="110" y="120" width="250" height="105" class="box"/>
+  <text x="235" y="160" text-anchor="middle" class="title">24 V 电源输入</text>
+  <text x="235" y="195" text-anchor="middle" class="sub">保险丝 + 防反接 + TVS</text>
+  <rect x="500" y="120" width="270" height="105" class="box"/>
+  <text x="635" y="160" text-anchor="middle" class="title">24 V → 5 V</text>
+  <text x="635" y="195" text-anchor="middle" class="sub">降压稳压模块</text>
+  <rect x="910" y="120" width="270" height="105" class="box"/>
+  <text x="1045" y="160" text-anchor="middle" class="title">5 V → 3.3 V</text>
+  <text x="1045" y="195" text-anchor="middle" class="sub">低压差稳压模块</text>
+  <rect x="1450" y="105" width="560" height="135" class="box"/>
+  <text x="1730" y="145" text-anchor="middle" class="title">电源网络</text>
+  <text x="1730" y="180" text-anchor="middle" class="sub">24 V：C610 / M2006　　5 V：USB / 蜂鸣器</text>
+  <text x="1730" y="212" text-anchor="middle" class="sub">3.3 V：STM32F407 / CAN / BMI088 / LED</text>
+  <path d="M360 172 H500" class="wire"/>
+  <text x="430" y="153" text-anchor="middle" class="net">24V_PROTECTED</text>
+  <path d="M770 172 H910" class="wire"/>
+  <text x="840" y="153" text-anchor="middle" class="net">+5V</text>
+  <path d="M1180 172 H1450" class="wire"/>
+  <text x="1315" y="153" text-anchor="middle" class="net">+3V3</text>
+
+  <rect x="55" y="355" width="2090" height="780" class="domain"/>
+  <rect x="90" y="341" width="285" height="36" fill="#fff"/>
+  <text x="108" y="369" class="domain-title">控制、通信与执行电路</text>
+
+  <rect x="810" y="510" width="500" height="300" class="box"/>
+  <text x="1060" y="555" text-anchor="middle" class="title">STM32F407 主控模块</text>
+  <text x="1060" y="595" text-anchor="middle" class="sub">复位电路 / 时钟电路 / 电源去耦</text>
+  <text x="1060" y="635" text-anchor="middle" class="sub">视觉数据解析与滚球平衡控制</text>
+  <text x="1060" y="675" text-anchor="middle" class="sub">位置外环、角度换算及电机双闭环</text>
+  <text x="1060" y="715" text-anchor="middle" class="sub">故障检测与驱动输出管理</text>
+  <text x="1060" y="765" text-anchor="middle" class="label">供电：3.3 V</text>
+
+  <rect x="120" y="450" width="350" height="150" class="box"/>
+  <text x="295" y="495" text-anchor="middle" class="title">树莓派 5</text>
+  <text x="295" y="535" text-anchor="middle" class="sub">钢球位置与状态数据</text>
+  <text x="295" y="570" text-anchor="middle" class="label">USB 主机</text>
+  <rect x="120" y="720" width="350" height="150" class="box"/>
+  <text x="295" y="765" text-anchor="middle" class="title">USB CDC 接口保护</text>
+  <text x="295" y="805" text-anchor="middle" class="sub">串联电阻 + ESD 防护</text>
+  <text x="295" y="840" text-anchor="middle" class="label">50 Hz · 24 字节 + CRC</text>
+  <path d="M295 600 V720" class="wire"/>
+  <path d="M470 795 H650 V700 H810" class="wire"/>
+  <text x="620" y="682" text-anchor="middle" class="net">USB D+ / D−</text>
+
+  <rect x="120" y="930" width="350" height="150" class="box"/>
+  <text x="295" y="975" text-anchor="middle" class="title">BMI088 加速度模块</text>
+  <text x="295" y="1015" text-anchor="middle" class="sub">纵向加速度前馈</text>
+  <text x="295" y="1050" text-anchor="middle" class="label">SPI 通信 · 3.3 V</text>
+  <path d="M470 1005 H650 V760 H810" class="wire"/>
+  <text x="630" y="987" text-anchor="end" class="net">SPI</text>
+
+  <rect x="1510" y="450" width="300" height="165" class="box"/>
+  <text x="1660" y="495" text-anchor="middle" class="title">CAN 收发电路</text>
+  <text x="1660" y="535" text-anchor="middle" class="sub">3.3 V CAN 收发器</text>
+  <text x="1660" y="572" text-anchor="middle" class="label">120 Ω 终端电阻可选</text>
+  <path d="M1310 590 H1510" class="wire"/>
+  <text x="1410" y="572" text-anchor="middle" class="net">CAN_TX / CAN_RX</text>
+  <rect x="1910" y="450" width="180" height="165" class="box"/>
+  <text x="2000" y="495" text-anchor="middle" class="title">C610 电调</text>
+  <text x="2000" y="535" text-anchor="middle" class="sub">CAN 接口</text>
+  <text x="2000" y="572" text-anchor="middle" class="label">24 V 供电</text>
+  <path d="M1810 532 H1910" class="wire"/>
+  <text x="1860" y="514" text-anchor="middle" class="net">CANH / CANL</text>
+  <rect x="1870" y="760" width="260" height="150" class="box"/>
+  <text x="2000" y="805" text-anchor="middle" class="title">M2006 电机</text>
+  <text x="2000" y="845" text-anchor="middle" class="sub">摆杆执行机构</text>
+  <text x="2000" y="880" text-anchor="middle" class="label">编码器 / 转速 / 电流 / 温度反馈</text>
+  <path d="M2000 615 V760" class="wire"/>
+  <path d="M1870 865 H1450 V760 H1310" class="wire"/>
+  <text x="1580" y="845" text-anchor="middle" class="net">CAN 反馈</text>
+
+  <rect x="1510" y="965" width="300" height="120" class="box"/>
+  <text x="1660" y="1007" text-anchor="middle" class="title">RGB LED 状态指示</text>
+  <text x="1660" y="1045" text-anchor="middle" class="sub">限流电阻 + 三色 LED</text>
+  <rect x="1870" y="965" width="260" height="120" class="box"/>
+  <text x="2000" y="1007" text-anchor="middle" class="title">蜂鸣器告警</text>
+  <text x="2000" y="1045" text-anchor="middle" class="sub">GPIO + 三极管驱动</text>
+  <path d="M1310 790 H1400 V1025 H1510" class="wire"/>
+  <path d="M1810 1025 H1870" class="wire"/>
+  <text x="1415" y="1007" class="net">GPIO</text>
+
+  <path d="M1730 240 V315 H1060 V510" class="power"/>
+  <path d="M1730 315 H1660 V450" class="power"/>
+  <path d="M1730 315 H2000 V450" class="power"/>
+  <path d="M1045 240 V330 H295 V720" class="power"/>
+  <path d="M1045 330 H295 V930" class="power"/>
+
+  <line x1="760" y1="1205" x2="850" y2="1205" class="wire"/>
+  <text x="875" y="1212" class="label">数据 / 控制信号</text>
+  <line x1="1180" y1="1205" x2="1270" y2="1205" class="power"/>
+  <text x="1295" y="1212" class="label">电源供电</text>
+  <text x="1100" y="1345" text-anchor="middle" class="domain-title">滚球平衡控制子系统电路图</text>
+</svg>

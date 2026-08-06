@@ -1,0 +1,354 @@
+SOURCE: C:\Users\Thorn\workspace_ccstheia\TI_Car_3507_64\report_work\inputs\template_converted.docx
+
+SECTIONS:
+[1] {"page_width_cm": 20.998, "page_height_cm": 29.697, "top_margin_cm": 3.0, "bottom_margin_cm": 2.54, "left_margin_cm": 3.175, "right_margin_cm": 3.175, "header_distance_cm": 1.501, "footer_distance_cm": 1.75, "different_first_page_header_footer": true, "header": [{"text": "", "style": "Normal", "alignment": null, "line_spacing": null, "space_before_pt": null, "space_after_pt": null, "first_line_indent_cm": null, "left_indent_cm": null, "keep_with_next": null, "page_break_before": null, "runs": []}], "footer": [{"text": "III", "style": "Footer", "alignment": null, "line_spacing": null, "space_before_pt": null, "space_after_pt": null, "first_line_indent_cm": null, "left_indent_cm": null, "keep_with_next": null, "page_break_before": null, "runs": [{"text": "III", "font": null, "size_pt": null, "bold": null, "italic": null, "underline": null}]}, {"text": "", "style": "Footer", "alignment": null, "line_spacing": null, "space_before_pt": null, "space_after_pt": null, "first_line_indent_cm": null, "left_indent_cm": null, "keep_with_next": null, "page_break_before": null, "runs": []}]}
+[2] {"page_width_cm": 20.998, "page_height_cm": 29.697, "top_margin_cm": 3.0, "bottom_margin_cm": 2.54, "left_margin_cm": 3.175, "right_margin_cm": 3.175, "header_distance_cm": 1.501, "footer_distance_cm": 1.75, "different_first_page_header_footer": false, "header": [{"text": "", "style": "Normal", "alignment": null, "line_spacing": null, "space_before_pt": null, "space_after_pt": null, "first_line_indent_cm": null, "left_indent_cm": null, "keep_with_next": null, "page_break_before": null, "runs": []}], "footer": [{"text": "III", "style": "Footer", "alignment": null, "line_spacing": null, "space_before_pt": null, "space_after_pt": null, "first_line_indent_cm": null, "left_indent_cm": null, "keep_with_next": null, "page_break_before": null, "runs": [{"text": "III", "font": null, "size_pt": null, "bold": null, "italic": null, "underline": null}]}, {"text": "", "style": "Footer", "alignment": null, "line_spacing": null, "space_before_pt": null, "space_after_pt": null, "first_line_indent_cm": null, "left_indent_cm": null, "keep_with_next": null, "page_break_before": null, "runs": []}]}
+[3] {"page_width_cm": 20.998, "page_height_cm": 29.697, "top_margin_cm": 3.0, "bottom_margin_cm": 2.501, "left_margin_cm": 2.501, "right_margin_cm": 2.501, "header_distance_cm": 1.501, "footer_distance_cm": 1.75, "different_first_page_header_footer": false, "header": [{"text": "", "style": "Normal", "alignment": null, "line_spacing": null, "space_before_pt": null, "space_after_pt": null, "first_line_indent_cm": null, "left_indent_cm": null, "keep_with_next": null, "page_break_before": null, "runs": []}], "footer": [{"text": "2", "style": "Footer", "alignment": null, "line_spacing": null, "space_before_pt": null, "space_after_pt": null, "first_line_indent_cm": null, "left_indent_cm": null, "keep_with_next": null, "page_break_before": null, "runs": [{"text": "2", "font": null, "size_pt": null, "bold": null, "italic": null, "underline": null}]}, {"text": "", "style": "Footer", "alignment": null, "line_spacing": null, "space_before_pt": null, "space_after_pt": null, "first_line_indent_cm": null, "left_indent_cm": null, "keep_with_next": null, "page_break_before": null, "runs": []}]}
+[4] {"page_width_cm": 20.998, "page_height_cm": 29.697, "top_margin_cm": 3.0, "bottom_margin_cm": 2.501, "left_margin_cm": 2.501, "right_margin_cm": 2.501, "header_distance_cm": 1.501, "footer_distance_cm": 1.75, "different_first_page_header_footer": false, "header": [{"text": "", "style": "Normal", "alignment": null, "line_spacing": null, "space_before_pt": null, "space_after_pt": null, "first_line_indent_cm": null, "left_indent_cm": null, "keep_with_next": null, "page_break_before": null, "runs": []}], "footer": [{"text": "2", "style": "Footer", "alignment": null, "line_spacing": null, "space_before_pt": null, "space_after_pt": null, "first_line_indent_cm": null, "left_indent_cm": null, "keep_with_next": null, "page_break_before": null, "runs": [{"text": "2", "font": null, "size_pt": null, "bold": null, "italic": null, "underline": null}]}, {"text": "", "style": "Footer", "alignment": null, "line_spacing": null, "space_before_pt": null, "space_after_pt": null, "first_line_indent_cm": null, "left_indent_cm": null, "keep_with_next": null, "page_break_before": null, "runs": []}]}
+[5] {"page_width_cm": 20.998, "page_height_cm": 29.697, "top_margin_cm": 3.0, "bottom_margin_cm": 2.501, "left_margin_cm": 2.501, "right_margin_cm": 2.501, "header_distance_cm": 1.501, "footer_distance_cm": 1.75, "different_first_page_header_footer": false, "header": [{"text": "", "style": "Normal", "alignment": null, "line_spacing": null, "space_before_pt": null, "space_after_pt": null, "first_line_indent_cm": null, "left_indent_cm": null, "keep_with_next": null, "page_break_before": null, "runs": []}], "footer": [{"text": "2", "style": "Footer", "alignment": null, "line_spacing": null, "space_before_pt": null, "space_after_pt": null, "first_line_indent_cm": null, "left_indent_cm": null, "keep_with_next": null, "page_break_before": null, "runs": [{"text": "2", "font": null, "size_pt": null, "bold": null, "italic": null, "underline": null}]}, {"text": "", "style": "Footer", "alignment": null, "line_spacing": null, "space_before_pt": null, "space_after_pt": null, "first_line_indent_cm": null, "left_indent_cm": null, "keep_with_next": null, "page_break_before": null, "runs": []}]}
+
+PARAGRAPHS:
+P0004 2026年全国大学生电子设计竞赛
+  META {"style": "Normal", "alignment": "CENTER (1)"}
+  RUNS [{"text": "20", "size_pt": 24.0}, {"text": "26", "size_pt": 24.0}, {"text": "年全国大学生电子设计竞赛", "size_pt": 24.0}]
+P0005 广东赛区竞赛
+  META {"style": "Normal", "alignment": "CENTER (1)"}
+  RUNS [{"text": "广东赛区竞赛", "size_pt": 24.0}]
+P0008 XXX系统（A/B/C…/H题）
+  META {"style": "Normal", "alignment": "CENTER (1)"}
+  RUNS [{"text": "XXX", "size_pt": 18.0, "bold": true}, {"text": "系统", "size_pt": 18.0, "bold": true}, {"text": "（", "size_pt": 18.0, "bold": true}, {"text": "A/B/C", "size_pt": 18.0, "bold": true}, {"text": "…", "size_pt": 18.0, "bold": true}, {"text": "/H", "size_pt": 18.0, "bold": true}, {"text": "题）", "size_pt": 18.0, "bold": true}]
+P0021 2026年8月1日
+  META {"style": "Normal", "alignment": "CENTER (1)"}
+  RUNS [{"text": "20", "size_pt": 16.0, "bold": true}, {"text": "26", "size_pt": 16.0, "bold": true}, {"text": "年", "size_pt": 16.0, "bold": true}, {"text": "8", "size_pt": 16.0, "bold": true}, {"text": "月", "size_pt": 16.0, "bold": true}, {"text": "1", "size_pt": 16.0, "bold": true}, {"text": "日", "size_pt": 16.0, "bold": true}]
+P0023 摘 要
+  META {"style": "Normal", "alignment": "CENTER (1)"}
+  RUNS [{"text": "摘", "size_pt": 16.0, "bold": true}, {"text": "", "size_pt": 16.0, "bold": true}, {"text": "要", "size_pt": 16.0, "bold": true}, {"text": "", "size_pt": 16.0, "bold": true}]
+P0026 （小四、宋体，300字以内）
+  META {"style": "Normal", "line_spacing": "1.25", "first_line_indent_cm": -0.157, "left_indent_cm": 0.995}
+  RUNS [{"text": "（小四、宋体，300字以内）", "font": "SimSun", "size_pt": 12.0}]
+P0028 关键词：脉宽；脉冲；数显；电容（小四、宋体）
+  META {"style": "Normal", "line_spacing": "1.25"}
+  RUNS [{"text": "关键词：", "font": "SimHei", "size_pt": 12.0}, {"text": "脉宽；脉冲；数显；电容", "font": "SimSun", "size_pt": 12.0}, {"text": "（", "size_pt": 12.0}, {"text": "小四、宋体）"}]
+P0031 XXX系统（A/B/C…/H题）
+  META {"style": "Normal", "alignment": "CENTER (1)", "line_spacing": "1.25"}
+  RUNS [{"text": "XXX", "size_pt": 18.0, "bold": true}, {"text": "系统", "size_pt": 18.0, "bold": true}, {"text": "（", "size_pt": 18.0, "bold": true}, {"text": "A/B/C", "size_pt": 18.0, "bold": true}, {"text": "…", "size_pt": 18.0, "bold": true}, {"text": "/H", "size_pt": 18.0, "bold": true}, {"text": "题", "size_pt": 18.0, "bold": true}, {"text": "）", "size_pt": 18.0, "bold": true}]
+P0033 一、系统方案
+  META {"style": "Heading 1", "line_spacing": "1.25"}
+  RUNS [{"text": "一、", "size_pt": 16.0}, {"text": "系统方案", "size_pt": 16.0}]
+P0034 本系统主要由单片机控制模块、XXX模块、XXX模块、电源模块组成，下面分别论证这几个模块的选择。
+  META {"style": "Normal", "line_spacing": "279400", "first_line_indent_cm": 1.083}
+  RUNS [{"text": "本系统主要由", "size_pt": 12.0}, {"text": "单片机控制", "size_pt": 12.0}, {"text": "模块、", "size_pt": 12.0}, {"text": "XXX", "size_pt": 12.0}, {"text": "模块、", "size_pt": 12.0}, {"text": "XXX", "size_pt": 12.0}, {"text": "模块、电源模块组成，下面分别论证这几个模块的选择。", "size_pt": 12.0}]
+P0035 1、主控制器件的论证与选择
+  META {"style": "Heading 2", "line_spacing": "1.25"}
+  RUNS [{"text": "1", "font": "SimSun", "size_pt": 14.0}, {"text": "、主控制器件", "font": "SimSun", "size_pt": 14.0}, {"text": "的论证与选择", "font": "SimSun", "size_pt": 14.0}]
+P0036 1.1.1控制器选用
+  META {"style": "Normal", "line_spacing": "279400"}
+  RUNS [{"text": "1.1.1控制器选用", "font": "SimSun", "size_pt": 12.0}]
+P0037 单片机比较
+  META {"style": "Normal", "line_spacing": "279400"}
+  RUNS [{"text": "单片机比较", "font": "SimSun", "size_pt": 12.0}]
+P0038 方案一：采用传统的51系列单片机。
+  META {"style": "Normal", "line_spacing": "279400"}
+  RUNS [{"text": "方案一：采用传统的51系列单片机。", "font": "SimSun", "size_pt": 12.0}]
+P0039 XXXXXX.
+  META {"style": "Normal", "line_spacing": "279400"}
+  RUNS [{"text": "XXXXXX.", "font": "SimSun", "size_pt": 12.0}]
+P0040 方案二：采用以增强型80C51内核的STC系列单片机
+  META {"style": "Normal", "line_spacing": "279400"}
+  RUNS [{"text": "方案二：采用以增强型80C51内核的STC系列单片机", "font": "SimSun", "size_pt": 12.0}]
+P0041 XXXXXX
+  META {"style": "Normal", "line_spacing": "279400"}
+  RUNS [{"text": "XXXXXX", "font": "SimSun", "size_pt": 12.0}]
+P0042 通过比较，我们选择方案二。
+  META {"style": "Normal", "line_spacing": "279400"}
+  RUNS [{"text": "通过比较，我们选择方案二。", "font": "SimSun", "size_pt": 12.0}]
+P0043 1.1.2控制系统方案选择
+  META {"style": "Normal", "line_spacing": "279400"}
+  RUNS [{"text": "1.1.2控制系统方案选择", "font": "SimSun", "size_pt": 12.0}]
+P0044 方案一：采用在面包板上搭建简易单片机系统
+  META {"style": "Normal", "line_spacing": "279400"}
+  RUNS [{"text": "方案一：采用在面包板上搭建简易单片机系统", "font": "SimSun", "size_pt": 12.0}]
+P0045 在面包板上搭建单片机系统可以方便的对硬件做随时修改，也易于搭建，但是系统连线较多，不仅相互干扰，使电路杂乱无章，而且系统可靠性低，不适合本系统使用。
+  META {"style": "Normal", "line_spacing": "279400"}
+  RUNS [{"text": "在面包板上搭建单片机系统可以方便的对硬件做随时修改，也易于搭建，但是系统连线较多，不仅相互干扰，使电路杂乱无章，而且系统可靠性低，不适合本系统使用。", "font": "SimSun", "size_pt": 12.0}]
+P0046 方案二：自制单片机印刷电路板
+  META {"style": "Normal", "line_spacing": "279400"}
+  RUNS [{"text": "方案二：自制单片机印刷电路板", "font": "SimSun", "size_pt": 12.0}]
+P0047 自制印刷电路实现较为困难，实现周期长，此外也会花费较多的时间，影响整体设计进程。不宜采用该方案。
+  META {"style": "Normal", "line_spacing": "279400"}
+  RUNS [{"text": "自制印刷电路实现较为困难，实现周期长，此外也会花费较多的时间，影响整体设计进程。不宜采用该方案。", "font": "SimSun", "size_pt": 12.0}]
+P0048 方案三：采用单片机最小系统。
+  META {"style": "Normal", "line_spacing": "279400"}
+  RUNS [{"text": "方案三：采用单片机最小系统。", "font": "SimSun", "size_pt": 12.0}]
+P0049 单片机最小系统包含了显示、矩阵键盘、A/D、D/A等模块，能明显减少外围电路的设计，降低系统设计的难度，非常适合本系统的设计。
+  META {"style": "Normal", "line_spacing": "279400"}
+  RUNS [{"text": "单片机最小系统包含了显示、矩阵键盘、A/D、D/A等模块，能明显减少外围电路的设计，降低系统设计的难度，非常适合本系统的设计。", "font": "SimSun", "size_pt": 12.0}]
+P0050 综合以上三种方案，选择方案三。
+  META {"style": "Normal", "line_spacing": "279400"}
+  RUNS [{"text": "综合以上三种方案，选择方案三。", "font": "SimSun", "size_pt": 12.0}]
+P0051 2、XXXX的论证与选择
+  META {"style": "Heading 2", "line_spacing": "1.25"}
+  RUNS [{"text": "2", "font": "SimSun", "size_pt": 14.0}, {"text": "、", "font": "SimSun", "size_pt": 14.0}, {"text": "XXXX", "font": "SimSun", "size_pt": 14.0}, {"text": "的论证与选择", "font": "SimSun", "size_pt": 14.0}]
+P0052 方案一：XXX。XXXX
+  META {"style": "Normal", "line_spacing": "1.25"}
+  RUNS [{"text": "方案一：", "size_pt": 12.0}, {"text": "XXX", "size_pt": 12.0}, {"text": "。", "size_pt": 12.0}, {"text": "XXXX", "size_pt": 12.0}]
+P0053 方案二：XXX。XXXX
+  META {"style": "Normal", "line_spacing": "1.25"}
+  RUNS [{"text": "方案二：", "size_pt": 12.0}, {"text": "XXX", "size_pt": 12.0}, {"text": "。", "size_pt": 12.0}, {"text": "XXXX", "size_pt": 12.0}]
+P0054 方案三：XXX。XXXX
+  META {"style": "Normal", "line_spacing": "1.25"}
+  RUNS [{"text": "方案三：", "size_pt": 12.0}, {"text": "XXX", "size_pt": 12.0}, {"text": "。", "size_pt": 12.0}, {"text": "XXXX", "size_pt": 12.0}]
+P0055 综合以上三种方案，选择方案三。
+  META {"style": "Normal", "line_spacing": "1.25", "first_line_indent_cm": 0.949}
+  RUNS [{"text": "综合以上三种方案，选择方案三。", "size_pt": 12.0}]
+P0056 3、控制系统的论证与选择
+  META {"style": "Heading 2", "line_spacing": "1.25"}
+  RUNS [{"text": "3", "font": "SimSun", "size_pt": 14.0}, {"text": "、", "font": "SimSun", "size_pt": 14.0}, {"text": "控制系统的论证与选择", "font": "SimSun", "size_pt": 14.0}]
+P0057 方案一：XXX。XXXX
+  META {"style": "Normal", "line_spacing": "1.25"}
+  RUNS [{"text": "方案一：", "size_pt": 12.0}, {"text": "XXX", "size_pt": 12.0}, {"text": "。", "size_pt": 12.0}, {"text": "XXXX", "size_pt": 12.0}]
+P0058 方案二：XXX。XXXX
+  META {"style": "Normal", "line_spacing": "1.25"}
+  RUNS [{"text": "方案二：", "size_pt": 12.0}, {"text": "XXX", "size_pt": 12.0}, {"text": "。", "size_pt": 12.0}, {"text": "XXXX", "size_pt": 12.0}]
+P0059 综合考虑采用XXXXX。
+  META {"style": "Normal", "line_spacing": "1.25", "first_line_indent_cm": 0.829}
+  RUNS [{"text": "综合考虑采用"}, {"text": "XXXXX"}, {"text": "。"}]
+P0061 二、系统理论分析与计算
+  META {"style": "Heading 1", "line_spacing": "1.25"}
+  RUNS [{"text": "二、", "size_pt": 16.0}, {"text": "系统理论分析与计算", "size_pt": 16.0}]
+P0062 1、XXXX的分析
+  META {"style": "Heading 2", "line_spacing": "1.25"}
+  RUNS [{"text": "1", "font": "SimSun", "size_pt": 14.0}, {"text": "、", "font": "SimSun", "size_pt": 14.0}, {"text": "XXXX", "font": "SimSun", "size_pt": 14.0}, {"text": "的分析", "font": "SimSun", "size_pt": 14.0}, {"text": "", "font": "SimSun", "size_pt": 14.0}]
+P0063 （1）XXX
+  META {"style": "Heading 3", "line_spacing": "1.25"}
+  RUNS [{"text": "（", "size_pt": 12.0}, {"text": "1", "size_pt": 12.0}, {"text": "）", "size_pt": 12.0}, {"text": "XXX", "size_pt": 12.0}]
+P0064 XXXX
+  META {"style": "Normal", "line_spacing": "1.25", "first_line_indent_cm": 0.949}
+  RUNS [{"text": "XXXX", "size_pt": 12.0}]
+P0065 （2）XXX
+  META {"style": "Heading 3", "line_spacing": "1.25"}
+  RUNS [{"text": "（", "size_pt": 12.0}, {"text": "2", "size_pt": 12.0}, {"text": "）", "size_pt": 12.0}, {"text": "XXX", "size_pt": 12.0}]
+P0066 XXXX
+  META {"style": "Normal", "line_spacing": "1.25", "first_line_indent_cm": 0.949}
+  RUNS [{"text": "XXXX", "size_pt": 12.0}]
+P0067 （3）XXX
+  META {"style": "Heading 3", "line_spacing": "1.25"}
+  RUNS [{"text": "（", "size_pt": 12.0}, {"text": "3", "size_pt": 12.0}, {"text": "）", "size_pt": 12.0}, {"text": "XXX", "size_pt": 12.0}]
+P0068 XXXX
+  META {"style": "Normal", "line_spacing": "1.25", "first_line_indent_cm": 0.949}
+  RUNS [{"text": "XXXX", "size_pt": 12.0}]
+P0069 2、XXXX的计算
+  META {"style": "Heading 2", "line_spacing": "1.25"}
+  RUNS [{"text": "2", "font": "SimSun", "size_pt": 14.0}, {"text": "、", "font": "SimSun", "size_pt": 14.0}, {"text": "XXXX", "font": "SimSun", "size_pt": 14.0}, {"text": "的计算", "font": "SimSun", "size_pt": 14.0}, {"text": "", "font": "SimSun", "size_pt": 14.0}]
+P0070 （1）XXX
+  META {"style": "Heading 3", "line_spacing": "1.25"}
+  RUNS [{"text": "（", "size_pt": 12.0}, {"text": "1", "size_pt": 12.0}, {"text": "）", "size_pt": 12.0}, {"text": "XXX", "size_pt": 12.0}]
+P0071 XXXX
+  META {"style": "Normal", "line_spacing": "1.25", "first_line_indent_cm": 0.949}
+  RUNS [{"text": "XXXX", "size_pt": 12.0}]
+P0072 （2）XXX
+  META {"style": "Heading 3", "line_spacing": "1.25"}
+  RUNS [{"text": "（", "size_pt": 12.0}, {"text": "2", "size_pt": 12.0}, {"text": "）", "size_pt": 12.0}, {"text": "XXX", "size_pt": 12.0}]
+P0073 XXXX
+  META {"style": "Normal", "line_spacing": "1.25", "first_line_indent_cm": 0.949}
+  RUNS [{"text": "XXXX", "size_pt": 12.0}]
+P0074 （3）XXX
+  META {"style": "Heading 3", "line_spacing": "1.25"}
+  RUNS [{"text": "（", "size_pt": 12.0}, {"text": "3", "size_pt": 12.0}, {"text": "）", "size_pt": 12.0}, {"text": "XXX", "size_pt": 12.0}]
+P0075 XXXX
+  META {"style": "Normal", "line_spacing": "1.25", "first_line_indent_cm": 0.949}
+  RUNS [{"text": "XXXX", "size_pt": 12.0}]
+P0076 3、XXXX的计算
+  META {"style": "Heading 2", "line_spacing": "1.25"}
+  RUNS [{"text": "3", "font": "SimSun", "size_pt": 14.0}, {"text": "、", "font": "SimSun", "size_pt": 14.0}, {"text": "XXXX", "font": "SimSun", "size_pt": 14.0}, {"text": "的计算", "font": "SimSun", "size_pt": 14.0}, {"text": "", "font": "SimSun", "size_pt": 14.0}]
+P0077 （1）XXX
+  META {"style": "Heading 3", "line_spacing": "1.25"}
+  RUNS [{"text": "（", "size_pt": 12.0}, {"text": "1", "size_pt": 12.0}, {"text": "）", "size_pt": 12.0}, {"text": "XXX", "size_pt": 12.0}]
+P0078 XXXX
+  META {"style": "Normal", "line_spacing": "1.25", "first_line_indent_cm": 0.949}
+  RUNS [{"text": "XXXX", "size_pt": 12.0}]
+P0079 （2）XXX
+  META {"style": "Heading 3", "line_spacing": "1.25"}
+  RUNS [{"text": "（", "size_pt": 12.0}, {"text": "2", "size_pt": 12.0}, {"text": "）", "size_pt": 12.0}, {"text": "XXX", "size_pt": 12.0}]
+P0080 XXXX
+  META {"style": "Normal", "line_spacing": "1.25", "first_line_indent_cm": 0.949}
+  RUNS [{"text": "XXXX", "size_pt": 12.0}]
+P0081 （3）XXX
+  META {"style": "Heading 3", "line_spacing": "1.25"}
+  RUNS [{"text": "（", "size_pt": 12.0}, {"text": "3", "size_pt": 12.0}, {"text": "）", "size_pt": 12.0}, {"text": "XXX", "size_pt": 12.0}]
+P0082 XXXX
+  META {"style": "Normal", "line_spacing": "1.25", "first_line_indent_cm": 0.949}
+  RUNS [{"text": "XXXX", "size_pt": 12.0}]
+P0084 三、电路与程序设计
+  META {"style": "Heading 1", "line_spacing": "1.25"}
+  RUNS [{"text": "三、", "size_pt": 16.0}, {"text": "电路与程序设计", "size_pt": 16.0}]
+P0085 1、电路的设计
+  META {"style": "Heading 2", "line_spacing": "1.25"}
+  RUNS [{"text": "1", "font": "SimSun", "size_pt": 14.0}, {"text": "、", "font": "SimSun", "size_pt": 14.0}, {"text": "电路的设计", "font": "SimSun", "size_pt": 14.0}]
+P0086 （1）系统总体框图
+  META {"style": "Heading 3", "line_spacing": "1.25"}
+  RUNS [{"text": "（", "size_pt": 12.0}, {"text": "1", "size_pt": 12.0}, {"text": "）", "size_pt": 12.0}, {"text": "系统总体框图", "size_pt": 12.0}]
+P0087 系统总体框图如图X所示，XXXXXX
+  META {"style": "Normal", "line_spacing": "1.25", "first_line_indent_cm": 0.949}
+  RUNS [{"text": "系统总体框图如图", "size_pt": 12.0}, {"text": "X", "size_pt": 12.0}, {"text": "所示，", "size_pt": 12.0}, {"text": "XXXXXX", "size_pt": 12.0}]
+P0089 图X 系统总体框图
+  META {"style": "Normal", "alignment": "CENTER (1)", "line_spacing": "1.25", "first_line_indent_cm": 0.829}
+  RUNS [{"text": "图"}, {"text": "X"}, {"text": "系统总体框图"}]
+P0090 （2）XXXX子系统框图与电路原理图
+  META {"style": "Heading 3", "line_spacing": "1.25"}
+  RUNS [{"text": "（", "size_pt": 12.0}, {"text": "2", "size_pt": 12.0}, {"text": "）", "size_pt": 12.0}, {"text": "XXXX", "size_pt": 12.0}, {"text": "子系统框图与电路原理图", "size_pt": 12.0}]
+P0091 1、XXXX子系统框图
+  META {"style": "Normal", "line_spacing": "1.25", "first_line_indent_cm": 0.949}
+  RUNS [{"text": "1", "size_pt": 12.0}, {"text": "、", "size_pt": 12.0}, {"text": "XXXX", "size_pt": 12.0}, {"text": "子系统框图", "size_pt": 12.0}]
+P0093 图X XXXX子系统框图
+  META {"style": "Normal", "alignment": "CENTER (1)", "line_spacing": "1.25", "first_line_indent_cm": 0.829}
+  RUNS [{"text": "图"}, {"text": "X XXXX"}, {"text": "子系统框图"}]
+P0094 2、XXXXX子系统电路
+  META {"style": "Normal", "line_spacing": "1.25", "first_line_indent_cm": 0.949}
+  RUNS [{"text": "2", "size_pt": 12.0}, {"text": "、", "size_pt": 12.0}, {"text": "XXXXX", "size_pt": 12.0}, {"text": "子系统电路", "size_pt": 12.0}]
+P0096 图X XXXX子系统电路
+  META {"style": "Normal", "alignment": "CENTER (1)", "line_spacing": "1.25", "first_line_indent_cm": 0.829}
+  RUNS [{"text": "图"}, {"text": "X XXXX"}, {"text": "子系统电路"}]
+P0097 （3）XXXX子系统框图与电路原理图
+  META {"style": "Heading 3", "line_spacing": "1.25"}
+  RUNS [{"text": "（", "size_pt": 12.0}, {"text": "3", "size_pt": 12.0}, {"text": "）", "size_pt": 12.0}, {"text": "XXXX", "size_pt": 12.0}, {"text": "子系统框图与电路原理图", "size_pt": 12.0}]
+P0098 1、XXXX子系统框图
+  META {"style": "Normal", "line_spacing": "1.25", "first_line_indent_cm": 0.949}
+  RUNS [{"text": "1", "size_pt": 12.0}, {"text": "、", "size_pt": 12.0}, {"text": "XXXX", "size_pt": 12.0}, {"text": "子系统框图", "size_pt": 12.0}]
+P0100 图X XXXX子系统框图
+  META {"style": "Normal", "alignment": "CENTER (1)", "line_spacing": "1.25", "first_line_indent_cm": 0.829}
+  RUNS [{"text": "图"}, {"text": "X XXXX"}, {"text": "子系统框图"}]
+P0101 2、XXXXX子系统电路
+  META {"style": "Normal", "line_spacing": "1.25", "first_line_indent_cm": 0.949}
+  RUNS [{"text": "2", "size_pt": 12.0}, {"text": "、", "size_pt": 12.0}, {"text": "XXXXX", "size_pt": 12.0}, {"text": "子系统电路", "size_pt": 12.0}]
+P0103 图X XXXX子系统电路
+  META {"style": "Normal", "alignment": "CENTER (1)", "line_spacing": "1.25", "first_line_indent_cm": 0.829}
+  RUNS [{"text": "图"}, {"text": "X XXXX"}, {"text": "子系统电路"}]
+P0104 （4）电源
+  META {"style": "Heading 3", "line_spacing": "1.25"}
+  RUNS [{"text": "（", "size_pt": 12.0}, {"text": "4", "size_pt": 12.0}, {"text": "）", "size_pt": 12.0}, {"text": "电源", "size_pt": 12.0}]
+P0105 电源由变压部分、滤波部分、稳压部分组成。为整个系统提供5V或者12V电压，确保电路的正常稳定工作。这部分电路比较简单，都采用三端稳压管实现，故不作详述。
+  META {"style": "Normal", "line_spacing": "1.25", "first_line_indent_cm": 0.949}
+  RUNS [{"text": "电源由变压部分、滤波部分、稳压部分组成。为整个系统提供", "size_pt": 12.0}, {"text": "5V", "size_pt": 12.0}, {"text": "或者", "size_pt": 12.0}, {"text": "12V", "size_pt": 12.0}, {"text": "电压，确保电路的正常稳定工作。这部分电路比较简单，都采用三端稳压管实现，故不作详述。", "size_pt": 12.0}]
+P0106 2、程序的设计
+  META {"style": "Heading 2", "line_spacing": "1.25"}
+  RUNS [{"text": "2", "font": "SimSun", "size_pt": 14.0}, {"text": "、", "font": "SimSun", "size_pt": 14.0}, {"text": "程序的设计", "font": "SimSun", "size_pt": 14.0}]
+P0107 （1）程序功能描述与设计思路
+  META {"style": "Heading 3", "line_spacing": "1.25"}
+  RUNS [{"text": "（", "size_pt": 12.0}, {"text": "1", "size_pt": 12.0}, {"text": "）", "size_pt": 12.0}, {"text": "程序功能描述与设计思路", "size_pt": 12.0}]
+P0108 1、程序功能描述
+  META {"style": "Normal", "line_spacing": "1.25", "first_line_indent_cm": 0.949}
+  RUNS [{"text": "1", "size_pt": 12.0}, {"text": "、程序功能描述", "size_pt": 12.0}]
+P0109 根据题目要求软件部分主要实现键盘的设置和显示。
+  META {"style": "Normal", "line_spacing": "1.25", "first_line_indent_cm": 0.949}
+  RUNS [{"text": "根据题目要求软件部分主要实现键盘的设置和显示。", "size_pt": 12.0}]
+P0110 1）键盘实现功能：设置频率值、频段、电压值以及设置输出信号类型。
+  META {"style": "Normal", "line_spacing": "1.25", "first_line_indent_cm": 0.949}
+  RUNS [{"text": "1", "size_pt": 12.0}, {"text": "）键盘实现功能：设置频率值、频段、电压值以及设置输出信号类型。", "size_pt": 12.0}]
+P0111 2）显示部分：显示电压值、频段、步进值、信号类型、频率。
+  META {"style": "Normal", "line_spacing": "1.25", "first_line_indent_cm": 0.949}
+  RUNS [{"text": "2", "size_pt": 12.0}, {"text": "）显示部分：显示电压值、频段、步进值、信号类型、频率。", "size_pt": 12.0}]
+P0112 2、程序设计思路
+  META {"style": "Normal", "line_spacing": "1.25", "first_line_indent_cm": 0.949}
+  RUNS [{"text": "2", "size_pt": 12.0}, {"text": "、程序设计思路", "size_pt": 12.0}]
+P0114 （2）程序流程图
+  META {"style": "Heading 3", "line_spacing": "1.25"}
+  RUNS [{"text": "（", "size_pt": 12.0}, {"text": "2", "size_pt": 12.0}, {"text": "）", "size_pt": 12.0}, {"text": "程序流程图", "size_pt": 12.0}]
+P0115 1、主程序流程图
+  META {"style": "Normal", "line_spacing": "1.25", "first_line_indent_cm": 0.949}
+  RUNS [{"text": "1", "size_pt": 12.0}, {"text": "、主程序流程图", "size_pt": 12.0}]
+P0117 2、XXX子程序流程图
+  META {"style": "Normal", "line_spacing": "1.25", "first_line_indent_cm": 0.949}
+  RUNS [{"text": "2", "size_pt": 12.0}, {"text": "、", "size_pt": 12.0}, {"text": "XXX", "size_pt": 12.0}, {"text": "子程序流程图", "size_pt": 12.0}]
+P0119 3、XXX子程序流程图
+  META {"style": "Normal", "line_spacing": "1.25", "first_line_indent_cm": 0.949}
+  RUNS [{"text": "3", "size_pt": 12.0}, {"text": "、", "size_pt": 12.0}, {"text": "XXX", "size_pt": 12.0}, {"text": "子程序流程图", "size_pt": 12.0}]
+P0121 4、XXX子程序流程图
+  META {"style": "Normal", "line_spacing": "1.25", "first_line_indent_cm": 0.949}
+  RUNS [{"text": "4", "size_pt": 12.0}, {"text": "、", "size_pt": 12.0}, {"text": "XXX", "size_pt": 12.0}, {"text": "子程序流程图", "size_pt": 12.0}]
+P0123 四、测试方案与测试结果
+  META {"style": "Heading 1", "line_spacing": "1.25"}
+  RUNS [{"text": "四、", "size_pt": 16.0}, {"text": "测试方案与测试结果", "size_pt": 16.0}]
+P0124 1、测试方案
+  META {"style": "Heading 2", "line_spacing": "1.25"}
+  RUNS [{"text": "1", "font": "SimSun", "size_pt": 14.0}, {"text": "、", "font": "SimSun", "size_pt": 14.0}, {"text": "测试方案", "font": "SimSun", "size_pt": 14.0}]
+P0125 （1）硬件测试
+  META {"style": "Normal", "line_spacing": "1.25", "first_line_indent_cm": 0.949}
+  RUNS [{"text": "（", "size_pt": 12.0}, {"text": "1", "size_pt": 12.0}, {"text": "）", "size_pt": 12.0}, {"text": "硬件测试", "size_pt": 12.0}]
+P0127 （2）软件仿真测试
+  META {"style": "Normal", "line_spacing": "1.25", "first_line_indent_cm": 0.949}
+  RUNS [{"text": "（", "size_pt": 12.0}, {"text": "2", "size_pt": 12.0}, {"text": "）", "size_pt": 12.0}, {"text": "软件仿真测试", "size_pt": 12.0}]
+P0129 （3）硬件软件联调
+  META {"style": "Normal", "line_spacing": "1.25", "first_line_indent_cm": 0.949}
+  RUNS [{"text": "（", "size_pt": 12.0}, {"text": "3", "size_pt": 12.0}, {"text": "）", "size_pt": 12.0}, {"text": "硬件软件联调", "size_pt": 12.0}]
+P0131 2、测试条件与仪器
+  META {"style": "Heading 2", "line_spacing": "1.25"}
+  RUNS [{"text": "2", "font": "SimSun", "size_pt": 14.0}, {"text": "、", "font": "SimSun", "size_pt": 14.0}, {"text": "测试条件与仪器", "font": "SimSun", "size_pt": 14.0}]
+P0132 测试条件：检查多次，仿真电路和硬件电路必须与系统原理图完全相同，并且检查无误，硬件电路保证无虚焊。
+  META {"style": "Normal", "line_spacing": "1.25", "first_line_indent_cm": 0.949}
+  RUNS [{"text": "测试条件：检查多次，仿真电路和硬件电路必须与系统原理图完全相同，并且检查无误，硬件电路保证无虚焊。", "size_pt": 12.0}]
+P0133 测试仪器：高精度的数字毫伏表，模拟示波器，数字示波器，数字万用表，指针式万用表。
+  META {"style": "Normal", "line_spacing": "1.25", "first_line_indent_cm": 0.949}
+  RUNS [{"text": "测试仪器：高精度的数字毫伏表，模拟示波器，数字示波器，数字万用表，指针式万用表。", "size_pt": 12.0}]
+P0134 3、测试结果及分析
+  META {"style": "Heading 2", "line_spacing": "1.25"}
+  RUNS [{"text": "3", "font": "SimSun", "size_pt": 14.0}, {"text": "、", "font": "SimSun", "size_pt": 14.0}, {"text": "测试结果及分析", "font": "SimSun", "size_pt": 14.0}]
+P0135 （1）测试结果(数据)
+  META {"style": "Heading 3", "line_spacing": "1.25"}
+  RUNS [{"text": "（", "size_pt": 12.0}, {"text": "1", "size_pt": 12.0}, {"text": "）", "size_pt": 12.0}, {"text": "测试结果", "size_pt": 12.0}, {"text": "(", "size_pt": 12.0}, {"text": "数据", "size_pt": 12.0}, {"text": ")", "size_pt": 12.0}]
+P0136 2V档信号测试结果好下表所示： （单位/V）
+  META {"style": "Normal", "line_spacing": "1.25", "first_line_indent_cm": 0.949}
+  RUNS [{"text": "2V", "size_pt": 12.0}, {"text": "档信号测试结果好下表所示：", "size_pt": 12.0}, {"text": "", "size_pt": 12.0}, {"text": "（单位", "size_pt": 12.0}, {"text": "/V", "size_pt": 12.0}, {"text": "）", "size_pt": 12.0}]
+P0138 （2）测试分析与结论
+  META {"style": "Heading 3", "line_spacing": "1.25"}
+  RUNS [{"text": "（", "size_pt": 12.0}, {"text": "2", "size_pt": 12.0}, {"text": "）", "size_pt": 12.0}, {"text": "测试分析与结论", "size_pt": 12.0}]
+P0139 根据上述测试数据，XXXXXXXXXXXXXXXXXXXXXXXXXXXXX，由此可以得出以下结论：
+  META {"style": "Normal", "line_spacing": "1.25", "first_line_indent_cm": 0.949}
+  RUNS [{"text": "根据上述测试数据，", "size_pt": 12.0}, {"text": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXX", "size_pt": 12.0}, {"text": "，由此可以得出以下结论：", "size_pt": 12.0}]
+P0140 1、
+  META {"style": "Normal", "line_spacing": "1.25", "first_line_indent_cm": 0.949}
+  RUNS [{"text": "1", "size_pt": 12.0}, {"text": "、", "size_pt": 12.0}]
+P0141 2、
+  META {"style": "Normal", "line_spacing": "1.25", "first_line_indent_cm": 0.949}
+  RUNS [{"text": "2", "size_pt": 12.0}, {"text": "、", "size_pt": 12.0}]
+P0142 3、
+  META {"style": "Normal", "line_spacing": "1.25", "first_line_indent_cm": 0.949}
+  RUNS [{"text": "3", "size_pt": 12.0}, {"text": "、", "size_pt": 12.0}]
+P0143 综上所述，本设计达到设计要求。
+  META {"style": "Normal", "line_spacing": "1.25", "first_line_indent_cm": 0.949}
+  RUNS [{"text": "综上所述，本设计达到设计要求。", "size_pt": 12.0}]
+P0145 五、参考文献
+  META {"style": "Heading 1", "line_spacing": "1.25"}
+  RUNS [{"text": "五、", "size_pt": 16.0}, {"text": "参考文献", "size_pt": 16.0}]
+P0146 [1] 谭浩强.C语言程序设计[M].北京:清华大学出版社,2012
+  META {"style": "Normal", "line_spacing": "1.25", "first_line_indent_cm": 0.741}
+  RUNS [{"text": "[1]", "font": "Arial", "size_pt": 12.0}, {"text": "", "font": "Arial", "size_pt": 12.0}, {"text": "谭浩强.C语言程序设计[M].北京:清华大学出版社,2012", "font": "SimSun", "size_pt": 12.0}]
+P0148 附录1：电路原理图
+  META {"style": "Heading 1", "line_spacing": "1.0"}
+  RUNS [{"text": "附录", "size_pt": 16.0}, {"text": "1", "size_pt": 16.0}, {"text": "：电路原理图", "size_pt": 16.0}]
+P0151 附录2：源程序
+  META {"style": "Heading 1", "line_spacing": "1.0"}
+  RUNS [{"text": "附录", "size_pt": 16.0}, {"text": "2", "size_pt": 16.0}, {"text": "：源程序", "size_pt": 16.0}]
+P0158 格式说明：《设计报告》为A4纸张，首页为不超过500字中文摘要，正文控制在 8 页以内（不含封面、摘要、目录、附录、参考文献）。正文小四号宋体，行距固定为22磅，不得加页眉页脚。每页右下端注明页码。单页打印。
+  META {"style": "Normal", "line_spacing": "1.25", "first_line_indent_cm": 0.847}
+  RUNS [{"text": "格式说明：《设计报告》为", "font": "Arial", "size_pt": 12.0}, {"text": "A4", "font": "Arial", "size_pt": 12.0}, {"text": "纸张，首页为", "font": "Arial", "size_pt": 12.0}, {"text": "不超过", "font": "Arial", "size_pt": 12.0}, {"text": "5", "font": "Arial", "size_pt": 12.0}, {"text": "00", "font": "Arial", "size_pt": 12.0}, {"text": "字中文摘要，", "font": "Arial", "size_pt": 12.0}, {"text": "正文控制在", "font": "Arial", "size_pt": 12.0}, {"text": "8", "font": "Arial", "size_pt": 12.0}, {"text": "页以内（不含封面、摘要、目录、附录、参考文献）", "font": "Arial", "size_pt": 12.0}, {"text": "。", "font": "Arial", "size_pt": 12.0}, {"text": "正文小四号宋体，行距固定为", "font": "Arial", "size_pt": 12.0}, {"text": "22", "font": "Arial", "size_pt": 12.0}, {"text": "磅，不得加页眉页脚。每页右下端注明页码。单页打印。", "font": "Arial", "size_pt": 12.0}]
+P0159 注意事项：为保障竞赛评审工作公平公正，本次竞赛采用匿名评审机制。《设计报告》正文及附录所有内容中，严禁出现能够识别参赛队伍所属院校、指导教师、参赛队员姓名、学号等相关单位及个人身份信息。请勿使用包含单位名称的水印、图表标注、致谢、参考文献备注等形式泄露队伍信息。凡违规标注相关信息的作品，组委会有权按竞赛相关规定予以处理。
+  META {"style": "Normal", "line_spacing": "1.25", "first_line_indent_cm": 0.847}
+  RUNS [{"text": "注意事项：", "font": "Arial", "size_pt": 12.0}, {"text": "为保障竞赛评审工作公平公正，本次竞赛采用匿名评审机制。", "font": "Arial", "size_pt": 12.0}, {"text": "《设计报告》", "font": "Arial", "size_pt": 12.0}, {"text": "正文及附录所有内容中，", "font": "Arial", "size_pt": 12.0}, {"text": "严禁出现能够识别参赛队伍所属院校、指导教师、参赛队员姓名、学号等相关单位及个人身份信息", "size_pt": 12.0}, {"text": "。请勿使用包含单位名称的水印、图表标注、致谢、参考文献备注等形式泄露队伍信息。凡违规标注相关信息的作品，组委会有权按竞赛相关规定予以处理。", "font": "Arial", "size_pt": 12.0}]
+
+TABLES:
+TABLE 1 STYLE=Normal Table
+R001: 信号值 || 0.2050 || 0.2100 || 0.2045 || 0.4026 || 1.007 || 1.542 || 1.669 || 1.999
+R002: 显示 || 0.2051 || 0.2100 || 0.2044 || 0.4026 || 1.006 || 1.542 || 1.669 || 1.999
+
+STYLES:
+{"name": "Normal", "size_pt": 10.5, "alignment": "JUSTIFY (3)"}
+{"name": "Heading 1", "base_style": "Normal", "size_pt": 22.0, "bold": true, "line_spacing": "2.408333333333333", "space_before_pt": 17.0, "space_after_pt": 16.5}
+{"name": "Heading 2", "base_style": "Normal", "font": "Arial", "size_pt": 16.0, "bold": true, "line_spacing": "1.7333333333333334", "space_before_pt": 13.0, "space_after_pt": 13.0}
+{"name": "Heading 3", "base_style": "Normal", "size_pt": 16.0, "bold": true, "line_spacing": "1.7333333333333334", "space_before_pt": 13.0, "space_after_pt": 13.0}
+{"name": "toc 3", "base_style": "Normal"}
+{"name": "toc 1", "base_style": "Normal", "font": "SimSun"}
+{"name": "Footer", "base_style": "Normal", "size_pt": 9.0, "alignment": "LEFT (0)"}
+{"name": "Header", "base_style": "Normal", "size_pt": 9.0, "alignment": "CENTER (1)"}
+{"name": "Date", "base_style": "Normal"}
+{"name": "toc 2", "base_style": "Normal"}

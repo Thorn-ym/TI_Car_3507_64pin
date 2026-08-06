@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="2000" height="1180" viewBox="0 0 2000 1180">
+  <defs>
+    <style>
+      .module-title { font: 700 23px "SimSun", "Microsoft YaHei", serif; fill: #000; }
+      .module-sub { font: 18px "SimSun", "Microsoft YaHei", serif; fill: #000; }
+      .link-label { font: 17px "SimSun", "Microsoft YaHei", serif; fill: #000; }
+      .caption { font: 22px "SimSun", "Microsoft YaHei", serif; fill: #000; }
+      .box { fill: #fff; stroke: #000; stroke-width: 2.6; shape-rendering: crispEdges; }
+      .group { fill: #fff; stroke: #000; stroke-width: 2.2; shape-rendering: crispEdges; }
+      .signal { fill: none; stroke: #000; stroke-width: 2.8; marker-end: url(#arrow); }
+      .branch { fill: none; stroke: #000; stroke-width: 2.2; marker-end: url(#arrow); }
+      .divider { stroke: #000; stroke-width: 1.6; }
+    </style>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="#000"/>
+    </marker>
+  </defs>
+  <rect width="2000" height="1180" fill="#fff"/>
+
+  <rect x="70" y="75" width="1860" height="925" class="group"/>
+  <rect x="108" y="61" width="300" height="36" fill="#fff"/>
+  <text x="125" y="89" class="module-title">视觉测量数据处理主链路</text>
+
+  <rect x="115" y="185" width="225" height="118" class="box"/>
+  <text x="227" y="230" text-anchor="middle" class="module-title">USB 摄像头</text>
+  <text x="227" y="267" text-anchor="middle" class="module-sub">图像输入</text>
+
+  <rect x="410" y="185" width="255" height="118" class="box"/>
+  <text x="537" y="230" text-anchor="middle" class="module-title">图像采集</text>
+  <text x="537" y="267" text-anchor="middle" class="module-sub">与预处理</text>
+
+  <rect x="735" y="185" width="240" height="118" class="box"/>
+  <text x="855" y="230" text-anchor="middle" class="module-title">动态端点</text>
+  <text x="855" y="267" text-anchor="middle" class="module-sub">检测</text>
+
+  <rect x="1045" y="185" width="280" height="118" class="box"/>
+  <text x="1185" y="230" text-anchor="middle" class="module-title">条带重建</text>
+  <text x="1185" y="267" text-anchor="middle" class="module-sub">与候选融合</text>
+
+  <rect x="1395" y="185" width="240" height="118" class="box"/>
+  <text x="1515" y="230" text-anchor="middle" class="module-title">钢球位置</text>
+  <text x="1515" y="267" text-anchor="middle" class="module-sub">标定</text>
+
+  <rect x="1695" y="185" width="195" height="118" class="box"/>
+  <text x="1792" y="230" text-anchor="middle" class="module-title">Alpha-Beta</text>
+  <text x="1792" y="267" text-anchor="middle" class="module-sub">状态跟踪</text>
+
+  <path d="M 340 244 H 410" class="signal"/>
+  <path d="M 665 244 H 735" class="signal"/>
+  <path d="M 975 244 H 1045" class="signal"/>
+  <path d="M 1325 244 H 1395" class="signal"/>
+  <path d="M 1635 244 H 1695" class="signal"/>
+
+  <rect x="820" y="430" width="360" height="132" class="box"/>
+  <text x="1000" y="472" text-anchor="middle" class="module-title">数据打包</text>
+  <text x="1000" y="508" text-anchor="middle" class="module-sub">加帧头 / 序号 / CRC</text>
+  <text x="1000" y="538" text-anchor="middle" class="link-label">24 字节数据帧</text>
+  <path d="M 1792 303 V 365 H 1000 V 430" class="signal"/>
+
+  <rect x="820" y="680" width="360" height="118" class="box"/>
+  <text x="1000" y="725" text-anchor="middle" class="module-title">USB CDC 输出</text>
+  <text x="1000" y="762" text-anchor="middle" class="module-sub">50 Hz → STM32F407</text>
+  <path d="M 1000 562 V 680" class="signal"/>
+
+  <line x1="275" y1="620" x2="700" y2="620" class="divider"/>
+  <text x="487" y="603" text-anchor="middle" class="link-label">旁路功能（不影响测量数据主链路）</text>
+
+  <rect x="155" y="680" width="300" height="118" class="box"/>
+  <text x="305" y="725" text-anchor="middle" class="module-title">录像存储</text>
+  <text x="305" y="762" text-anchor="middle" class="module-sub">本地视频留存</text>
+
+  <rect x="510" y="680" width="300" height="118" class="box"/>
+  <text x="660" y="725" text-anchor="middle" class="module-title">UDP / H.264 图传</text>
+  <text x="660" y="762" text-anchor="middle" class="module-sub">外部显示 / 存储（预留）</text>
+
+  <path d="M 537 303 V 380 H 305 V 680" class="branch"/>
+  <path d="M 537 380 H 660 V 680" class="branch"/>
+
+  <rect x="1320" y="650" width="480" height="178" class="box"/>
+  <text x="1560" y="695" text-anchor="middle" class="module-title">异常数据抑制</text>
+  <text x="1560" y="735" text-anchor="middle" class="module-sub">端点丢失 / 候选冲突 / 跟踪失锁</text>
+  <text x="1560" y="772" text-anchor="middle" class="module-sub">输出状态标志并保持数据帧完整性</text>
+  <path d="M 1180 496 H 1260 V 739 H 1320" class="branch"/>
+
+  <text x="1000" y="1090" text-anchor="middle" class="caption">图 2　视觉测量子系统详细框图</text>
+</svg>

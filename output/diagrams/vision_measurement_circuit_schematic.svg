@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="2200" height="1300" viewBox="0 0 2200 1300">
+  <defs>
+    <style>
+      .domain-title { font:700 23px "SimHei","Microsoft YaHei",sans-serif; fill:#000; }
+      .title { font:700 22px "SimSun","Microsoft YaHei",serif; fill:#000; }
+      .sub { font:17px "SimSun","Microsoft YaHei",serif; fill:#000; }
+      .label { font:16px "SimSun","Microsoft YaHei",serif; fill:#000; }
+      .net { font:700 16px "Consolas","SimSun",monospace; fill:#000; }
+      .box { fill:#fff; stroke:#000; stroke-width:2.6; }
+      .domain { fill:#fff; stroke:#000; stroke-width:2; stroke-dasharray:10 8; }
+      .wire { fill:none; stroke:#000; stroke-width:2.6; marker-end:url(#arrow); }
+      .power { fill:none; stroke:#000; stroke-width:2.4; stroke-dasharray:12 9; marker-end:url(#arrow-open); }
+    </style>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth"><path d="M0 0 L12 6 L0 12 Z" fill="#000"/></marker>
+    <marker id="arrow-open" markerWidth="13" markerHeight="13" refX="11" refY="6.5" orient="auto" markerUnits="strokeWidth"><path d="M1 1 L11 6.5 L1 12" fill="none" stroke="#000" stroke-width="1.8"/></marker>
+  </defs>
+  <rect width="2200" height="1300" fill="#fff"/>
+
+  <rect x="55" y="55" width="2090" height="245" class="domain"/>
+  <rect x="90" y="41" width="220" height="36" fill="#fff"/>
+  <text x="108" y="69" class="domain-title">系统供电电路</text>
+  <rect x="130" y="120" width="270" height="105" class="box"/>
+  <text x="265" y="160" text-anchor="middle" class="title">3S 电池分路输入</text>
+  <text x="265" y="195" text-anchor="middle" class="sub">保险丝 + 防反接 + TVS</text>
+  <rect x="560" y="120" width="300" height="105" class="box"/>
+  <text x="710" y="160" text-anchor="middle" class="title">5.1 V 降压电源</text>
+  <text x="710" y="195" text-anchor="middle" class="sub">大电流稳压 + 输入输出滤波</text>
+  <rect x="1020" y="120" width="320" height="105" class="box"/>
+  <text x="1180" y="160" text-anchor="middle" class="title">限流与软启动保护</text>
+  <text x="1180" y="195" text-anchor="middle" class="sub">电子保险丝 / 欠压保护</text>
+  <rect x="1540" y="120" width="430" height="105" class="box"/>
+  <text x="1755" y="160" text-anchor="middle" class="title">树莓派 5 供电接口</text>
+  <text x="1755" y="195" text-anchor="middle" class="sub">5.1 V / 5 A，输入输出去耦</text>
+  <path d="M400 172 H560" class="wire"/><path d="M860 172 H1020" class="wire"/><path d="M1340 172 H1540" class="wire"/>
+  <text x="480" y="153" text-anchor="middle" class="net">VIN_PROTECTED</text><text x="940" y="153" text-anchor="middle" class="net">+5V1</text><text x="1440" y="153" text-anchor="middle" class="net">+5V_PI</text>
+
+  <rect x="55" y="355" width="2090" height="700" class="domain"/>
+  <rect x="90" y="341" width="270" height="36" fill="#fff"/>
+  <text x="108" y="369" class="domain-title">计算平台与外设接口</text>
+
+  <rect x="815" y="500" width="570" height="330" class="box"/>
+  <text x="1100" y="550" text-anchor="middle" class="title">Raspberry Pi 5</text>
+  <text x="1100" y="595" text-anchor="middle" class="sub">视觉测量 / 数据打包 / 录像 / H.264 编码</text>
+  <text x="1100" y="640" text-anchor="middle" class="sub">USB 主机管理与 UDP 网络传输</text>
+  <text x="1100" y="700" text-anchor="middle" class="label">供电：5.1 V / 5 A</text>
+  <text x="1100" y="750" text-anchor="middle" class="label">USB 3.0 / USB 2.0 / 网络接口</text>
+
+  <rect x="120" y="440" width="350" height="150" class="box"/>
+  <text x="295" y="485" text-anchor="middle" class="title">GEMINI PRO 相机</text>
+  <text x="295" y="525" text-anchor="middle" class="sub">图像采集与 USB 供电</text>
+  <text x="295" y="560" text-anchor="middle" class="label">USB 视频输入</text>
+  <rect x="120" y="700" width="350" height="170" class="box"/>
+  <text x="295" y="745" text-anchor="middle" class="title">USB 主机接口 1</text>
+  <text x="295" y="785" text-anchor="middle" class="sub">VBUS 限流开关</text>
+  <text x="295" y="820" text-anchor="middle" class="sub">数据线串联电阻 + ESD 防护</text>
+  <text x="295" y="852" text-anchor="middle" class="label">USB 3.0 数据与供电</text>
+  <path d="M295 590 V700" class="wire"/>
+  <path d="M470 785 H650 V610 H815" class="wire"/>
+  <text x="630" y="592" text-anchor="middle" class="net">USB3</text>
+
+  <rect x="1730" y="440" width="350" height="150" class="box"/>
+  <text x="1905" y="485" text-anchor="middle" class="title">STM32F407</text>
+  <text x="1905" y="525" text-anchor="middle" class="sub">滚球平衡控制器</text>
+  <text x="1905" y="560" text-anchor="middle" class="label">USB Device CDC</text>
+  <rect x="1730" y="700" width="350" height="170" class="box"/>
+  <text x="1905" y="745" text-anchor="middle" class="title">USB 主机接口 2</text>
+  <text x="1905" y="785" text-anchor="middle" class="sub">VBUS 限流开关</text>
+  <text x="1905" y="820" text-anchor="middle" class="sub">串联电阻 + ESD 防护</text>
+  <text x="1905" y="852" text-anchor="middle" class="label">CDC · 50 Hz · 24 字节 + CRC</text>
+  <path d="M1905 590 V700" class="wire"/>
+  <path d="M1730 785 H1550 V690 H1385" class="wire"/>
+  <text x="1570" y="672" text-anchor="middle" class="net">USB2 D+ / D−</text>
+
+  <rect x="760" y="900" width="680" height="115" class="box"/>
+  <text x="1100" y="940" text-anchor="middle" class="title">UDP 无线图传接口（预留）</text>
+  <text x="1100" y="978" text-anchor="middle" class="sub">5 V / GND / USB 或 UART；未安装时使用树莓派板载无线网络</text>
+  <path d="M1100 830 V900" class="wire"/>
+
+  <path d="M1755 225 V320 H1100 V500" class="power"/>
+  <path d="M1755 320 H295 V700" class="power"/>
+  <path d="M1755 320 H1905 V700" class="power"/>
+  <path d="M1755 320 H1100 V900" class="power"/>
+
+  <line x1="760" y1="1125" x2="850" y2="1125" class="wire"/><text x="875" y="1132" class="label">数据 / 控制信号</text>
+  <line x1="1180" y1="1125" x2="1270" y2="1125" class="power"/><text x="1295" y="1132" class="label">电源供电</text>
+  <text x="1100" y="1250" text-anchor="middle" class="domain-title">视觉测量子系统电路图</text>
+</svg>

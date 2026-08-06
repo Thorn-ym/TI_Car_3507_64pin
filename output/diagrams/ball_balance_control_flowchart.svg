@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="2000" height="1400" viewBox="0 0 2000 1400">
+  <defs>
+    <style>
+      .domain { font: 700 23px "SimHei", "Microsoft YaHei", sans-serif; fill: #000; }
+      .node-title { font: 700 21px "SimSun", "Microsoft YaHei", serif; fill: #000; }
+      .node-sub { font: 17px "SimSun", "Microsoft YaHei", serif; fill: #000; }
+      .label { font: 16px "SimSun", "Microsoft YaHei", serif; fill: #000; }
+      .domain-box { fill: #fff; stroke: #000; stroke-width: 2.2; }
+      .process { fill: #fff; stroke: #000; stroke-width: 2.5; }
+      .terminator { fill: #fff; stroke: #000; stroke-width: 2.5; }
+      .decision { fill: #fff; stroke: #000; stroke-width: 2.5; }
+      .signal { fill: none; stroke: #000; stroke-width: 2.7; marker-end: url(#arrow); }
+      .signal-thin { fill: none; stroke: #000; stroke-width: 2.1; marker-end: url(#arrow); }
+    </style>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="#000"/>
+    </marker>
+  </defs>
+  <rect width="2000" height="1400" fill="#fff"/>
+
+  <rect x="55" y="50" width="1890" height="1280" class="domain-box"/>
+  <rect x="90" y="36" width="430" height="36" fill="#fff"/>
+  <text x="108" y="64" class="domain">STM32F407 滚球平衡双环控制与安全保护流程</text>
+
+  <rect x="760" y="85" width="480" height="82" rx="40" class="terminator"/>
+  <text x="1000" y="118" text-anchor="middle" class="node-title">滚球平衡程序启动</text>
+  <text x="1000" y="146" text-anchor="middle" class="node-sub">驱动输出默认撤销</text>
+
+  <rect x="760" y="210" width="480" height="100" class="process"/>
+  <text x="1000" y="248" text-anchor="middle" class="node-title">初始化 STM32F407 外设</text>
+  <text x="1000" y="280" text-anchor="middle" class="node-sub">USB CDC / SPI1 / CAN 1 Mbit/s / 按键 / 限位</text>
+
+  <polygon points="1000,355 1180,440 1000,525 820,440" class="decision"/>
+  <text x="1000" y="428" text-anchor="middle" class="node-title">STM32 独立按键按下？</text>
+  <text x="1000" y="460" text-anchor="middle" class="node-sub">使能滚球平衡控制</text>
+
+  <rect x="300" y="380" width="330" height="120" class="process"/>
+  <text x="465" y="421" text-anchor="middle" class="node-title">待机状态</text>
+  <text x="465" y="455" text-anchor="middle" class="node-sub">保持接收视觉数据</text>
+  <text x="465" y="484" text-anchor="middle" class="node-sub">CAN 输出为零</text>
+
+  <rect x="760" y="575" width="480" height="105" class="process"/>
+  <text x="1000" y="614" text-anchor="middle" class="node-title">接收视觉测量数据</text>
+  <text x="1000" y="647" text-anchor="middle" class="node-sub">USB CDC · 50 Hz · 24 字节 + CRC</text>
+
+  <polygon points="1000,725 1190,815 1000,905 810,815" class="decision"/>
+  <text x="1000" y="802" text-anchor="middle" class="node-title">数据有效？</text>
+  <text x="1000" y="835" text-anchor="middle" class="node-sub">CRC / 序号 / 时效 / 状态</text>
+
+  <rect x="1390" y="755" width="380" height="120" class="process"/>
+  <text x="1580" y="796" text-anchor="middle" class="node-title">进入故障状态</text>
+  <text x="1580" y="830" text-anchor="middle" class="node-sub">撤销 C610 电流指令</text>
+  <text x="1580" y="859" text-anchor="middle" class="node-sub">等待数据恢复或重新使能</text>
+
+  <rect x="90" y="755" width="360" height="120" class="process"/>
+  <text x="270" y="796" text-anchor="middle" class="node-title">采集 BMI088</text>
+  <text x="270" y="830" text-anchor="middle" class="node-sub">SPI1 读取纵向加速度</text>
+  <text x="270" y="859" text-anchor="middle" class="node-sub">计算前馈补偿量</text>
+
+  <rect x="520" y="965" width="320" height="105" class="process"/>
+  <text x="680" y="1004" text-anchor="middle" class="node-title">位置外环 PID</text>
+  <text x="680" y="1037" text-anchor="middle" class="node-sub">钢球位置误差调节</text>
+
+  <rect x="890" y="965" width="300" height="105" class="process"/>
+  <text x="1040" y="1004" text-anchor="middle" class="node-title">角度反算</text>
+  <text x="1040" y="1037" text-anchor="middle" class="node-sub">生成期望摆杆角度</text>
+
+  <rect x="1240" y="965" width="330" height="105" class="process"/>
+  <text x="1405" y="1004" text-anchor="middle" class="node-title">速度内环 PID</text>
+  <text x="1405" y="1037" text-anchor="middle" class="node-sub">叠加 BMI088 前馈补偿</text>
+
+  <rect x="1240" y="1135" width="330" height="105" class="process"/>
+  <text x="1405" y="1174" text-anchor="middle" class="node-title">电流限幅与 CAN 输出</text>
+  <text x="1405" y="1207" text-anchor="middle" class="node-sub">C610 电调 → M2006 电机</text>
+
+  <rect x="520" y="1135" width="390" height="105" class="process"/>
+  <text x="715" y="1174" text-anchor="middle" class="node-title">读取执行机构反馈</text>
+  <text x="715" y="1207" text-anchor="middle" class="node-sub">编码器 / 转速 / 电流 / 温度</text>
+
+  <polygon points="1075,1120 1220,1187 1075,1254 930,1187" class="decision"/>
+  <text x="1075" y="1176" text-anchor="middle" class="node-title">安全异常？</text>
+  <text x="1075" y="1207" text-anchor="middle" class="node-sub">限位 / 过温 / 超时 / CAN</text>
+
+  <rect x="760" y="1280" width="480" height="82" rx="40" class="terminator"/>
+  <text x="1000" y="1313" text-anchor="middle" class="node-title">撤销驱动输出并返回故障态</text>
+  <text x="1000" y="1341" text-anchor="middle" class="node-sub">禁止 M2006 继续动作</text>
+
+  <path d="M 1000 167 V 210" class="signal"/>
+  <path d="M 1000 310 V 355" class="signal"/>
+  <path d="M 820 440 H 630" class="signal"/>
+  <text x="760" y="423" class="label">否</text>
+  <path d="M 465 380 V 340 H 1000 V 355" class="signal-thin"/>
+  <path d="M 1000 525 V 575" class="signal"/>
+  <text x="1018" y="555" class="label">是</text>
+  <path d="M 1000 680 V 725" class="signal"/>
+  <path d="M 1190 815 H 1390" class="signal"/>
+  <text x="1240" y="798" class="label">否</text>
+  <path d="M 1000 905 V 930 H 680 V 965" class="signal"/>
+  <text x="1018" y="930" class="label">是</text>
+  <path d="M 270 875 V 915 H 1405 V 965" class="signal-thin"/>
+  <text x="515" y="904" class="label">前馈补偿</text>
+  <path d="M 840 1017 H 890" class="signal"/>
+  <path d="M 1190 1017 H 1240" class="signal"/>
+  <path d="M 1405 1070 V 1135" class="signal"/>
+  <path d="M 1405 1240 V 1265 H 715 V 1240" class="signal-thin"/>
+  <text x="1150" y="1257" class="label">CAN 执行与反馈</text>
+  <path d="M 910 1187 H 930" class="signal"/>
+  <path d="M 1220 1187 H 1240" class="signal-thin"/>
+  <path d="M 1075 1254 V 1280" class="signal"/>
+  <text x="1093" y="1274" class="label">是</text>
+  <path d="M 930 1187 H 480 V 627 H 760" class="signal-thin"/>
+  <text x="500" y="1168" class="label">否：进入下一控制周期</text>
+  <path d="M 1580 875 V 1321 H 1240" class="signal-thin"/>
+</svg>

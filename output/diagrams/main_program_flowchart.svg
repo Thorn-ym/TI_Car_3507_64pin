@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="2000" height="1400" viewBox="0 0 2000 1400">
+  <defs>
+    <style>
+      .domain { font: 700 23px "SimHei", "Microsoft YaHei", sans-serif; fill: #000; }
+      .node-title { font: 700 21px "SimSun", "Microsoft YaHei", serif; fill: #000; }
+      .node-sub { font: 17px "SimSun", "Microsoft YaHei", serif; fill: #000; }
+      .label { font: 16px "SimSun", "Microsoft YaHei", serif; fill: #000; }
+      .domain-box { fill: #fff; stroke: #000; stroke-width: 2.2; }
+      .process { fill: #fff; stroke: #000; stroke-width: 2.5; }
+      .terminator { fill: #fff; stroke: #000; stroke-width: 2.5; }
+      .decision { fill: #fff; stroke: #000; stroke-width: 2.5; }
+      .signal { fill: none; stroke: #000; stroke-width: 2.7; marker-end: url(#arrow); }
+      .signal-thin { fill: none; stroke: #000; stroke-width: 2.1; marker-end: url(#arrow); }
+      .power { fill: none; stroke: #000; stroke-width: 2.3; stroke-dasharray: 12 9; marker-end: url(#arrow-open); }
+    </style>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="#000"/>
+    </marker>
+    <marker id="arrow-open" markerWidth="13" markerHeight="13" refX="11" refY="6.5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 1 1 L 11 6.5 L 1 12" fill="none" stroke="#000" stroke-width="1.8"/>
+    </marker>
+  </defs>
+  <rect width="2000" height="1400" fill="#fff"/>
+
+  <rect x="720" y="35" width="560" height="92" rx="42" class="terminator"/>
+  <text x="1000" y="72" text-anchor="middle" class="node-title">3S 电池与分路电源上电</text>
+  <text x="1000" y="103" text-anchor="middle" class="node-sub">动力 / 5 V / 3.3 V，全系统共地</text>
+
+  <rect x="55" y="175" width="605" height="1120" class="domain-box"/>
+  <rect x="85" y="161" width="320" height="36" fill="#fff"/>
+  <text x="102" y="189" class="domain">视觉测量与图传程序（树莓派 5）</text>
+
+  <rect x="697" y="175" width="605" height="1120" class="domain-box"/>
+  <rect x="727" y="161" width="350" height="36" fill="#fff"/>
+  <text x="744" y="189" class="domain">滚球平衡控制程序（STM32F407）</text>
+
+  <rect x="1340" y="175" width="605" height="1120" class="domain-box"/>
+  <rect x="1370" y="161" width="355" height="36" fill="#fff"/>
+  <text x="1387" y="189" class="domain">循迹、计时与停车程序（MSPM0G3507）</text>
+
+  <!-- Dashed power links are the only shared connection among the three program domains. -->
+  <path d="M 860 127 V 145 H 355 V 225" class="power"/>
+  <path d="M 1000 127 V 225" class="power"/>
+  <path d="M 1140 127 V 145 H 1642 V 225" class="power"/>
+  <text x="500" y="142" text-anchor="middle" class="label">5 V 分路供电</text>
+  <text x="1000" y="155" text-anchor="middle" class="label">逻辑 / 执行器分路供电</text>
+  <text x="1500" y="142" text-anchor="middle" class="label">底盘动力 / 逻辑分路供电</text>
+
+  <!-- Raspberry Pi visual program -->
+  <rect x="145" y="225" width="420" height="95" rx="40" class="terminator"/>
+  <text x="355" y="263" text-anchor="middle" class="node-title">树莓派 5 启动</text>
+  <text x="355" y="293" text-anchor="middle" class="node-sub">加载视觉测量与图传服务</text>
+
+  <rect x="145" y="375" width="420" height="110" class="process"/>
+  <text x="355" y="416" text-anchor="middle" class="node-title">初始化 USB 摄像头</text>
+  <text x="355" y="450" text-anchor="middle" class="node-sub">640×480 · MJPG · 60 帧/s</text>
+
+  <rect x="145" y="540" width="420" height="110" class="process"/>
+  <text x="355" y="581" text-anchor="middle" class="node-title">启动录像与 H.264 图传</text>
+  <text x="355" y="615" text-anchor="middle" class="node-sub">本地存储 / UDP 无线图传（预留）</text>
+
+  <rect x="145" y="705" width="420" height="110" class="process"/>
+  <text x="355" y="746" text-anchor="middle" class="node-title">执行视觉识别与状态跟踪</text>
+  <text x="355" y="780" text-anchor="middle" class="node-sub">端点、钢球位置、速度与状态生成</text>
+
+  <rect x="145" y="870" width="420" height="110" class="process"/>
+  <text x="355" y="911" text-anchor="middle" class="node-title">数据打包并持续发送</text>
+  <text x="355" y="945" text-anchor="middle" class="node-sub">USB CDC · 50 Hz · 24 字节 + CRC</text>
+
+  <polygon points="355,1040 530,1130 355,1220 180,1130" class="decision"/>
+  <text x="355" y="1119" text-anchor="middle" class="node-title">服务退出？</text>
+  <text x="355" y="1152" text-anchor="middle" class="node-sub">关机 / 人工停止</text>
+
+  <path d="M 355 320 V 375" class="signal"/>
+  <path d="M 355 485 V 540" class="signal"/>
+  <path d="M 355 650 V 705" class="signal"/>
+  <path d="M 355 815 V 870" class="signal"/>
+  <path d="M 355 980 V 1040" class="signal"/>
+  <path d="M 180 1130 H 105 V 760 H 145" class="signal-thin"/>
+  <text x="125" y="1112" text-anchor="middle" class="label">否</text>
+  <text x="550" y="1112" class="label">是：安全结束服务</text>
+
+  <!-- STM32 balance-control program -->
+  <rect x="790" y="225" width="420" height="95" rx="40" class="terminator"/>
+  <text x="1000" y="263" text-anchor="middle" class="node-title">STM32F407 启动</text>
+  <text x="1000" y="293" text-anchor="middle" class="node-sub">初始化 USB / SPI1 / CAN / 按键</text>
+
+  <polygon points="1000,375 1175,460 1000,545 825,460" class="decision"/>
+  <text x="1000" y="448" text-anchor="middle" class="node-title">STM32 独立按键</text>
+  <text x="1000" y="481" text-anchor="middle" class="node-sub">是否使能滚球平衡？</text>
+  <path d="M 1000 320 V 375" class="signal"/>
+  <path d="M 825 460 H 760 V 355 H 1000 V 375" class="signal-thin"/>
+  <text x="780" y="442" class="label">否：待机</text>
+
+  <rect x="790" y="600" width="420" height="110" class="process"/>
+  <text x="1000" y="641" text-anchor="middle" class="node-title">采集控制输入与反馈</text>
+  <text x="1000" y="675" text-anchor="middle" class="node-sub">视觉数据 / BMI088 / CAN 电机反馈</text>
+  <path d="M 1000 545 V 600" class="signal"/>
+  <text x="1018" y="575" class="label">是</text>
+
+  <rect x="790" y="765" width="420" height="110" class="process"/>
+  <text x="1000" y="806" text-anchor="middle" class="node-title">执行滚球平衡闭环</text>
+  <text x="1000" y="840" text-anchor="middle" class="node-sub">位置外环 / 前馈补偿 / 速度内环</text>
+
+  <polygon points="1000,930 1180,1020 1000,1110 820,1020" class="decision"/>
+  <text x="1000" y="1007" text-anchor="middle" class="node-title">出现安全异常？</text>
+  <text x="1000" y="1040" text-anchor="middle" class="node-sub">超时 / CAN / 限位 / 过温</text>
+
+  <rect x="790" y="1160" width="420" height="95" class="process"/>
+  <text x="1000" y="1198" text-anchor="middle" class="node-title">撤销 M2006 驱动输出</text>
+  <text x="1000" y="1228" text-anchor="middle" class="node-sub">C610 电调进入安全状态</text>
+
+  <path d="M 1000 710 V 765" class="signal"/>
+  <path d="M 1000 875 V 930" class="signal"/>
+  <path d="M 820 1020 H 745 V 655 H 790" class="signal-thin"/>
+  <text x="762" y="1002" class="label">否：继续控制</text>
+  <path d="M 1000 1110 V 1160" class="signal"/>
+  <text x="1018" y="1140" class="label">是</text>
+
+  <!-- The only inter-controller data link in the whole system. -->
+  <path d="M 565 925 H 680 V 655 H 790" class="signal"/>
+  <rect x="590" y="838" width="180" height="62" fill="#fff"/>
+  <text x="680" y="862" text-anchor="middle" class="label">USB CDC · 50 Hz</text>
+  <text x="680" y="886" text-anchor="middle" class="label">24 字节 + CRC</text>
+
+  <!-- MSPM0 chassis program -->
+  <rect x="1432" y="225" width="420" height="95" rx="40" class="terminator"/>
+  <text x="1642" y="263" text-anchor="middle" class="node-title">MSPM0G3507 启动</text>
+  <text x="1642" y="293" text-anchor="middle" class="node-sub">初始化 GPIO / QEI / PWM / OLED</text>
+
+  <polygon points="1642,375 1817,460 1642,545 1467,460" class="decision"/>
+  <text x="1642" y="448" text-anchor="middle" class="node-title">MSPM0 独立按键</text>
+  <text x="1642" y="481" text-anchor="middle" class="node-sub">是否启动底盘任务？</text>
+  <path d="M 1642 320 V 375" class="signal"/>
+  <path d="M 1467 460 H 1405 V 355 H 1642 V 375" class="signal-thin"/>
+  <text x="1425" y="442" class="label">否：待机</text>
+
+  <rect x="1432" y="600" width="420" height="110" class="process"/>
+  <text x="1642" y="641" text-anchor="middle" class="node-title">同步启动循迹与 10 ms 计时</text>
+  <text x="1642" y="675" text-anchor="middle" class="node-sub">七路红外 + 双编码器闭环</text>
+  <path d="M 1642 545 V 600" class="signal"/>
+  <text x="1660" y="575" class="label">是</text>
+
+  <rect x="1432" y="765" width="420" height="110" class="process"/>
+  <text x="1642" y="806" text-anchor="middle" class="node-title">持续循迹、里程计算与显示</text>
+  <text x="1642" y="840" text-anchor="middle" class="node-sub">PWM 差速驱动 / OLED 状态更新</text>
+
+  <polygon points="1642,930 1817,1020 1642,1110 1467,1020" class="decision"/>
+  <text x="1642" y="1007" text-anchor="middle" class="node-title">返回 A 点？</text>
+  <text x="1642" y="1040" text-anchor="middle" class="node-sub">终点条件确认</text>
+
+  <rect x="1432" y="1160" width="420" height="95" rx="40" class="terminator"/>
+  <text x="1642" y="1198" text-anchor="middle" class="node-title">短接制动并停止计时</text>
+  <text x="1642" y="1228" text-anchor="middle" class="node-sub">保持最终时间显示</text>
+
+  <path d="M 1642 710 V 765" class="signal"/>
+  <path d="M 1642 875 V 930" class="signal"/>
+  <path d="M 1467 1020 H 1395 V 820 H 1432" class="signal-thin"/>
+  <text x="1412" y="1002" class="label">否</text>
+  <path d="M 1642 1110 V 1160" class="signal"/>
+  <text x="1660" y="1140" class="label">是</text>
+
+  <rect x="640" y="1320" width="720" height="48" class="process"/>
+  <text x="1000" y="1351" text-anchor="middle" class="label">三路程序上电后并行运行；MSPM0G3507 与树莓派 5、STM32F407 之间无通信链路</text>
+</svg>

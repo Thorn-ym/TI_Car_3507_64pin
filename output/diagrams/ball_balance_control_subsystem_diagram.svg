@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="2000" height="1180" viewBox="0 0 2000 1180">
+  <defs>
+    <style>
+      .module-title { font: 700 22px "SimSun", "Microsoft YaHei", serif; fill: #000; }
+      .module-sub { font: 17px "SimSun", "Microsoft YaHei", serif; fill: #000; }
+      .link-label { font: 17px "SimSun", "Microsoft YaHei", serif; fill: #000; }
+      .caption { font: 22px "SimSun", "Microsoft YaHei", serif; fill: #000; }
+      .box { fill: #fff; stroke: #000; stroke-width: 2.6; shape-rendering: crispEdges; }
+      .group { fill: #fff; stroke: #000; stroke-width: 2.2; shape-rendering: crispEdges; }
+      .signal { fill: none; stroke: #000; stroke-width: 2.8; marker-end: url(#arrow); }
+      .feedback { fill: none; stroke: #000; stroke-width: 2.2; marker-end: url(#arrow); }
+      .safety { fill: none; stroke: #000; stroke-width: 2.2; marker-end: url(#arrow); }
+    </style>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="#000"/>
+    </marker>
+  </defs>
+  <rect width="2000" height="1180" fill="#fff"/>
+
+  <rect x="55" y="75" width="1890" height="925" class="group"/>
+  <rect x="93" y="61" width="350" height="36" fill="#fff"/>
+  <text x="110" y="89" class="module-title">滚球平衡闭环控制与保护链路</text>
+
+  <rect x="85" y="195" width="190" height="112" class="box"/>
+  <text x="180" y="239" text-anchor="middle" class="module-title">视觉数据</text>
+  <text x="180" y="275" text-anchor="middle" class="module-sub">USB CDC 输入</text>
+
+  <rect x="330" y="195" width="240" height="112" class="box"/>
+  <text x="450" y="233" text-anchor="middle" class="module-title">数据校验</text>
+  <text x="450" y="269" text-anchor="middle" class="module-sub">CRC / 时效 / 序号</text>
+
+  <rect x="625" y="195" width="210" height="112" class="box"/>
+  <text x="730" y="239" text-anchor="middle" class="module-title">模式状态机</text>
+  <text x="730" y="275" text-anchor="middle" class="module-sub">待机 / 使能 / 故障</text>
+
+  <rect x="890" y="195" width="210" height="112" class="box"/>
+  <text x="995" y="239" text-anchor="middle" class="module-title">位置外环 PID</text>
+  <text x="995" y="275" text-anchor="middle" class="module-sub">位置误差调节</text>
+
+  <rect x="1155" y="195" width="190" height="112" class="box"/>
+  <text x="1250" y="239" text-anchor="middle" class="module-title">角度反算</text>
+  <text x="1250" y="275" text-anchor="middle" class="module-sub">期望摆杆角度</text>
+
+  <rect x="1400" y="195" width="210" height="112" class="box"/>
+  <text x="1505" y="239" text-anchor="middle" class="module-title">速度内环 PID</text>
+  <text x="1505" y="275" text-anchor="middle" class="module-sub">电机速度调节</text>
+
+  <rect x="1665" y="195" width="190" height="112" class="box"/>
+  <text x="1760" y="239" text-anchor="middle" class="module-title">电流限幅</text>
+  <text x="1760" y="275" text-anchor="middle" class="module-sub">输出约束</text>
+
+  <path d="M 275 251 H 330" class="signal"/>
+  <path d="M 570 251 H 625" class="signal"/>
+  <path d="M 835 251 H 890" class="signal"/>
+  <path d="M 1100 251 H 1155" class="signal"/>
+  <path d="M 1345 251 H 1400" class="signal"/>
+  <path d="M 1610 251 H 1665" class="signal"/>
+
+  <rect x="1475" y="450" width="285" height="118" class="box"/>
+  <text x="1617" y="495" text-anchor="middle" class="module-title">CAN 总线输出</text>
+  <text x="1617" y="532" text-anchor="middle" class="module-sub">1 Mbit/s</text>
+  <path d="M 1760 307 V 380 H 1617 V 450" class="signal"/>
+
+  <rect x="1475" y="685" width="285" height="130" class="box"/>
+  <text x="1617" y="727" text-anchor="middle" class="module-title">M2006 + C610</text>
+  <text x="1617" y="763" text-anchor="middle" class="module-sub">摆杆执行机构</text>
+  <text x="1617" y="792" text-anchor="middle" class="module-sub">电机闭环执行</text>
+  <path d="M 1617 568 V 685" class="signal"/>
+
+  <rect x="210" y="450" width="285" height="118" class="box"/>
+  <text x="352" y="495" text-anchor="middle" class="module-title">BMI088 加速度输入</text>
+  <text x="352" y="532" text-anchor="middle" class="module-sub">SPI1</text>
+
+  <rect x="590" y="450" width="285" height="118" class="box"/>
+  <text x="732" y="495" text-anchor="middle" class="module-title">前馈补偿</text>
+  <text x="732" y="532" text-anchor="middle" class="module-sub">纵向扰动补偿量</text>
+  <path d="M 495 509 H 590" class="signal"/>
+  <path d="M 875 509 H 1320 V 330 H 1505 V 307" class="signal"/>
+  <text x="1110" y="492" text-anchor="middle" class="link-label">前馈量叠加至速度内环</text>
+
+  <rect x="915" y="685" width="390" height="130" class="box"/>
+  <text x="1110" y="727" text-anchor="middle" class="module-title">执行机构反馈</text>
+  <text x="1110" y="763" text-anchor="middle" class="module-sub">编码器 / 转速 / 电流 / 温度</text>
+  <text x="1110" y="792" text-anchor="middle" class="module-sub">CAN 反馈帧</text>
+  <path d="M 1475 750 H 1305" class="feedback"/>
+  <path d="M 1110 685 V 620 H 1370 V 330 H 1505 V 307" class="feedback"/>
+
+  <rect x="210" y="685" width="540" height="130" class="box"/>
+  <text x="480" y="727" text-anchor="middle" class="module-title">安全保护与输出撤销</text>
+  <text x="480" y="763" text-anchor="middle" class="module-sub">限位 / 过温 / 数据超时 / CAN 异常</text>
+  <text x="480" y="792" text-anchor="middle" class="module-sub">进入故障态并撤销电机输出</text>
+  <path d="M 915 750 H 750" class="safety"/>
+  <path d="M 210 750 H 145 V 380 H 730 V 307" class="safety"/>
+
+  <text x="1000" y="1090" text-anchor="middle" class="caption">图 3　滚球平衡控制子系统详细框图</text>
+</svg>

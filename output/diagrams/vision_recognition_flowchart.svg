@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="2000" height="1400" viewBox="0 0 2000 1400">
+  <defs>
+    <style>
+      .domain { font: 700 23px "SimHei", "Microsoft YaHei", sans-serif; fill: #000; }
+      .node-title { font: 700 21px "SimSun", "Microsoft YaHei", serif; fill: #000; }
+      .node-sub { font: 17px "SimSun", "Microsoft YaHei", serif; fill: #000; }
+      .label { font: 16px "SimSun", "Microsoft YaHei", serif; fill: #000; }
+      .domain-box { fill: #fff; stroke: #000; stroke-width: 2.2; }
+      .process { fill: #fff; stroke: #000; stroke-width: 2.5; }
+      .terminator { fill: #fff; stroke: #000; stroke-width: 2.5; }
+      .decision { fill: #fff; stroke: #000; stroke-width: 2.5; }
+      .signal { fill: none; stroke: #000; stroke-width: 2.7; marker-end: url(#arrow); }
+      .signal-thin { fill: none; stroke: #000; stroke-width: 2.1; marker-end: url(#arrow); }
+    </style>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 12 6 L 0 12 z" fill="#000"/>
+    </marker>
+  </defs>
+  <rect width="2000" height="1400" fill="#fff"/>
+
+  <rect x="55" y="50" width="1890" height="1280" class="domain-box"/>
+  <rect x="90" y="36" width="360" height="36" fill="#fff"/>
+  <text x="108" y="64" class="domain">树莓派 5 视觉识别、数据输出与图传流程</text>
+
+  <rect x="760" y="90" width="480" height="84" rx="40" class="terminator"/>
+  <text x="1000" y="124" text-anchor="middle" class="node-title">视觉程序启动</text>
+  <text x="1000" y="153" text-anchor="middle" class="node-sub">加载标定参数与 Alpha-Beta 跟踪状态</text>
+
+  <rect x="760" y="225" width="480" height="100" class="process"/>
+  <text x="1000" y="263" text-anchor="middle" class="node-title">初始化 USB 摄像头与视频通道</text>
+  <text x="1000" y="295" text-anchor="middle" class="node-sub">640×480 · MJPG · 60 帧/s</text>
+
+  <rect x="760" y="375" width="480" height="100" class="process"/>
+  <text x="1000" y="413" text-anchor="middle" class="node-title">采集图像帧并预处理</text>
+  <text x="1000" y="445" text-anchor="middle" class="node-sub">裁剪 / 去噪 / 颜色与灰度特征生成</text>
+
+  <rect x="130" y="375" width="420" height="100" class="process"/>
+  <text x="340" y="413" text-anchor="middle" class="node-title">录像存储旁路</text>
+  <text x="340" y="445" text-anchor="middle" class="node-sub">原始或叠加结果视频本地保存</text>
+
+  <rect x="1450" y="375" width="420" height="100" class="process"/>
+  <text x="1660" y="413" text-anchor="middle" class="node-title">H.264 编码与 UDP 图传</text>
+  <text x="1660" y="445" text-anchor="middle" class="node-sub">外部显示 / 存储装置（预留）</text>
+
+  <rect x="760" y="525" width="480" height="100" class="process"/>
+  <text x="1000" y="563" text-anchor="middle" class="node-title">动态端点检测</text>
+  <text x="1000" y="595" text-anchor="middle" class="node-sub">确定摆杆有效区域与运动端点</text>
+
+  <polygon points="1000,675 1180,755 1000,835 820,755" class="decision"/>
+  <text x="1000" y="744" text-anchor="middle" class="node-title">端点检测有效？</text>
+  <text x="1000" y="776" text-anchor="middle" class="node-sub">几何约束与置信度判定</text>
+
+  <rect x="1260" y="705" width="430" height="100" class="process"/>
+  <text x="1475" y="743" text-anchor="middle" class="node-title">置端点异常状态</text>
+  <text x="1475" y="775" text-anchor="middle" class="node-sub">保持预测量并降低数据置信度</text>
+
+  <rect x="760" y="885" width="480" height="100" class="process"/>
+  <text x="1000" y="923" text-anchor="middle" class="node-title">条带重建与候选融合</text>
+  <text x="1000" y="955" text-anchor="middle" class="node-sub">生成钢球候选并执行时空一致性筛选</text>
+
+  <polygon points="1000,1035 1180,1115 1000,1195 820,1115" class="decision"/>
+  <text x="1000" y="1104" text-anchor="middle" class="node-title">钢球候选有效？</text>
+  <text x="1000" y="1136" text-anchor="middle" class="node-sub">面积 / 圆度 / 位置连续性</text>
+
+  <rect x="1260" y="1065" width="430" height="100" class="process"/>
+  <text x="1475" y="1103" text-anchor="middle" class="node-title">Alpha-Beta 预测保持</text>
+  <text x="1475" y="1135" text-anchor="middle" class="node-sub">置失锁或候选无效状态标志</text>
+
+  <rect x="440" y="1065" width="300" height="100" class="process"/>
+  <text x="590" y="1103" text-anchor="middle" class="node-title">钢球位置标定</text>
+  <text x="590" y="1135" text-anchor="middle" class="node-sub">像素坐标 → 摆杆坐标</text>
+
+  <rect x="440" y="1215" width="300" height="100" class="process"/>
+  <text x="590" y="1253" text-anchor="middle" class="node-title">Alpha-Beta 状态更新</text>
+  <text x="590" y="1285" text-anchor="middle" class="node-sub">位置 / 速度 / 时间戳</text>
+
+  <rect x="860" y="1215" width="360" height="100" class="process"/>
+  <text x="1040" y="1253" text-anchor="middle" class="node-title">数据打包</text>
+  <text x="1040" y="1285" text-anchor="middle" class="node-sub">帧头 / 序号 / 状态 / CRC，24 字节</text>
+
+  <rect x="1340" y="1215" width="360" height="100" class="process"/>
+  <text x="1520" y="1253" text-anchor="middle" class="node-title">USB CDC 输出</text>
+  <text x="1520" y="1285" text-anchor="middle" class="node-sub">50 Hz → STM32F407</text>
+
+  <path d="M 1000 174 V 225" class="signal"/>
+  <path d="M 1000 325 V 375" class="signal"/>
+  <path d="M 760 425 H 550" class="signal-thin"/>
+  <path d="M 1240 425 H 1450" class="signal-thin"/>
+  <path d="M 1000 475 V 525" class="signal"/>
+  <path d="M 1000 625 V 675" class="signal"/>
+  <path d="M 1180 755 H 1260" class="signal"/>
+  <text x="1205" y="740" class="label">否</text>
+  <path d="M 1000 835 V 885" class="signal"/>
+  <text x="1018" y="866" class="label">是</text>
+  <path d="M 1000 985 V 1035" class="signal"/>
+  <path d="M 820 1115 H 740" class="signal"/>
+  <text x="770" y="1098" class="label">是</text>
+  <path d="M 590 1165 V 1215" class="signal"/>
+  <path d="M 1180 1115 H 1260" class="signal"/>
+  <text x="1205" y="1098" class="label">否</text>
+  <path d="M 1475 805 V 1190 H 1040 V 1215" class="signal-thin"/>
+  <path d="M 1475 1165 V 1190" class="signal-thin"/>
+  <path d="M 740 1265 H 860" class="signal"/>
+  <path d="M 1220 1265 H 1340" class="signal"/>
+  <path d="M 1700 1265 H 1815 V 340 H 1000 V 375" class="signal-thin"/>
+  <text x="1790" y="1248" text-anchor="end" class="label">下一帧</text>
+</svg>
